@@ -1,0 +1,21 @@
+<!--Components/prize_card_two/prize_card_two.wxml-->
+  <!--<view class="padding"></view>-->
+<view class="card2" hover-class="none" hover-stop-propagation="false">
+
+  <navigator class="indexCard" target="" url="/pages/howToNew/new1/new1" hover-class="navigator-hover" open-type="navigate">
+    <image src="{{src1}}" class="pImage"></image>
+        <view class="textOfCard2">
+          <view class="pText" hover-class="none" hover-stop-propagation="false">
+            奖品：{{prizeText}} * {{prizeNumber}}
+          </view>
+          <view class="numberCondition" hover-class="none" hover-stop-propagation="false">
+            满{{personNumber}}人 自动开奖
+          </view>
+          <view class="" hover-class="none" hover-stop-propagation="false">
+            <icon class="icon1" type="waiting" size="20" color="0, 171, 255"><text class="tText" space="nbsp"> 点击参与</text></icon>
+          </view>
+        </view>
+  </navigator>
+  
+</view>
+<!--<view class="padding"></view>-->

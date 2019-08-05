@@ -1,0 +1,67 @@
+<!--Components/wayToNewLuckyDraw/wayToNewLuckyDraw.wxml--> 
+<text class="chooseText" selectable="false" space="nbsp" decode="false">
+  选择抽奖模板
+</text>
+
+<view class="newCard" hover-class="none" hover-stop-propagation="false">
+    <navigator class="newCard1" target="" url="{{url1}}" hover-class="navigator-hover" open-type="navigate" bindtap="way1">
+        <image class="pImage" src="{{src1[0]}}"></image>
+        <view class="textOfCard2">
+            <view class="method" hover-class="none" hover-stop-propagation="false">
+                {{version[0]}}
+            </view>
+            <view class="condition" hover-class="none" hover-stop-propagation="false">
+                {{versionMessage[0]}}
+            </view>
+        </view>
+    </navigator>
+
+    <navigator class="newCard1" target="" url="{{url1}}" hover-class="navigator-hover" open-type="navigate" bindtap="way2">
+        <image class="pImage" src="{{src1[1]}}"></image>
+        <view class="textOfCard2">
+            <view class="method" hover-class="none" hover-stop-propagation="false">
+                {{version[1]}}
+            </view>
+            <view class="condition" hover-class="none" hover-stop-propagation="false">
+                {{versionMessage[1]}}
+            </view>
+        </view>
+    </navigator>
+
+    <navigator class="newCard1" target="" url="{{url1}}" hover-class="navigator-hover" open-type="navigate" bindtap="way3">
+        <image class="pImage" src="{{src1[2]}}"></image>
+        <view class="textOfCard2">
+            <view class="method" hover-class="none" hover-stop-propagation="false">
+                {{version[2]}}
+            </view>
+            <view class="condition" hover-class="none" hover-stop-propagation="false">
+                {{versionMessage[2]}}
+            </view>
+        </view>
+    </navigator>
+
+    <navigator class="newCard1" target="" url="{{url1}}" hover-class="navigator-hover" open-type="navigate" bindtap="way4">
+        <image class="pImage" src="{{src1[3]}}"></image>
+        <view class="textOfCard2">
+            <view class="method" hover-class="none" hover-stop-propagation="false">
+                {{version[3]}}
+            </view>
+            <view class="condition" hover-class="none" hover-stop-propagation="false">
+                {{versionMessage[3]}}
+            </view>
+        </view>
+    </navigator>
+
+    <navigator class="newCard1" target="" url="{{url1}}" hover-class="navigator-hover" open-type="navigate" bindtap="way4">
+        <image class="pImage" src="{{src1[4]}}"></image>
+        <view class="textOfCard2">
+            <view class="method" hover-class="none" hover-stop-propagation="false">
+                {{version[4]}}
+            </view>
+            <view class="condition" hover-class="none" hover-stop-propagation="false">
+                {{versionMessage[4]}}
+            </view>
+        </view>
+    </navigator>
+    
+</view>

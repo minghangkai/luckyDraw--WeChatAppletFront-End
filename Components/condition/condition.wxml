@@ -1,0 +1,57 @@
+<!--Components/condition/condition.wxml-->
+<view id="main">
+  <view class="prizesetting">
+    <view class="setPrize">设置开奖条件</view>
+    <view class="redStar">※</view>
+  </view>
+
+<!--开奖类型栏的选择-->
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖条件</view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker_text" >
+         {{array[index]}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+
+
+<!--开奖时间设定-->
+  <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖时间</view>
+    <picker mode="date" value="{{date}}" start="{{date}}" end="2100-09-01" bindchange="bindDateChange">
+        <view class="picker_text" >
+         {{date}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+<!--提示剩余时间-->
+  <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：离开奖时间还有 {{timeLeft}} 天，请设置合理的开奖时间
+    </view>
+  </view>
+
+  <!--开奖人数的设定-->
+  <view wx:if="{{kindOfCondition === 1}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖人数 </view>
+    <input class="input" type="number" placeholder="开奖人数" />
+  </view>
+<!--提示人数不足-->
+  <view wx:if="{{kindOfCondition === 1}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：人数未满，建议 7天内 手动开奖
+    </view>
+  </view>
+
+<!--体现现在开奖的按钮-->
+  <view wx:if="{{kindOfCondition === 2}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：点击抽奖详情标题下方“现在开奖”，可手动开奖
+    </view>
+  </view>
+
+
+</view>

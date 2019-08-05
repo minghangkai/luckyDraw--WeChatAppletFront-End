@@ -1,0 +1,21 @@
+<!--Components/headImage/headImage.wxml-->
+<view class="mainHeadImage"wx:if="{{headImageDisplayOrNot!==1}}">
+  <view class="image" bindtap="changeImage">
+    <image class="image" src="{{imageSrc}}" mode="apectFit"></image>
+    <view class="change">点击更换头奖图片</view>
+  </view>
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <input class="input" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindinput="getActivityName"/>
+  </view>
+
+  <navigator url="">
+    <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindinput="getActivityInfo" />
+  </navigator>
+  <view class="prizesetting">
+    <view class="setPrize">奖项设置</view>
+    <view class="redStar">※</view>
+  </view>
+
+</view>
+
+

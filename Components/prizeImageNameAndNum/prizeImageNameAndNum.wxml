@@ -1,0 +1,54 @@
+<!--Components/prizeImageNameAndNum/prizeImageNameAndNum.wxml--> 
+<view class="main" wx:for="{{imageArray}}" wx:key="id">
+  <view class="image" wx:if="{{imageDisplayOrNot !== 4}}" bindtap="changeImage">
+    <image class="image" data-id="{{item.id}}" src="{{item.imageSrc}}" mode="apectFit"></image>
+    <view class="change">点击更换奖品图片</view>
+  </view>
+
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name"  selectable="false" space="false" decode="false">奖品名称</view>
+    <input class="input" data-id="{{index}}" type="text"  placeholder="请输入奖品名称（必填）" bindblur="getPrizeName"/>
+  </view>
+
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">奖品数量</view>
+    <input class="input1" data-id="{{item.id}}" type="text"  placeholder="请输入奖品数量（必填）" bindblur="getPrizeNumber"/>
+    <text class="ge">个</text>
+  </view>
+
+  <view class="Line" wx:if="{{kindOfPrizeDisplayOrNot === 1}}" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">奖品类型</view>
+    <picker bindchange="getKindOfPrize1" value="{{objectIndex}}" range="{{objectArray}}" range-key="{{'name'}}">
+        <view class="picker_text" >
+         {{objectArray[objectIndex].name}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+
+  <view class="Line" wx:if="{{probityDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+    <view class="name"  selectable="false" space="false" decode="false">中奖概率</view>
+    <input class="input1" type="text"  placeholder="请输入中奖概率（必填）" bindblur="getProbablility"/>
+    <text class="ge">%</text>
+  </view>
+
+  <view  class="Line" wx:if="{{len !== 0}}">
+    <icon class="deleteIcon" data-id="{{item.id}}" type="cancel" color="red" bindtap="delete"></icon>
+    <text class="deleteText" data-id="{{item.id}}" bindtap="delete">删除该奖品</text>
+  </view>
+  <view class="nullString" wx:if="{{kindOfPrizeDisplayOrNot !== 1 && len !== 0}}"></view>
+
+</view>
+
+
+
+<view class="Line1" wx:if="{{kindOfPrizeDisplayOrNot !== 1}}" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">奖品类型</view>
+    <picker bindchange="getKindOfPrize2" value="{{index}}" range="{{array}}">
+        <view class="picker_text" >
+         {{array[index]}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+<button class="addprize" wx:if="{{addPrizeOrNotDisplayOrNot !== 1}}" bindtap="addPrize">+增加奖项</button>

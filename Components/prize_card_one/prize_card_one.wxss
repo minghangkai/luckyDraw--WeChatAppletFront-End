@@ -1,0 +1,55 @@
+/* Components/prizeCard1/prizeCard1.wxss */
+
+.card1 {
+    width: 700rpx;
+    height: 400rpx;
+    margin: 25rpx;
+    background-color: white;
+    
+}
+
+.indexCard {
+    width: 100%;
+    
+    
+    border-radius: 40px；
+}
+
+.pImage {
+    display: flex;
+    width: 100%;
+    
+    
+    height: 300rpx;
+}
+
+.textAreaOfPrizeInformation {}
+
+.pText {
+    display: flex;
+    padding-left: 4rpx;
+}
+
+.timeInformation {}
+
+.icon1 {
+  padding-left: 4rpx;
+    margin-top: 5rpx;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+}
+
+.tText1 {
+    font-size: 18rpx;
+    color: #00abff;
+    line-height: 30rpx;
+    vertical-align: middle;
+}
+
+.tText2 {
+    font-size: 18rpx;
+    color: gray;
+    line-height: 30rpx;
+    vertical-align: middle;
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "prizeImageNameAndNum": "/Components/prizeImageNameAndNum/prizeImageNameAndNum",
+    "activityInformation": "/Components/activityInformation/activityInformation",
+    "condition": "/Components/condition/condition",
+    "moreOptions": "/Components/moreOptions/moreOptions",
+    "headImage": "/Components/headImage/headImage"
+  }
+}

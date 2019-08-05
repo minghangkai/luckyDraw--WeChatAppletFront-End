@@ -1,0 +1,4 @@
+{
+  "usingComponents": {"wayToNewLuckyDraw":"/Components/wayToNewLuckyDraw/wayToNewLuckyDraw"},
+  "navigationBarTitleText": "新建抽奖"
+}

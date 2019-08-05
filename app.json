@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/self-help/self-help",
+    "pages/new/new",
+    "pages/personal/personal",
+    "pages/newWay/newWay"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "抽奖",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "selectedColor": "#f12727",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "每日抽奖",
+        "iconPath": "icons/index.png",
+        "selectedIconPath": "icons/index_active.png"
+      },
+      {
+        "pagePath": "pages/self-help/self-help",
+        "text": "自助福利",
+        "iconPath": "icons/selfHelp.png",
+        "selectedIconPath": "icons/selfHelp_active.png"
+      },
+      {
+        "pagePath": "pages/new/new",
+        "text": "新建抽奖",
+        "iconPath": "icons/new.png",
+        "selectedIconPath": "icons/new_active.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "个人中心",
+        "iconPath": "icons/personal.png",
+        "selectedIconPath": "icons/personal_active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

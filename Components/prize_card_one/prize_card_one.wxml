@@ -1,0 +1,11 @@
+<!--Components/prizeCard1/prizeCard1.wxml-->
+<view class="card1">
+  <navigator class="indexCard" target="" url="/pages/howToNew/new1/new1" hover-class="navigator-hover" open-type="navigate">
+    <image class="pImage" src="{{src1}}" mode="aspectFit"></image>
+    <view class="pText">奖品：{{prizeText}} * {{prizeNumber}}</view>
+    <icon class="icon1" type="waiting" size="18" color="0, 171, 255">
+      <text class="tText1" space="nbsp"> 点击参与</text>
+      <text class="tText2" style="font:lightgray 18rpx line-height: 30rpx vertical-align: middle">  {{expirationTime}}</text>
+    </icon>  
+  </navigator>
+</view>

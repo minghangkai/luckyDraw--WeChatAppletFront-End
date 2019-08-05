@@ -1,0 +1,254 @@
+<!--头奖设置--> 
+<view class="HeadImage" wx:if="{{headImageDisplayOrNot!==1}}">
+  <view class="image" bindtap="changeImage">
+    <image class="image" src="{{srcOfHeadImage}}" mode="apectFit"></image>
+    <view class="change">点击更换头奖图片</view>
+  </view>
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <input class="inputFull" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindblur="getActivityName"/>
+  </view>
+
+  <navigator url="">
+    <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindinput="getActivityInfo" />
+  </navigator>
+
+    
+    <view class="border"></view>
+    <view class="necessarySetting">
+      <view class="settingText">奖项设置</view>
+      <view class="redStar">※</view>
+    </view>
+    <view class="border" style="display:flex;"></view>
+</view>
+
+<!--奖品设置-->
+
+<view class="prizeImageNameAndNum">
+  <view class="PrizeSetting" wx:for="{{imageArray}}" wx:key="id">
+    <view class="image" wx:if="{{imageDisplayOrNot !== 4}}"  bindtap="changePrizeImage">
+      <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="apectFit"></image>
+      <view class="change">点击更换奖品图片</view>
+    </view>
+ 
+    <view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name"  selectable="false" space="false" decode="false">奖品名称</view>
+      <input class="input75" data-id="{{index}}" type="text"  placeholder="请输入奖品名称（必填）" bindblur="getPrizeName"/>
+    </view>
+
+    <view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">奖品数量</view>
+      <input class="input68" data-id="{{index}}" type="number"  placeholder="请输入奖品数量（必填）" bindblur="getPrizeNumber"/>
+      <text class="ge">个</text>
+    </view>
+
+    <view class="Line" wx:if="{{kindOfPrizeDisplayOrNot === 1}}" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">奖品类型</view>
+      <picker bindchange="getKindOfPrize1" value="{{objectIndex}}" range="{{objectArray}}" range-key="{{'name'}}">
+        <view class="picker_text" >
+         {{objectArray[objectIndex].name}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+    </view>
+
+    <view class="Line" wx:if="{{probityDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name"  selectable="false" space="false" decode="false">中奖概率</view>
+      <input class="input68" data-id="{{index}}" type="number"  placeholder="请输入中奖概率（必填）" bindblur="getProbablility"/>
+      <text class="ge">%</text>
+    </view>
+
+    <view  class="Line" wx:if="{{len !== 0}}">
+      <icon class="deleteIcon" data-id="{{index}}" type="cancel" color="red" bindtap="delete"></icon>
+      <text class="deleteText" data-id="{{index}}" bindtap="delete">删除该奖品</text>
+    </view>
+    <view class="nullString" wx:if="{{kindOfPrizeDisplayOrNot !== 1 && len !== 0}}"></view>
+  </view>
+  <!--结束wx:for部分-->
+  <view class="LineWith10rpxOnTop" wx:if="{{kindOfPrizeDisplayOrNot !== 1}}" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">奖品类型</view>
+    <picker bindchange="getKindOfPrize2" value="{{index}}" range="{{array}}">
+        <view class="picker_text" >
+         {{array[index]}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+  <button class="addprize" wx:if="{{addPrizeOrNotDisplayOrNot !== 1}}" bindtap="addPrize">+增加奖项
+  </button>
+</view>
+
+<!--活动情况--> 
+
+<view class="activityInformation" wx:if="{{activityInformationDisplayOrNot === 1 }}">
+  <view class="border"></view>
+  <view class="necessarySetting" >
+    <view class="settingText">抽奖活动说明</view>
+    <view class="redStar">※</view>
+  </view>
+  <view class="border" style="display:flex;"></view>
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <input class="inputFull" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindblur="getActivityName"/>
+  </view>
+  <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindblur="getActivityInfo" />
+  <view class="border"></view>
+</view> 
+
+
+<!--开奖条件-->
+<view class="condition">
+  <view class="border"></view>
+  <view class="necessarySetting">
+    <view class="settingText">设置开奖条件</view>
+    <view class="redStar">※</view>
+  </view>
+  <view class="border" style="display:flex;"></view>
+
+  <!--开奖类型栏的选择-->
+  <view class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖条件</view>
+    <picker bindchange="getKindOfConditon" value="{{conditionIndex}}" range="{{conditionArray}}">
+        <view class="picker_text" >
+         {{conditionArray[conditionIndex]}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+  <!--开奖时间设定-->
+  <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖时间</view>
+    <picker mode="date" value="{{date}}" start="{{date}}" end="2100-09-01" bindchange="getDate">
+        <view class="picker_text" >
+         {{date}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+    </picker>
+  </view>
+  <!--提示剩余时间-->
+  <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：离开奖时间还有 {{timeLeft}} 天，请设置合理的开奖时间
+    </view>
+  </view>
+
+  <!--开奖人数的设定-->
+  <view wx:if="{{kindOfCondition === 1}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="name" selectable="false" space="false" decode="false">开奖人数 </view>
+    <input class="input75" type="number" placeholder="开奖人数" bindblur="getPersonNumber"/>
+  </view>
+  <!--提示人数不足-->
+  <view wx:if="{{kindOfCondition === 1}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：人数未满，建议 7天内 手动开奖
+    </view>
+  </view>
+
+  <!--体现现在开奖的按钮-->
+  <view wx:if="{{kindOfCondition === 2}}" class="Line" hover-class="none" hover-stop-propagation="false">
+    <view class="tips" selectable="false" space="false" decode="false">
+      小提示：点击抽奖详情标题下方“现在开奖”，可手动开奖
+    </view>
+  </view>
+  <view class="border" style="display:flex;height:10rpx;"></view>
+</view>
+
+
+<!--更多设置-->
+<!--Components/moreOptions/moreOptions.wxml--> 
+<view class="moreOptions"> 
+  <view class="pari1"> 
+<!--发起人署名-->
+    <view class="Line" wx:if="{{initiatorNameDisplayOrNot === 2 || initiatorNameDisplayOrNot=== 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">发起人署名</view>
+      <input class="input60" type="text"  placeholder="请输入发起人的姓名或昵称" bindinput="getInitiatorName"/>
+    </view>
+
+<!--发起人微信号-->
+    <view class="Line" wx:if="{{initiatorWcNameDisplayOrNot === 3 || initiatorWcNameDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name50" selectable="false" space="false" decode="false">发起人微信号（选填）</view>
+      <input class="input50" type="text"  placeholder="请输入发起人的微信号" bindinput="getInitiatorWxNumber"/>
+    </view>
+
+
+<!--手机号--> 
+    <view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">手机号（必填）</view>
+      <button class="synchronization" wx:if="{{phoneNum}}" type="primary" plain="true"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><text>自动填写</text></button>
+    </view>
+
+  <!--参与者关注-->
+    <view class="Line" wx:if="{{participantAttentionDisplayOrNot === 1 || participantAttentionDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false" bindchange="getParticipantAttention">
+      <view class="name40" selectable="false" space="false" decode="false">参与者关注</view>
+      <navigator class="picker_text" url="">可设置微信/公众号等</navigator> 
+      <image class="address_image_participantAttention" src="/icons/address.svg" mode="aspectFit"/>
+    </view>
+
+  <!--开启邀请好友助力-->
+    <view class="Line" wx:if="{{inviateFriendsDisplayOrNot === 1 || inviateFriendsDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false" >
+      <view class="name40" selectable="false" space="false" decode="false">开启邀请好友助力</view>
+      <switch class="switch" checked color="#FF5252" bindchange="getInviateFriends"></switch>
+    </view>
+</view><!--main1结束-->
+  <!--上传群二维码-->
+
+  <view class="part2">
+  <view class="border" style="display:flex;height:10rpx;"></view>
+  <!--公众号名称-->
+    <view class="Line" wx:if="{{officialAccountsNameDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">公众号名称</view>
+      <input class="input60" type="text"  placeholder="请输入需关注的微信公众号" bindblur="getOfficialAccountsName"/>
+    </view>
+
+  <!--每位参与者抽取次数-->
+    <view  class="Line" wx:if="{{participantDrawNumberDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name50" selectable="false" space="false" decode="false">每位参与者抽取次数 </view>
+      <input class="input68" type="number" placeholder="抽取次数" bindblur="getParticipantDrawNumber"/>
+    </view>
+
+  <!--参加抽奖途径-->
+    <view class="Line" wx:if="{{participateWayDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name50" selectable="false" space="false" decode="false">参加抽奖途径</view>
+      <picker bindchange="getParticipateWay" value="{{participateWayIndex}}" range="{{participateWayArray1}}">
+        <view class="picker_text_participateWay" >
+          {{participateWayArray[participateWayIndex]}}<!--//指定数组中指定下标的name键对应的值 -->
+          <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+    </view>
+
+  <!--分享权限-->
+    <view class="Line" wx:if="{{shareJurisdictionDisplayOrNot === 2 || shareJurisdictionDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">分享权限</view>
+      <picker bindchange="getShareJurisdiction" value="{{shareJurisdictionIndex}}" range="{{shareJurisdictionArray}}">
+        <view class="picker_text" >
+          {{shareJurisdictionArray[shareJurisdictionIndex]}}<!--//指定数组中指定下标的name键对应的值 -->
+          <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+    </view>
+
+  <!--允许参与人退出抽奖-->
+    <view class="Line" wx:if="{{allowQuitOrNotDisplayOrNot === 2 || allowQuitOrNotDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">允许参与人退出抽奖</view>
+      <switch class="switch" check="true" color="#FF5252" bindchange="getAllowQuitOrNot"></switch>
+    </view>
+
+  <!--参与抽奖需要输入口令-->
+    <view class="Line" wx:if="{{inputCommandOrNotDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name50" selectable="false" space="false" decode="false">参与抽奖需要输入口令</view>
+      <switch class="switch_inputCommand" check="true" color="#FF5252" bindchange="getInputCommandOrNot"></switch>
+    </view>
+
+  <!--显示中奖者名单-->
+    <view class="Line" wx:if="{{winnerListDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">显示中奖者名单</view>
+      <switch class="switch" check="true" color="#FF5252" bindchange="getWinnerList"></switch>
+    </view>
+  </view>
+</view>
+
+
+<!--确认发布-->
+<view class="final">
+  <text class="agreeTheProtocol">确认即表示同意《微信公众平台服务协议》</text>
+  <button class="confirm" bindtap="confirmRelease">确认发布</button>
+</view>

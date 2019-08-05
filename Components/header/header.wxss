@@ -1,0 +1,41 @@
+.myhead {
+    height: 130rpx;
+    /*border: 1px red solid;*/
+    display: flex;
+    padding: 10rpx;
+    padding-top: 20rpx;
+    background-color: white;
+}
+
+.head {
+    width: 20%;
+    height: 130rpx;
+    /*border: 1px green solid;*/
+    position: relative;
+    align-content: center;
+}
+
+.category {
+    box-sizing: border-box;
+    width: 100%;
+    /*border: 1px yellow solid;*/
+    float: left;
+    align-items: center;
+    justify-content: center;
+    height: 60rpx;
+    margin-buttom: 4rpx;
+}
+
+.categoryText {
+    display: flex;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+    font-size: 24rpx;
+    /*border: 1px blue solid;*/
+    padding-top: 18rpx;
+}
+
+image {
+    display: flex;
+}

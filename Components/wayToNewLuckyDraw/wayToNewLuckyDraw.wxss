@@ -1,0 +1,39 @@
+/* Components/wayToNewLuckyDraw/wayToNewLuckyDraw.wxss */
+
+.chooseText {
+    size: 24rpx;
+    margin: 25rpx;
+}
+
+.newCard1 {
+    display: flex;
+    width: 700rpx;
+    height: 150rpx;
+    margin: 25rpx;
+    background-color: white;
+}
+
+.pImage {
+    width: 100rpx;
+    height: 100rpx;
+    float: left;
+    display: flex;
+    margin: 25rpx 35rpx 25rpx 40rpx;
+}
+
+.textOfCard2 {
+    float: left;
+}
+
+.method {
+    height: 50rpx;
+    margin: 20rpx 5rpx 20rpx 0rpx;
+}
+
+.condition {
+    font-size: 24rpx;
+    color: gray;
+    line-height: 30rpx;
+    vertical-align: middle;
+    margin-bottom: 20rpx;
+}

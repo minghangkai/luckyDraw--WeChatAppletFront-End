@@ -1,0 +1,92 @@
+<!--Components/moreOptions/moreOptions.wxml--> 
+<view class="main">
+  <view class="main1"> 
+<!--发起人署名-->
+    <view class="Line" wx:if="{{initiatorNameDisplayOrNot === 2 || initiatorNameDisplayOrNot=== 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">发起人署名</view>
+      <input class="input" type="text"  placeholder="请输入发起人的姓名或昵称" bindinput="getInitiatorName"/>
+    </view>
+
+<!--发起人微信号-->
+    <view class="Line" wx:if="{{initiatorWcNameDisplayOrNot === 3 || initiatorWcNameDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name1" selectable="false" space="false" decode="false">发起人微信号（选填）</view>
+      <input class="input1" type="text"  placeholder="请输入发起人的微信号" bindinput="getInitiatorWxNumber"/>
+    </view>
+
+
+<!--手机号--> 
+    <view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">手机号（必填）</view>
+      <button class="synchronization" wx:if="{{phoneNum}}" type="primary" plain="true"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><text>自动填写</text></button>
+    </view>
+
+  <!--参与者关注-->
+    <view class="Line" wx:if="{{participantAttentionDisplayOrNot === 1 || participantAttentionDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false" bindchange="getParticipantAttention">
+      <view class="name" selectable="false" space="false" decode="false">参与者关注</view>
+      <navigator class="picker_text" url="">可设置微信/公众号等</navigator> 
+      <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+    </view>
+
+  <!--开启邀请好友助力-->
+    <view class="Line" wx:if="{{inviateFriendsDisplayOrNot === 1 || inviateFriendsDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false" >
+      <view class="name" selectable="false" space="false" decode="false">开启邀请好友助力</view>
+      <switch class="switch" check="true" color="#FF5252" bindchange="getInviateFriends"></switch>
+    </view>
+</view><!--main1结束-->
+  <!--上传群二维码-->
+
+  <view class="main2">
+  <!--公众号名称-->
+    <view class="Line" wx:if="{{officialAccountsNameDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">公众号名称</view>
+      <input class="input" type="text"  placeholder="请输入需关注的微信公众号" bindinput="getOfficialAccountsName"/>
+    </view>
+
+  <!--每位参与者抽取次数-->
+    <view  class="Line" wx:if="{{participantDrawNumberDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name1" selectable="false" space="false" decode="false">每位参与者抽取次数 </view>
+      <input class="input1" type="number" placeholder="抽取次数" bindinput="getParticipantDrawNumber"/>
+    </view>
+
+  <!--参加抽奖途径-->
+    <view class="Line" wx:if="{{participateWayDisplayOrNot === 3}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name1" selectable="false" space="false" decode="false">参加抽奖途径</view>
+      <picker bindchange="getParticipateWay" value="{{index1}}" range="{{array1}}">
+        <view class="picker_text1" >
+          {{array1[index1]}}<!--//指定数组中指定下标的name键对应的值 -->
+          <image class="picker_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+    </view>
+
+  <!--分享权限-->
+    <view class="Line" wx:if="{{shareJurisdictionDisplayOrNot === 2 || shareJurisdictionDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">分享权限</view>
+      <picker bindchange="getShareJurisdiction" value="{{index2}}" range="{{array2}}">
+        <view class="picker_text" >
+          {{array2[index2]}}<!--//指定数组中指定下标的name键对应的值 -->
+          <image class="picker_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+    </view>
+
+  <!--允许参与人退出抽奖-->
+    <view class="Line" wx:if="{{allowQuitOrNotDisplayOrNot === 2 || allowQuitOrNotDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">允许参与人退出抽奖</view>
+      <switch class="switch" check="true" color="#FF5252" bindchange="getAllowQuitOrNot"></switch>
+    </view>
+
+  <!--参与抽奖需要输入口令-->
+    <view class="Line" wx:if="{{inputCommandOrNotDisplayOrNot === 2}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name2" selectable="false" space="false" decode="false">参与抽奖需要输入口令</view>
+      <switch class="switch2" check="true" color="#FF5252" bindchange="getInputCommandOrNot"></switch>
+    </view>
+
+  <!--显示中奖者名单-->
+    <view class="Line" wx:if="{{winnerListDisplayOrNot === 4}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name" selectable="false" space="false" decode="false">显示中奖者名单</view>
+      <switch class="switch" check="true" color="#FF5252" bindchange="getWinnerList"></switch>
+    </view>
+  </view>
+</view>
+  

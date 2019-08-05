@@ -1,0 +1,17 @@
+<!--index.wxml-->
+<!--<view class="main">
+<headImage bindmyevent="myEventListener"></headImage>
+<prizeImageNameAndNum bindmyevent="myEventListener"></prizeImageNameAndNum>
+<activityInformation bindmyevent="myEventListener"></activityInformation>
+<condition bindmyevent="myEventListener"></condition>
+<moreOptions bindmyevent="myEventListener"></moreOptions>
+</view>-->
+<header></header>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+<prize_card_one></prize_card_one>
+

@@ -1,0 +1,6 @@
+<!--Components/activityInformation/activityInformation.wxml-->
+<view class="main" wx:if="{{activityInformationDisplayOrNot === 1 }}">
+  <view class="information">抽奖活动说明    </view>
+  <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindinput="getActivityInfo">
+  </textarea> 
+</view>

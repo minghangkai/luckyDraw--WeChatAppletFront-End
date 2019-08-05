@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "header":"../../Components/header/header",
+    "prize_card_one":"../../Components/prize_card_one/prize_card_one",
+    "prize_card_two": "/Components/prize_card_two/prize_card_two",
+    "wayToNewLuckyDraw": "/Components/wayToNewLuckyDraw/wayToNewLuckyDraw",
+    "prizeImageNameAndNum":"/Components/prizeImageNameAndNum/prizeImageNameAndNum",
+    "activityInformation":"/Components/activityInformation/activityInformation",
+    "condition": "/Components/condition/condition",
+    "moreOptions":"/Components/moreOptions/moreOptions",
+    "headImage":"/Components/headImage/headImage"
+    },
+  "navigationBarTitleText": "抽奖"
+}
+

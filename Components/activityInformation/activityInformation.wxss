@@ -1,0 +1,22 @@
+/* Components/activityInformation/activityInformation.wxss */
+
+.information {
+    color: #616161;
+    width: 100%;
+    padding-bottom: 15rpx;
+    /*border: 1px red solid;*/
+    font-size: 30rpx;
+    padding-top: 15rpx;
+    margin-left: 25rpx;
+}
+
+.textArea {
+    margin-top: 10rpx;
+    padding-top: 10rpx;
+    width: 725rpx;
+    background-color: white;
+    /*border: 1px red solid;*/
+    height: 200rpx;
+    margin-bottom: 20rpx;
+    padding-left:25rpx;
+}

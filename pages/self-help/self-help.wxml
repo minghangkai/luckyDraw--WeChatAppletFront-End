@@ -1,0 +1,14 @@
+<!--pages/self-help/self-help.wxml-->
+<view class="main2" hover-class="none" hover-stop-propagation="false">
+    <header></header>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    <prize_card_two></prize_card_two>
+    
+</view>

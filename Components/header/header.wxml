@@ -1,0 +1,23 @@
+<!--Components/header/header.wxml-->
+<view class="myhead">
+  <navigator class="head" url="/pages/howToNew/new1/new1">
+    <image class='category' mode="aspectFit" src="{{imageSrc[0]}}"></image>
+    <p class='categoryText'>潮牌</p>
+  </navigator>
+  <navigator class="head" url="/pages/new/new">
+    <image class='category'  mode="aspectFit" src="{{imageSrc[1]}}"></image>
+    <p class='categoryText'>美妆</p>
+  </navigator>
+  <navigator class="head" url="/pages/new/new">
+    <image class='category' mode="aspectFit" src="{{imageSrc[2]}}"></image>
+    <p class='categoryText'>数码</p>
+  </navigator>
+  <navigator class="head" url="/pages/new/new">
+    <image class='category'  mode="aspectFit" src="{{imageSrc[3]}}"></image>
+    <p class='categoryText'>美食</p>
+  </navigator>
+  <navigator class="head" url="/pages/new/new">
+    <image class='category'  mode="aspectFit" src="{{imageSrc[4]}}"></image>
+    <p class='categoryText'>好玩</p>
+  </navigator>
+</view>

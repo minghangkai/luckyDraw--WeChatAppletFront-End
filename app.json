@@ -4,7 +4,9 @@
     "pages/self-help/self-help",
     "pages/new/new",
     "pages/personal/personal",
-    "pages/newWay/newWay"
+    "pages/newWay/newWay",
+    "pages/indexPrize/indexPrize",
+    "pages/richText/richText"
   ],
   "window": {
     "backgroundTextStyle": "dark",

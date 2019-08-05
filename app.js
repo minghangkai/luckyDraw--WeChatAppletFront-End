@@ -53,9 +53,17 @@ App({
         }
       }
     })
+
+    let that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.globalData.systemInfo = res;
+      },
+    })
   },
   globalData: {
     userInfo: null,
+    systemInfo: null,
     newBy:0,
     numberOfKindPrize:0,
   }

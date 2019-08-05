@@ -8,7 +8,7 @@
     <input class="inputFull" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindblur="getActivityName"/>
   </view>
 
-  <navigator url="">
+  <navigator url="/pages/richText/richText">
     <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindinput="getActivityInfo" />
   </navigator>
 

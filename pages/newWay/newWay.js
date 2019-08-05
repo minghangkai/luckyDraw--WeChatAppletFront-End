@@ -56,7 +56,7 @@ Page({
         
 
         conditionArray: ['按时间自动开奖', '按人数自动开奖', '手动开奖'],
-      conditionObject: { id: 0, info: null,timeLeft: 0},
+      conditionObject: { id: 0, info: null,timeLeft: 2},
         conditionIndex: 0,
         kindOfCondition: 0,
         date: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),
@@ -258,13 +258,15 @@ Page({
 
     delete: function(e) {
         let that = this
-        let length = this.data.imageArray.length
-        let id = e.currentTarget.dataset.id;
-        console.log("id=" + id)
-        var element = "imageArray[" + id + "].nameOfPrize"
-        let newArray = this.data.imageArray.splice(id, 1)
-        if (length > 1) {
+        let length = e.currentTarget.dataset.id;
+        console.log("id=" + length)
+        var element = "imageArray[" + length + "].nameOfPrize"
+        let newArray = this.data.imageArray
+        
+      console.log("newArray.length:" + newArray.length + "个")
+        if (newArray.length > 1) {
             //数组长度>1 才能删除
+            newArray.splice(length,1)
             that.setData({
                 imageArray: newArray
             })
@@ -538,6 +540,7 @@ Page({
 
     confirmRelease:function(){
       var obj={}
+      var count = 0
       if(app.globalData.newBy === 1){
         if (this.data.imageArray[0].imageSrc === "/icons/prizeBackgroud.jpg" ){
           wx.showModal({
@@ -553,6 +556,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.imageArray[0].nameOfPrize === "") {
@@ -569,6 +573,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.imageArray[0].numberOfPrize === 0 || this.data.imageArray[0].numberOfPrize === "") {
@@ -585,6 +590,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.infoOfActivity === "") {
@@ -617,6 +623,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.conditionObject.id === 1 && this.data.conditionObject.info === 0) {
@@ -633,6 +640,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.phoneNum.length !== 11) {
@@ -649,15 +657,17 @@ Page({
               }
             }
           })
+          count++
         }
-
-        obj = {
-          imageArray: this.data.imageArray,
-          infoOfActivity: this.data.infoOfActivity,
-          conditionObject: this.data.conditionObject,
-          phoneNum: this.data.phoneNum,
-          participantAttention: this.data.participantAttention,
-          inviateFriends: this.data.inviateFriends,
+        if (count === 0){
+          obj = {
+            imageArray: this.data.imageArray,
+            infoOfActivity: this.data.infoOfActivity,
+            conditionObject: this.data.conditionObject,
+            phoneNum: this.data.phoneNum,
+            participantAttention: this.data.participantAttention,
+            inviateFriends: this.data.inviateFriends,
+          }
         }
       }
       
@@ -677,6 +687,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.activityName.length > 30 || this.data.activityName.length === 0){
@@ -693,6 +704,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         for(let i = 0;i < this.data.imageArray.length;i++){
@@ -711,6 +723,7 @@ Page({
                   }
                 }
               })
+              count++
             }
           }
           else{
@@ -728,6 +741,7 @@ Page({
                   }
                 }
               })
+              count++
             }
           }
           if (this.data.imageArray[i].nameOfPrize === "") {
@@ -744,6 +758,7 @@ Page({
                 }
               }
             })
+            count++
           }
 
           if (this.data.imageArray[i].numberOfPrize === 0 || this.data.imageArray[i].numberOfPrize === "") {
@@ -760,6 +775,7 @@ Page({
                 }
               }
             })
+            count++
           }
         }//for结束
         
@@ -777,6 +793,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.conditionObject.id === 0 && this.data.conditionObject.timeLeft === 0) {
@@ -793,6 +810,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.conditionObject.id === 1 && this.data.conditionObject.info === 0) {
@@ -825,6 +843,7 @@ Page({
               }
             }
           })
+          count++
         }
       }
 
@@ -844,20 +863,23 @@ Page({
               }
             }
           })
+          count++
         }
-        obj = {
-          srcOfHeadImage: this.data.srcOfHeadImage,
-          activityName: this.data.activityName,
-          infoOfActivity: this.data.infoOfActivity,
-          imageArray: this.data.imageArray,
-          conditionObject: this.data.conditionObject,
-          initiatorName: this.data.initiatorName,
-          phoneNum: this.data.phoneNum,
-          participantAttention: this.data.participantAttention,
-          shareJurisdiction: this.data.shareJurisdiction,
-          allowQuitOrNot: this.data.allowQuitOrNot,
-          inviateFriends: this.data.inviateFriends,
-          inputCommandOrNot: this.data.inputCommandOrNot
+        if (count === 0) {
+          obj = {
+            srcOfHeadImage: this.data.srcOfHeadImage,
+            activityName: this.data.activityName,
+            infoOfActivity: this.data.infoOfActivity,
+            imageArray: this.data.imageArray,
+            conditionObject: this.data.conditionObject,
+            initiatorName: this.data.initiatorName,
+            phoneNum: this.data.phoneNum,
+            participantAttention: this.data.participantAttention,
+            shareJurisdiction: this.data.shareJurisdiction,
+            allowQuitOrNot: this.data.allowQuitOrNot,
+            inviateFriends: this.data.inviateFriends,
+            inputCommandOrNot: this.data.inputCommandOrNot
+          }
         }
       }
 
@@ -877,6 +899,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.initiatorWxNumber === "") {
@@ -893,6 +916,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         obj = {
@@ -924,6 +948,7 @@ Page({
               }
             }
           })
+          count++
         }
 
         if (this.data.initiatorWxNumber === "") {
@@ -940,28 +965,39 @@ Page({
               }
             }
           })
+          count++
         }
-
-        obj = {
-          srcOfHeadImage: this.data.srcOfHeadImage,
-          activityName: this.data.activityName,
-          infoOfActivity: this.data.infoOfActivity,
-          imageArray: this.data.imageArray,
-          conditionObject: this.data.conditionObject,
-          initiatorName: this.data.initiatorName,
-          phoneNum: this.data.phoneNum,
-          initiatorName: this.data.initiatorName,
-          initiatorWxNumber: this.data.initiatorWxNumber,
-          participantDrawNumber: this.data.participantDrawNumber,
-          shareJurisdiction: this.data.shareJurisdiction,
-          winnerList: this.data.winnerList,
+        if(count === 0){
+          obj = {
+            srcOfHeadImage: this.data.srcOfHeadImage,
+            activityName: this.data.activityName,
+            infoOfActivity: this.data.infoOfActivity,
+            imageArray: this.data.imageArray,
+            conditionObject: this.data.conditionObject,
+            initiatorName: this.data.initiatorName,
+            phoneNum: this.data.phoneNum,
+            initiatorName: this.data.initiatorName,
+            initiatorWxNumber: this.data.initiatorWxNumber,
+            participantDrawNumber: this.data.participantDrawNumber,
+            shareJurisdiction: this.data.shareJurisdiction,
+            winnerList: this.data.winnerList,
+          }
         }
       }
-      var newJSON = JSON.stringify(obj)
-      try {
-        wx.setStorageSync(newJSON)
-      } catch (e) {console.log("存储页面数据出错") }
-      console.log("newJSON:" + newJSON)
+      if(count === 0){
+        var newJSON = JSON.stringify(obj)
+        try {
+          wx.setStorage({
+            key: "newInfo",
+            data: newJSON
+          })
+          wx.setStorageSync('newInfo', newJSON)
+        } catch (e) { console.log("存储页面数据出错") }
+        console.log("newJSON:" + newJSON)
+        wx.navigateTo({
+          url: '/pages/indexPrize/indexPrize',
+        })
+      }
     },
 
     myEventListener: function(e) {

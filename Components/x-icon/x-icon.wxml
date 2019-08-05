@@ -1,0 +1,5 @@
+<!--Components/x-icon/x-icon.wxml-->
+<i bindtap="clickIcon" class="iconfont position hx-icon-{{type}}" style="font-size:{{size}}px;color:{{textColor}}">
+<slot></slot>
+</i>
+ 

@@ -1,0 +1,3 @@
+<!--pages/indexPrize/indexPrize.wxml <button bindtap="test">测试</button>
+-->
+<image class="image"  src="{{obj.imageArray[0].imageSrc}}" mode="apectFit"></image>

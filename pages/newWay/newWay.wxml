@@ -9,7 +9,7 @@
   </view>
 
   <navigator url="/pages/richText/richText">
-    <textarea class="textArea" maxlength="-1" placeholder="请输入活动说明" bindinput="getActivityInfo" />
+    <textarea class="textArea" maxlength="-1" placeholder="{{placeholderOfActivityInfo}}" />
   </navigator>
 
     

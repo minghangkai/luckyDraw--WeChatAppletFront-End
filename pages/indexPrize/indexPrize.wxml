@@ -1,3 +1,6 @@
 <!--pages/indexPrize/indexPrize.wxml <button bindtap="test">测试</button>
+bindstatuschange="onStatusChange"
 -->
 <image class="image"  src="{{obj.imageArray[0].imageSrc}}" mode="apectFit"></image>
+ <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize   read-only="true" bindready="onEditorReady">
+      </editor>

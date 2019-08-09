@@ -6,7 +6,12 @@
     "pages/personal/personal",
     "pages/newWay/newWay",
     "pages/indexPrize/indexPrize",
-    "pages/richText/richText"
+    "pages/richText/richText",
+    "pages/sponsorCertification/sponsorCertification",
+    "pages/launchLottery/launchLottery",
+    "pages/participateLottery/participateLottery",
+    "pages/winningRecord/winningRecord",
+    "pages/shippingAddress/shippingAddress"
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -31,6 +31,7 @@ Page({
         srcOfHeadImage: "/icons/headImage.svg",
         activityNameOfHeadImage: "",
         activityName: "",
+        placeholderOfActivityInfo:"请输入活动说明",
         infoOfActivity: "",
         
         len: 0,
@@ -137,9 +138,9 @@ Page({
     //奖品信息
 
     //改变图片并取得图片路径（路径保存在imageSrc变量中）
-    changePrizeImage: function(e) {
+    changePrizeImage: function(e) { 
         var that = this;
-        const length = e.target.dataset.id;
+      const length = e.target.dataset.id//target.dataset.id;
         console.log("换图片的id是否为undefined:"+length)
         var element = "imageArray[" + length + "].imageSrc"
         wx.chooseImage({
@@ -707,6 +708,23 @@ Page({
           count++
         }
 
+        if(app.globalData.haveWroteTheActivityInfo !== true){
+          wx.showModal({
+            title: '警告',
+            content: '活动说明不能为空',
+            showCancel: false,
+            confirmColor: "#4CAF50",
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+          count++
+        }
+
         for(let i = 0;i < this.data.imageArray.length;i++){
           if (app.globalData.newBy !== 4){
             if (this.data.imageArray[i].imageSrc === "/icons/prizeBackgroud.jpg") {
@@ -779,22 +797,7 @@ Page({
           }
         }//for结束
         
-        if (this.data.infoOfActivity === "") {
-          wx.showModal({
-            title: '警告',
-            content: '请输入活动说明',
-            showCancel: false,
-            confirmColor: "#4CAF50",
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-          count++
-        }
+        
 
         if (this.data.conditionObject.id === 0 && this.data.conditionObject.timeLeft === 0) {
           wx.showModal({
@@ -994,8 +997,14 @@ Page({
           wx.setStorageSync('newInfo', newJSON)
         } catch (e) { console.log("存储页面数据出错") }
         console.log("newJSON:" + newJSON)
-        wx.navigateTo({
-          url: '/pages/indexPrize/indexPrize',
+        app.globalData.haveWroteTheActivityInfo
+        wx.showToast({
+          title: '发布抽奖成功',
+          icon: 'success',
+          duration: 2000
+        })
+        wx.switchTab({
+          url: '/pages/personal/personal',
         })
       }
     },

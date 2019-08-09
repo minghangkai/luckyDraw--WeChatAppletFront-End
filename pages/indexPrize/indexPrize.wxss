@@ -1,1 +1,4 @@
 /* pages/indexPrize/indexPrize.wxss */
+#editor{
+  border: 1px red solid;
+}

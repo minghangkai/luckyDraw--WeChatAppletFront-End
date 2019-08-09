@@ -6,7 +6,9 @@ Page({
    */
   data: {
     prizeInfoJson:"",
-    obj:""
+    obj:"",
+    richTextContent:"",
+    placeholder:"",
   },
 
 
@@ -37,41 +39,53 @@ Page({
       success(res) {
         console.log("res.data:"+res.data)
         temp = res.data
-        that.setData({
-          obj: JSON.parse(temp)
-        })
-        console.log("\nobj: " + typeof (that.data.obj))
-        console.log("\nobj: " + that.data.obj)
-        console.log("\nobj.imageArray[0].imageSrc: " + that.data.obj.imageArray[0].imageSrc)
         temp1 = res.data.replace(" ", "")
-        that.setData({
-          obj: JSON.parse(temp)
-        })
-        console.log("\nobj1: " + typeof (that.data.obj))
-        console.log("\nobj1: " + that.data.obj)
-        console.log("\nobj1.imageArray[0].imageSrc: " + that.data.obj.imageArray[0].imageSrc)
         temp2 = temp1.replace(/\ufeff/g, "")
         that.setData({
-          obj: JSON.parse(temp)
+          obj: JSON.parse(temp2)
         })
-        console.log("\nobj2: " + typeof (that.data.obj))
-        console.log("\nobj2: " + that.data.obj)
-        console.log("\nobj2.imageArray[0].imageSrc: " + that.data.obj.imageArray[0].imageSrc)
-        //console.log("temp:" + temp)
-
-        //console.log("\ntemp1:" + temp1)
-        //console.log("\ntemp2:" + temp2)
-        
+        console.log("\nobj: " + that.data.obj)
       }
     })
-    //that.data.obj = JSON.parse(temp)          prizeInfoJson: res.data,
-    //console.log("obj" + that.data.obj)
-    //var json = that.data.prizeInfoJson.replace(/\ufeff/g, "")
+    wx.getStorage({
+      key: 'richText',
+      success(res) {
+        console.log("res.data:" + res.data)
+        temp = res.data
+        temp1 = res.data.replace(" ", "")
+        temp2 = temp1.replace(/\ufeff/g, "")
+        that.setData({
+          richTextContent: JSON.parse(temp2),
+          placeholder: JSON.parse(temp2)
+        })
+        console.log("\nrichTextContent: " + that.data.richTextContent)
+        /*this.editorCtx.setContents({
+          richTextContent : that.data.richTextContent,
+          success: function () {
+            console.log('contents set')
+            p.setData({
+              logs: p.data.logs + 'setConents success; '
+            })
+          },
+        })*/
+        that.onEditorReady()
+        //that.setContents(that.data.richTextContent)
+        console.log("onEditorReady执行")
+      }
+    })
     
-    //wx.getStorageSync('object')
-    //console.log("obj: "+typeof(that.data.obj))
-    //console.log("prizeInfoJson: "+typeof(that.data.prizeInfoJson))
   },
+
+  /**   * 初始化富文本框   */  
+  onEditorReady() {
+    const that = this
+    wx.createSelectorQuery().select('#editor').context(function (res) {
+      that.editorCtx = res.context
+      let html = that.data.richTextContent;
+      that.editorCtx.setContents(html)
+    }).exec()
+  },
+
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -1,0 +1,5 @@
+<template name="foot">
+  <navigator class="page-foot" openType="switchTab" url="/pages/newWay/newWay" hover-class="none">
+    <image class="icon-foot" src="/icons/address.svg"></image>
+  </navigator>
+</template>

@@ -1,52 +1,50 @@
 /* pages/richText/richText.wxss */
-.input_view{
-  padding: 10px;
+@import "/common/lib/weui.wxss";
+@import "/assets/iconfont.wxss"
+
+.wrapper {
+  padding: 5px;
+}
+
+.iconfont {
+  display: inline-block;
+  padding: 8px 8px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.toolbar {
+  box-sizing: border-box;
+  /* border: 1px solid #ccc; */
+  border-bottom: 0;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+
+.ql-container {
+  box-sizing: border-box;
+  padding: 12px 15px;
   width: 100%;
-  line-height: 32rpx;
-  font-size: 32rpx;
+  min-height: 30vh;
+  height: auto;
+  /* border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; */
+  background: #fff;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
 }
-.input_view2{
-  padding: 10px;
-  width: 100%;
-  font-size: 32rpx;
-  line-height: 19px;
-  white-space: pre-wrap;
-  word-break: break-all;
+
+.ql-active {
+  color: #06c;
 }
-.img_view{
-  display: flex;
-  position: relative;
-  padding: 4px;
-  background-color: white;
-  align-items: flex-start;
-}
-.img_view image{
-  width: 100%;
-  height: 100%;
-}
-.close_img{
-  position: absolute;
-  right: 10px;
-  top:10px;
-}
-.add-img {
-  display: flex;
-  background-size:cover;
+
+.storage{
+  width: 670rpx;
+  margin-top:30rpx;
+  bottom: 20rpx;
   position:fixed;
-  right:74rpx;
-  bottom:140px;
-}
-.save{
-  display: flex;
-  background-size:cover;
-  position:fixed;
-  right:74rpx;
-  bottom:70px;
-}
-.circle_center_view{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  box-shadow: 0px 0px 1px 1px #cdcdcd;
+  margin: 0rpx 40rpx 0rpx 40rpx;
 }

@@ -1,223 +1,174 @@
-// components/richText/richText.js
 var app = getApp();
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-    firstCon: {
-      type: String,
-      value: ''
-    },
-    initlist: { // 用于初始化数据，例如，编辑富文本
-      type: Array,
-      value: []
-    },
-    save: {
-      type: String,
-      value: 'save'
-    },
-    max_length: { // 传入图片上限，默认为4
-      type: Number,
-      value: 4
-    }
-  },
-  options: { // 允许接受外部样式，根据个人喜好来处理
-    addGlobalClass: true
-  },
-  /**
-   * 组件的初始数据
-   */
+var textContent = "";
+Page({
   data: {
-    dataList: [],
-    focusList: [{
-      focus: false
-    }],
-    isEdit: true,
-    addImgView: {},
-    insertIndex: 0,
-    width: 375
+    formats: {},
+    bottom: 0,
+    readOnly: false,
+    placeholder: '开始输入...',
+    _focus: false,
   },
-  created() {
-    let that = this;
-    that.data.addImgView = that.selectComponent("#addimg");
-  },
-  attached() { // 当组件挂载到页面时，才会执行初始化
-    let that = this;
-    that.setData({
-      width: app.globalData.systemInfo.windowWidth
+  readOnlyChange() {
+    this.setData({
+      readOnly: !this.data.readOnly
     })
-    that._initRichText();
   },
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-    /**
-     * 内部方法
-     * 初始化富文本方法
-     */
-    _initRichText() {
-      let that = this;
-      if (that.data.initlist && that.data.initlist.length > 0) {// 初始化数据不为空
-        for (let i = 0; i < that.data.initlist.length; i++) {
-          if (i === 0) {
-            if (that.data.initlist[i].type === 0) {
-              that.data.firstCon = that.data.initlist[0].info;
-            } else {
-              that.data.dataList.push({
-                img: that.data.initlist[i].info,
-                info: ''
-              })
-              that.data.focusList.push({
-                focus: false
-              })
-            }
-          } else {
-            if (that.data.initlist[i].type === 0) { // 文字
-              that.data.dataList[that.data.dataList.length - 1].info = that.data.initlist[i].info;
-            } else {
-              that.data.dataList.push({
-                img: that.data.initlist[i].info,
-                info: ''
-              })
-              that.data.focusList.push({
-                focus: false
-              })
-            }
-          }
-        }
-        that.setData({
-          firstCon: that.data.firstCon,
-          focusList: that.data.focusList,
-          dataList: that.data.dataList,
-          insertIndex: that.data.dataList.length
-        })
+  onShow(){
+    
+  },
+  onLoad() {
+    wx.loadFontFace({
+      family: 'Pacifico',
+      source: 'url("https://sungd.github.io/Pacifico.ttf")',
+      success: console.log
+    })
+    var that = this
+    that.onEditorReady();
+    console.log("textContent: " + textContent)
+  },
+  onUnload(){
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    prevPage.setData({
+      placeholderOfActivityInfo: "已保存活动说明"
+    }) 
+  },
+  onEditorReady() {
+    const that = this
+    wx.createSelectorQuery().select('#editor').context(function (res) {
+      that.editorCtx = res.context
+      console.log("真假："+app.globalData.haveWroteTheActivityInfo)
+      if(app.globalData.haveWroteTheActivityInfo === true){
+        let html = JSON.parse(textContent)
+        that.editorCtx.setContents(html)
       }
-    },
-    /**
-     * 富文本文字输入监听
-     */
-    _inputCon(e) {
-      let that = this;
-      let index = +e.currentTarget.dataset.index;
-      if (index === 0) {
-        that.data.firstCon = e.detail.value;
-      } else {
-        that.data.dataList[index - 1].info = e.detail.value;
+    }).exec()
+  },
+
+  undo() {
+    this.editorCtx.undo()
+  },
+  redo() {
+    this.editorCtx.redo()
+  },
+  format(e) {
+    let { name, value } = e.target.dataset
+    if (!name) return
+    // console.log('format', name, value)
+    this.editorCtx.format(name, value)
+
+  },
+  onStatusChange(e) {
+    const formats = e.detail
+    this.setData({ formats })
+  },
+  insertDivider() {
+    this.editorCtx.insertDivider({
+      success: function () {
+        console.log('insert divider success')
       }
-    },
-    /**
-     * 文本框获取焦点监听
-     */
-    _focusView(e) {
-      let that = this;
-      let index = +e.currentTarget.dataset.index;
-      that.data.focusList = that.data.focusList.map(item => {
-        item.focus = false;
-        return item;
-      });
-      that.data.focusList[index].focus = true;
-      that.setData({
-        focusList: that.data.focusList,
-        isEdit: true
-      })
-    },
-    /**
-     * 内部方法
-     * 文本框失去焦点的监听事件
-     * 存储失去焦点的文本框位置，为插入图片作准备
-     */
-    _outBlur(e) {
-      let that = this;
-      that.data.insertIndex = +e.currentTarget.dataset.index;
-      that.setData({
-        firstCon: that.data.firstCon,
-        dataList: that.data.dataList,
-        isEdit: false
-      })
-    },
-    /**
-     * 内部方法
-     * 调用添加图片事件监听
-     * 此处没有做太多处理，下次添加一个上传图片的组件
-     * demo存贮的是本地的临时链接，自己要自己处理哦
-     */
-    _addImg() {
-      let that = this;
-      if (that.data.dataList.length < that.data.max_length) {
-        wx.chooseImage({
-          success: function (res) {
-            that.data.dataList.splice(that.data.insertIndex, 0, {
-              img: res.tempFilePaths[0],
-              info: ''
-            })
-            that.data.focusList.splice(that.data.insertIndex + 1, 0, {
-              focus: false
-            })
-            that.setData({
-              dataList: that.data.dataList,
-              focusList: that.data.focusList,
-              insertIndex: that.data.insertIndex + 1
-            })
+    })
+  },
+  clear() {
+    this.editorCtx.clear({
+      success: function (res) {
+        console.log("clear success")
+      }
+    })
+  },
+  removeFormat() {
+    this.editorCtx.removeFormat()
+  },
+  insertDate() {
+    const date = new Date()
+    const formatDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+    this.editorCtx.insertText({
+      text: formatDate
+    })
+  },
+  insertImage() {
+    const that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        const tempFilePaths = res.tempFilePaths
+        that.editorCtx.insertImage({
+          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543767268337&di=5a3bbfaeb30149b2afd33a3c7aaa4ead&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151031%2Ftooopen_sy_147004931368.jpg',
+          data: {
+            id: 'abcd',
+            role: 'god'
           },
-        })
-      } else {
-        wx.showToast({
-          title: '最多只能添加' + that.data.max_length + '张图片哦',
-          mask: true,
-          duration: 1000
+          success: function () {
+            console.log('insert image success' + tempFilePaths)
+          }
         })
       }
-    },
-    /**
-     * 内部方法
-     * 删除图片
-     */
-    _deletedImg(e) {
-      let that = this;
-      let index = +e.detail;
-      if (that.data.dataList[index].info) {
-        if (index === 0) { // 最后一个
-          that.data.firstCon = that.data.firstCon + that.data.dataList[index].info;
-        } else {
-          that.data.dataList[index - 1].info = that.data.dataList[index - 1].info + that.data.dataList[index].info;
-        }
-      }
-      that.data.dataList.splice(index, 1);
-      that.setData({
-        firstCon: that.data.firstCon,
-        dataList: that.data.dataList
-      })
-    },
-    /**
-     * 暴露出来的方法
-     * 返回 富文本数据list
-     */
-    _saveRichText() {
-      let that = this;
-      let list = [];
-      if (that.data.firstCon) {
-        list.push({
-          info: that.data.firstCon,
-          type: 0
-        })
-      }
-      that.data.dataList.forEach(item => {
-        if (item.img) {
-          list.push({
-            info: item.img,
-            type: 1
+    })
+  },
+  
+  storageRichText(e){
+    const that = this
+    console.log('button发生了submit事件，携带数据为：', e.detail.value)
+    
+    this.editorCtx.getContents({
+      success(res) {
+        console.log(res)
+        textContent = JSON.stringify(res)
+        try {
+          wx.setStorage({
+            key: "richText",
+            data: textContent
           })
-        }
-        if (item.info) {
-          list.push({
-            info: item.info,
-            type: 0
-          })
-        }
-      })
-      that.triggerEvent('getDataList', list);
-    }
+          wx.setStorageSync('richText', textContent)
+        } catch (e) { console.log("存储页面数据出错") }
+        console.log("richText:" + textContent)
+      }
+    })
+    wx.navigateBack({
+      success(res){
+        app.globalData.haveWroteTheActivityInfo = true
+        
+      }
+    })
+    wx.showToast({
+      title: '保存成功',
+      icon: 'success',
+      duration: 2000
+    })
+
   }
+  //真正地插入图片函数，等到后端可用时再更新
+  /*insertImage() {
+    const that = this;
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        console.log(res.tempFilePaths, '上传图片')
+        wx.uploadFile({
+          url: '自己的图片上传地址',
+          filePath: res.tempFilePaths,
+          name: 'file',
+          formData: {
+            app_token: app.data.userInfo.app_token,
+          },
+          success: function (res) {
+            console.log(res.data, '图片上传之后的数据')
+            var data = JSON.parse(res.data)
+            console.log(data.data.url)
+            that.editorCtx.insertImage({
+              src: data.data.url,
+              success: function () {
+                console.log('insert image success')
+              }
+            })
+          }
+        })
+      }
+    })
+  }*/
 })

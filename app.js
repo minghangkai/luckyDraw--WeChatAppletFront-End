@@ -66,5 +66,6 @@ App({
     systemInfo: null,
     newBy:0,
     numberOfKindPrize:0,
+    haveWroteTheActivityInfo:false,
   }
 })

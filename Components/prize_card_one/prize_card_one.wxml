@@ -1,6 +1,7 @@
-<!--Components/prizeCard1/prizeCard1.wxml-->
+<!--Components/prizeCard1/prizeCard1.wxml
+/pages/indexPrize/indexPrize-->
 <view class="card1">
-  <navigator class="indexCard" target="" url="/pages/indexPrize/indexPrize" hover-class="navigator-hover" open-type="navigate">
+  <navigator class="indexCard" target="" url="/pages/certificationInfo/certificationInfo" hover-class="navigator-hover" open-type="navigate">
     <image class="pImage" src="{{src1}}" mode="aspectFit"></image>
     <view class="pText">奖品：{{prizeText}} * {{prizeNumber}}</view>
     <icon class="icon1" type="waiting" size="18" color="0, 171, 255">

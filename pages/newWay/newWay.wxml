@@ -1,7 +1,7 @@
 <!--头奖设置--> 
 <view class="HeadImage" wx:if="{{headImageDisplayOrNot!==1}}">
   <view class="image" bindtap="changeImage">
-    <image class="image" src="{{srcOfHeadImage}}" mode="apectFit"></image>
+    <image class="image" src="{{srcOfHeadImage}}" mode="aspectFill"></image>
     <view class="change">点击更换头奖图片</view>
   </view>
   <view class="Line" hover-class="none" hover-stop-propagation="false">
@@ -23,10 +23,10 @@
 
 <!--奖品设置-->
 
-<view class="prizeImageNameAndNum">
+<view class="prizeImageNameAndNum"> 
   <view class="PrizeSetting" wx:for="{{imageArray}}" wx:key="id">
     <view class="image" wx:if="{{imageDisplayOrNot !== 4}}"  bindtap="changePrizeImage">
-      <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="apectFit"></image>
+      <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="aspectFill"></image>
       <view class="change">点击更换奖品图片</view>
     </view>
  

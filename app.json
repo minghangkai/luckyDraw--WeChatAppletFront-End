@@ -11,7 +11,9 @@
     "pages/launchLottery/launchLottery",
     "pages/participateLottery/participateLottery",
     "pages/winningRecord/winningRecord",
-    "pages/shippingAddress/shippingAddress"
+    "pages/shippingAddress/shippingAddress",
+    "pages/certificationKind/certificationKind",
+    "pages/certificationInfo/certificationInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

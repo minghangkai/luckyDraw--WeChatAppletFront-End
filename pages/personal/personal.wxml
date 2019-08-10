@@ -1,64 +1,75 @@
 <!--pages/personal/personal.wxml-->
-<view class="userinfo">
-    <button class="synchronization1" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else >
+<view wx:if="{{!hasUserInfo && canIUse}}">
+  <image class="miniprogramLogo" src="/icons/logo.png" mode="aspectFit"></image>
+  <text class="title">{{title}}</text>
+  <text class="tips">{{tips}}</text> 
+  <button class="synchronization1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 微信授权登录 </button>
+</view>
+
+<view class="main2" wx:if="{{hasUserInfo}}">
+  <view class="userinfo">
       <image  class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image><!--显示头像-->
       <view class="userinfoAndSync">
         <text class="userinfo-nickname">{{userInfo.nickName}}</text><!--显示姓名-->
         <button class="synchronization2" open-type="getUserInfo" bindgetuserinfo="getUserInfo">{{synchronizationUserInfo}}</button>
       </view>
       <view class="address">
-      <navigator class="address_text">
+      <navigator class="address_text" url="/pages/shippingAddress/shippingAddress">
         <text>收货地址</text>
         <image class="address_image" src="/icons/address.svg" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
       </navigator>
       </view>
-    </block>
-    
-</view>
-<view class="infoAbuotLuckyDraw">
-  <view class="info">
-    <view class="infoNum">{{luckyDrawNumber[0]}}</view>
-    <view class="infoText">{{luckDrawKind[0]}}</view>
   </view>
-  <view class="info">
-    <view class="infoNum">{{luckyDrawNumber[1]}}</view>
-    <view class="infoText">{{luckDrawKind[1]}}</view>
-  </view>
-  <view class="info">
-    <view class="infoNum">{{luckyDrawNumber[2]}}</view>
-    <view class="infoText">{{luckDrawKind[2]}}</view>
-  </view>
-</view>
-<view class="function">
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[0]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[0]}}</text>
-  </navigator>
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[1]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[1]}}</text>
-  </navigator>
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[2]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[2]}}</text>
-  </navigator>
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[3]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[3]}}</text>
-  </navigator>
-</view>
 
-<view class="function">
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[4]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[4]}}</text>
-  </navigator>
-  <navigator class="functionKind">
-    <image class="functionImage" src="{{functionImage[5]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
-    <text class="functionText" selectable="false" space="false" decode="false">{{functionText[5]}}</text>
-  </navigator>
+  <view class="infoAbuotLuckyDraw">
+    <view class="info">
+      <view class="infoNum">{{luckyDrawNumber[0]}}</view>
+      <view class="infoText">{{luckDrawKind[0]}}</view>
+    </view>
+    <view class="info">
+      <view class="infoNum">{{luckyDrawNumber[1]}}</view>
+      <view class="infoText">{{luckDrawKind[1]}}</view>
+    </view>
+    <view class="info">
+      <view class="infoNum">{{luckyDrawNumber[2]}}</view>
+      <view class="infoText">{{luckDrawKind[2]}}</view>
+    </view>
+  </view>
+
+
+  <view class="function">
+    <navigator class="functionKind" url="/pages/sponsorCertification/sponsorCertification">
+      <image class="functionImage" src="{{functionImage[0]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[0]}}</text>
+    </navigator>
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[1]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[1]}}</text>
+    </navigator>
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[2]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[2]}}</text>
+    </navigator>
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[3]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[3]}}</text>
+    </navigator>
+  </view>
+
+  <view class="function">
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[4]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[4]}}</text>
+    </navigator>
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[5]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[5]}}</text>
+    </navigator>
+    <navigator class="functionKind">
+      <image class="functionImage" src="{{functionImage[6]}}" mode="aspectFit" lazy-load="false" binderror="" bindload="" />
+      <text class="functionText" selectable="false" space="false" decode="false">{{functionText[6]}}</text>
+    </navigator>
+  </view>
 </view>
-  
   
 

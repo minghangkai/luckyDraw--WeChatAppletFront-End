@@ -1,2 +1,19 @@
 <!--pages/shippingAddress/shippingAddress.wxml-->
-<text>pages/shippingAddress/shippingAddress.wxml</text>
+<text class="tips">{{tips}}</text>
+
+<view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name"  selectable="false" space="false" decode="false">{{name[0]}}</view>
+      <input class="input75" type="text"  placeholder="{{info[0]}}"  value="{{participantName}}" bindinput="getParticipantName"/>
+</view>
+
+<view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name"  selectable="false" space="false" decode="false">{{name[1]}}</view>
+      <input class="input75"  type="text"  placeholder="{{info[1]}}" value="{{participantPhoneNumber}}"bindinput="getParticipantPhoneNumber"/>
+</view>
+
+<view class="LineOfAddress" hover-class="none" hover-stop-propagation="false">
+      <view class="name"  selectable="false" space="false" decode="false">{{name[2]}}</view>
+      <textarea class="textarea75" maxlength="-1" placeholder="{{info[2]}}" value="{{participantAddress}}" bindinput="getParticipantAddress"/>
+</view>
+
+<button class="confirm" bindtap="confirm">保存</button>

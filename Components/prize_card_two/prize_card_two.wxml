@@ -1,5 +1,5 @@
 <!--Components/prize_card_two/prize_card_two.wxml-->
-  <!--<view class="padding"></view>-->
+  <!--<view class="padding"></view>--> 
 <view class="card2" hover-class="none" hover-stop-propagation="false">
 
   <navigator class="indexCard" target="" url="/pages/howToNew/new1/new1" hover-class="navigator-hover" open-type="navigate">

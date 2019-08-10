@@ -1,1 +1,50 @@
 /* pages/sponsorCertification/sponsorCertification.wxss */
+.headImage{
+  width: 100%;
+  height: 100rpx;
+  margin-top: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.headInfo{
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 60rpx;
+}
+
+.main2{
+  float: left;
+  display: flex;
+}
+
+.itemImage{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 18rpx 20rpx 0rpx 60rpx;
+  padding-bottom: 80rpx;
+}
+.title{
+  line-height: 2.0;
+}
+
+.info{
+  float: left;
+  width: 590rpx;
+  height: 80rpx;
+  margin: 0 40rpx 50rpx 0rpx;
+  color: #9E9E9E;
+  font-size: 24rpx;
+}
+
+.certification{
+  position: absolute;
+  bottom: 10rpx;
+  background-color: #FF5252;
+  width: 630rpx;
+  height: 80rpx;
+  margin: 0rpx 60rpx 0rpx 60rpx;
+  color: white;
+  font-size: 36rpx;
+}

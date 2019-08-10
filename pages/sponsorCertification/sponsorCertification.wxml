@@ -1,2 +1,15 @@
 <!--pages/sponsorCertification/sponsorCertification.wxml-->
-<text>pages/sponsorCertification/sponsorCertification.wxml</text>
+<view class="main1">
+  <image class="headImage" src="/icons/certificationInterest.svg"></image>
+  <text class="headInfo">认证权益</text>
+</view>
+
+<view class="main2" wx:for="{{objArray}}" wx:key="id">
+  <image class="itemImage" src="/icons/item.svg"></image>
+  <view class="text">
+      <text class="title">{{item.title}}</text>
+      <text class="info">{{item.info}}</text>
+  </view>
+</view>
+
+<button class="certification" bindtap="turnToCertificationKind">{{buttonText}}</button>

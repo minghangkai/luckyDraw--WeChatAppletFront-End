@@ -13,7 +13,8 @@
     "pages/winningRecord/winningRecord",
     "pages/shippingAddress/shippingAddress",
     "pages/certificationKind/certificationKind",
-    "pages/certificationInfo/certificationInfo"
+    "pages/certificationInfo/certificationInfo",
+    "pages/personalCertificationInfo/personalCertificationInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

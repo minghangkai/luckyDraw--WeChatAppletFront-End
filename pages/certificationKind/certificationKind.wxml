@@ -1,7 +1,7 @@
 <!--pages/certificationKind/certificationKind.wxml
 -->
-
-  <navigator class="line" wx:for="{{objArray}}" wx:key="id"  target="" url="/pages/certificationInfo/certificationInfo" hover-class="navigator-hover" open-type="navigate">
+<view style="margin-top:20rpx"></view>
+  <navigator class="line" wx:for="{{objArray}}" wx:key="id"  target="" url="{{item.certificationInfo}}" hover-class="navigator-hover" open-type="navigate" data-id="{{index}}" bindtap="setCertificationKind">
     <image class="itemImage" src="{{item.imageSrc}}" mode="aspectFit" ></image>
     <view class="titleAndInfo">
       <text class="title">{{item.title}}</text>

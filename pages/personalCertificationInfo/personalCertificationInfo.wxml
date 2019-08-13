@@ -1,0 +1,37 @@
+<!--pages/personalCertificationInfo/personalCertificationInfo.wxml-->
+<view class="main">
+  <text class="guide">{{guide}}</text>
+  <view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{name[0]}}</view>
+      <input class="input68" type="text"  placeholder="请输入您的真实姓名" placeholder-class="placeholderClass" bindinput="getRealName"/>
+  </view>
+  <view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{name[1]}}</view>
+      <picker bindchange="getCredentialsKind" value="{{credentialsIndex}}" range="{{credentialsKindArray}}">
+        <view class="picker_text" >
+         {{credentialsKindArray[credentialsIndex]}}<!--//指定数组中指定下标的name键对应的值 -->
+         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+  </view>
+  <view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{name[2]}}</view>
+      <input class="input68" type="number"  placeholder="请输入您的证件号码"  placeholder-class="placeholderClass" bindinput="getCredentialsNumber"/>
+  </view>
+  <phoneNumber></phoneNumber>
+</view>
+
+<view class="upload">
+  <view class="half"> 
+    <text class="uploadText">{{uploadText1}}</text>
+    <image class="uploadphoto" mode="aspectFill" src="{{uploadPhoto1}}" bindtap="choosePhoto1"></image>
+  <text wx:if="{{chooseAgainShowOrNot1}}" class="chooseAgain" bindtap="changePhoto1">{{chooseAgain}}</text>
+  </view>
+  <view class="half"> 
+    <text class="uploadText">{{uploadText2}}</text>
+    <image class="uploadphoto" mode="aspectFill" src="{{uploadPhoto2}}" bindtap="choosePhoto2"></image>
+  <text wx:if="{{chooseAgainShowOrNot2}}" class="chooseAgain" bindtap="changePhoto2">{{chooseAgain}}</text>
+  </view>
+</view>
+
+<button class="nextStep" bindtap="confirm">{{confirmText}}</button>

@@ -57,7 +57,7 @@ Page({
         
 
         conditionArray: ['按时间自动开奖', '按人数自动开奖', '手动开奖'],
-      conditionObject: { id: 0, info: null,timeLeft: 2},
+        conditionObject: { id: 0, info: null,timeLeft: 2},
         conditionIndex: 0,
         kindOfCondition: 0,
         date: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),

@@ -1,0 +1,5 @@
+<!--Components/phoneNumber/phoneNumber.wxml-->
+<view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">手机号（必填）</view>
+      <button class="synchronization" wx:if="{{phoneNum}}" type="primary" plain="true"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><text>自动填写</text></button>
+    </view>

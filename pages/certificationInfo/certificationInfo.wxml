@@ -1,2 +1,34 @@
-<!--pages/certificationInfo/certificationInfo.wxml-->
-<text>pages/certificationInfo/certificationInfo.wxml</text>
+<!--pages/certificationInfo/certificationInfo.wxml
+organizationInput: ””,
+organizationPlaceholder: ””, 
+unifiedSocialCreditCodeInput: ””,
+unifiedSocialCreditCodePlaceholder: ””,
+principalInput: ””,
+principalPlaceholder: ””,
+uploadIntroduction: ””,
+orginizationName: “”,
+unifiedSocialCreditCode: ””,
+principalName:””
+-->
+<view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{organizationInput}}</view>
+      <input class="input68" data-id="{{index}}" type="text"  placeholder="{{organizationPlaceholder}}" placeholder-class="placeholderClass" bindinput="getOrginizationName"/>
+</view>
+<view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{unifiedSocialCreditCodeInput}}</view>
+      <input class="input68" data-id="{{index}}" type="text"  placeholder="{{unifiedSocialCreditCodePlaceholder}}" placeholder-class="placeholderClass" bindinput="getUnifiedSocialCreditCode"/>
+</view>
+<view class="Line" >
+      <view class="name" selectable="false" space="false" decode="false">{{principalInput}}</view>
+      <input class="input68" data-id="{{index}}" type="text"  placeholder-class="placeholderClass" placeholder="{{principalPlaceholder}}" bindinput="getPrincipalName"/>
+</view>
+
+<view class="uploadText">
+  <text>{{uploadIntroduction}}</text>
+</view>
+<view class="uploadimage">
+  <image class="photo" mode="aspectFill" src="{{uploadPhoto}}" bindtap="choosePhoto"></image>
+  <text wx:if="{{chooseAgainShowOrNot}}" class="chooseAgain" bindtap="changePhoto">{{chooseAgain}}</text>
+</view>
+
+<button class="nextStep" bindtap="next">下一步</button>

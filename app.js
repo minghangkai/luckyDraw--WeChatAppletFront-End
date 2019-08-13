@@ -80,5 +80,6 @@ App({
     numberOfKindPrize:0,
     haveWroteTheActivityInfo:false,
     haveWroteThePersonalInfo:false,
+    certificationKind:0,
   }
 })

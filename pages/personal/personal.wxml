@@ -2,7 +2,7 @@
 <view wx:if="{{!hasUserInfo && canIUse}}">
   <image class="miniprogramLogo" src="/icons/logo.png" mode="aspectFit"></image>
   <text class="title">{{title}}</text>
-  <text class="tips">{{tips}}</text> 
+  <text class="tips">{{tips}}</text>  
   <button class="synchronization1" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 微信授权登录 </button>
 </view>
 

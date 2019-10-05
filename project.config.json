@@ -21,7 +21,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.8.3",
 	"appid": "wxd5230cfaaa6e5d93",
 	"projectname": "LuckyDraw",
 	"debugOptions": {

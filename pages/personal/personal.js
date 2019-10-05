@@ -59,6 +59,29 @@ Page({
             userInfo: e.detail.userInfo,
             hasUserInfo: true
           })
+          console.log(that.data.userInfo)
+          console.log(typeof (that.data.userInfo))
+          var userInfoObj= that.data.userInfo
+          var util = require('../../utils/util.js')
+          userInfoObj.nickName
+          userInfoObj.avatarUrl
+          userInfoObj.city
+          userInfoObj.country
+          userInfoObj.gender
+          userInfoObj.language
+          userInfoObj.province
+          util.httpRequest(false, 'luckyDraw_1/getUserInfo', 0, {
+              nickName: userInfoObj.nickName,
+              avatarUrl: userInfoObj.avatarUrl,
+              city: userInfoObj.city,
+              country: userInfoObj.country,
+              gender: userInfoObj.gender,
+              language: userInfoObj.language,
+              province: userInfoObj.province,
+              token: wx.getStorageSync('token')
+          }, 0, function (res) {
+            console.log("上传地址成功")
+          })
         }
       })
     }

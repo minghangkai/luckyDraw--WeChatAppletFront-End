@@ -97,8 +97,9 @@ Page({
     }
     
     if(count === 0){
+      var util = require('../../utils/util.js')
       var obj = {
-        articipantName: that.data.articipantName ,
+        participantName: that.data.participantName ,
         participantPhoneNumber: that.data.participantPhoneNumber ,
         participantAddress: that.data.participantAddress ,
       }
@@ -116,6 +117,14 @@ Page({
       app.globalData.haveWroteThePersonalInfo = true
       console.log("联系人：" + that.data.participantName + "\n手机号：" + that.data.participantPhoneNumber + "\n详细地址:" + that.data.participantAddress)
     }
+
+    util.httpRequest(false, 'luckyDraw_1/storage_address', 0, {
+      participantName: that.data.participantName,
+      participantPhoneNumber: that.data.participantPhoneNumber,
+      participantAddress: that.data.participantAddress, 
+      token: wx.getStorageSync('token')}, 0, function (res) {
+        console.log("上传地址成功")
+    })
   },
 
   /**

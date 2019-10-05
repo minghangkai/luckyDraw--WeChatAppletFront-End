@@ -19,32 +19,149 @@
   */
 
 //app.js
+/**
+ * App({
+    
+    onLaunch () {
+        console.log('App.onLaunch()');
+    }
+});
+ */
+var util = require('/utils/util.js')
 
 App({
+  config: {
+    host: 'luckydraw.net.cn' // 这个地方填写你的域名
+  },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    var haveToken = wx.getStorageSync('token') || []
+    console.log("haveToken:" + haveToken)
+    if (haveToken == '') { //本地没有存储token
+      console.log("本地没有存储token,将调用wx.login")
+      wx.login({
+        success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+          if (res.code) {
+            //发起网络请求
+            console.log('code'+res.code)
+            util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
+              console.log('token:' + res)
+              console.log(typeof (res))
+              try {
+                wx.setStorage({
+                  key: "token",
+                  data: res
+                })
+              } catch (e) { console.log("存储token数据出错") }
+            })
+          }
+        }
+      })
+    } else { //本地存储token了
+      console.log("else")
+      try {
+        wx.getStorage({
+          key: 'token',
+          success(res) {
+            console.log("本地有存储token:" + res.data)
+            util.httpRequest(false, 'luckyDraw_1/check_token', 0, { token: res.data }, 0, function (res) {
+              console.log("http中的check_token:" + res)
+              console.log(typeof(res))
+              if (res == true) {
+                console.log("check_token:" + res)
+                console.log("token没过期")
+              }
+              else {
+                console.log("token已过期，将重新调用wx.login")
+                wx.login({
+                  success: res => {
+                    // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                    if (res.code) {
+                      //发起网络请求
+                      util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
+                        console.log('token:' + res)
+                        console.log(typeof (res))
+                        try {
+                          wx.setStorage({
+                            key: "token",
+                            data: res
+                          })
+                        } catch (e) { console.log("存储token数据出错") }
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          }
+        })
+      } catch (e) { console.log("取token数据时出错")}
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        //以下代码应在后台搭建好后再用
-        /*if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: 'https://test.com/onLogin',
-            data: {
-              code: res.code
+    }
+    /**try {
+      wx.getStorage({
+        key: 'token',
+        success(res) {
+          console.log("本地有存储token:" + res.data)
+          util.httpRequest(false, 'luckyDraw_1/check_token', 0, {token: res.data}, 0, function (res) {
+            console.log("http中的check_token:" + res.data)
+            if (res.data == true) {
+              havaToken = res.data
+              console.log("check_token:" + res.data)
+              console.log("token没过期")
+            }
+            else {
+              console.log("token已过期，将重新调用wx.login")
+              wx.login({
+                success: res => {
+                  // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                  if (res.code) {
+                    //发起网络请求
+                    util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, {code: res.code}, 0, function (res) {
+                      console.log('token:' + res.data)
+                      console.log(typeof (res.data))
+                      try {
+                        wx.setStorage({
+                          key: "token",
+                          data: res.data
+                        })
+                        wx.setStorageSync('token', res.data)
+                      } catch (e) { console.log("存储token数据出错") }
+                    })
+                  }
+                }
+              })
             }
           })
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }*/
-      }
-    })
+        }
+      })
+    } catch (e) {
+      console.log("本地没有存储token,将调用wx.login")
+      wx.login({
+        success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+          if (res.code) {
+            //发起网络请求
+            util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
+              console.log('token:' + res.data)
+              console.log(typeof (res.data))
+              try {
+                wx.setStorage({
+                  key: "token",
+                  data: res.data
+                })
+                wx.setStorageSync('token', res.data)
+              } catch (e) { console.log("存储token数据出错") }
+            })
+          }
+        }
+      })
+    }*/
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -81,5 +198,6 @@ App({
     haveWroteTheActivityInfo:false,
     haveWroteThePersonalInfo:false,
     certificationKind:0,
+    serverUrl: 'http://127.0.0.1:8000/luckyDraw_1',
   }
 })

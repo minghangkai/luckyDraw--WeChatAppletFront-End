@@ -80,7 +80,8 @@ Page({
               province: userInfoObj.province,
               token: wx.getStorageSync('token')
           }, 0, function (res) {
-            console.log("上传地址成功")
+                  util.checkToken(res)
+                  console.log('成功获取用户信息')
           })
         }
       })

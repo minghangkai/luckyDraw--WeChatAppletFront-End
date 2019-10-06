@@ -123,7 +123,8 @@ Page({
       participantPhoneNumber: that.data.participantPhoneNumber,
       participantAddress: that.data.participantAddress, 
       token: wx.getStorageSync('token')}, 0, function (res) {
-        console.log("上传地址成功")
+        util.checkToken(res)
+        console.log('上传地址成功')
     })
   },
 

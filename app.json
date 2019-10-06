@@ -14,8 +14,7 @@
     "pages/shippingAddress/shippingAddress",
     "pages/certificationKind/certificationKind",
     "pages/certificationInfo/certificationInfo",
-    "pages/personalCertificationInfo/personalCertificationInfo",
-    "pages/test/test"
+    "pages/personalCertificationInfo/personalCertificationInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

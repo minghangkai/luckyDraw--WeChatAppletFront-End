@@ -148,7 +148,20 @@
         line-height: 40rpx;
         text-align: right;
     }
-    
+
+    .date_picker_text {
+        margin-top: 19rpx;
+        width: 425rpx;
+        line-height: 40rpx;
+        text-align: right;
+    }
+
+    .multipicker_text {
+        margin-top: 19rpx;
+        width: 110rpx;
+        line-height: 40rpx;
+        text-align: right;
+    }
     .picker_text_participateWay {
         margin-top: 19rpx;
         width: 375rpx;

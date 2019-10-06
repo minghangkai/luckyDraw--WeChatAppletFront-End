@@ -1,5 +1,5 @@
 // pages/newWay/newWay.js  
-var app = getApp();
+var app = getApp(); 
 Page({
 
     /**
@@ -64,6 +64,10 @@ Page({
         finalYear: new Date().getFullYear(),
         finalMonth: (new Date().getMonth() + 1),
         finalDay: new Date().getDate(),
+        multiArray: [['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'], ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59']],
+        multiIndex: [0, 0],
+        hour: 0,
+        minute: 0,
         timeLeft: 2,
         personNumber: 1,
 
@@ -117,7 +121,7 @@ Page({
             sourceType: ['album', 'camera'],
             success(res) {
                 // tempFilePath可以作为img标签的src属性显示图片
-                const tempFilePaths = res.tempFilePaths
+                const tempFilePaths = res.tempFilePaths[0]
                 that.setData({
                     srcOfHeadImage: tempFilePaths
                 })
@@ -149,7 +153,7 @@ Page({
             sourceType: ['album', 'camera'],
             success(res) {
                 // tempFilePath可以作为img标签的src属性显示图片
-                const tempFilePaths = res.tempFilePaths
+                const tempFilePaths = res.tempFilePaths[0]
                 that.setData({
                     [element]: tempFilePaths
                 })
@@ -297,7 +301,7 @@ Page({
     getActivityInfo: function(e) {
         var that = this
         that.setData({
-            infoOfActivity: e.detail.value
+          infoOfActivity: e.detail.value
         })
         console.log("活动说明"+that.data.infoOfActivity)
         var myeventDetail = {} // detail对象，提供给事件监听函数
@@ -305,8 +309,6 @@ Page({
         this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
-
-  
     getKindOfConditon: function(e) {
         console.log('picker发送选择改变，携带值为', e.detail.value)
         this.setData({
@@ -334,6 +336,7 @@ Page({
         this.data.finalMonth *= 1
         this.data.finalDay *= 1 //转为number基本类型
       console.log("开奖时间： " + this.data.conditionObject.info)
+      console.log(typeof(this.data.conditionObject.info))
         var nowTimeStamp = new Date().getTime() //取得当前时间的时间戳
 
         var date = this.data.date.replace(/-/g, '/'); //将2019-07-26 转为 2019/07/26
@@ -349,6 +352,27 @@ Page({
         var myeventDetail = {} // detail对象，提供给事件监听函数
         var myeventOption = {} // 触发事件的选项
         this.triggerEvent('myevent', myeventDetail, myeventOption)
+    },
+    bindMultiPickerChange: function (e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        multiIndex: e.detail.value
+      })
+    },
+    bindMultiPickerColumnChange: function (e) {
+      console.log('修改的列为', e.detail.column, '，值为', e.detail.value)
+      console.log('类型为', typeof(e.detail.value))
+      if(e.detail.column == 0){
+        this.setData({
+          hour: e.detail.value
+        })
+      }else{
+        this.setData({
+          minute: e.detail.value
+        })
+      }
+      console.log("hour:"+this.data.hour+', minute:'+this.data.minute)
+      console.log("hour:" + typeof(this.data.hour) + ', minute:' + typeof(this.data.minute))
     },
 
     getPersonNumber: function(e) {
@@ -478,6 +502,7 @@ Page({
     //参加抽奖途径
     getParticipateWay: function(e) {
         console.log('picker发送选择改变，携带值为', e.detail.value)
+        console.log('类型为', typeof(e.detail.value))
         this.setData({
             index1: e.detail.value,
             participateWay: e.detail.value,
@@ -542,7 +567,24 @@ Page({
     confirmRelease:function(){
       var obj={}
       var count = 0
+      //快速抽奖
       if(app.globalData.newBy === 1){
+        if (this.data.activityName === ""){
+          wx.showModal({
+            title: '警告',
+            content: '请填写活动标题',
+            showCancel: false,
+            confirmColor: "#4CAF50",
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+          count++
+        }
         if (this.data.imageArray[0].imageSrc === "/icons/prizeBackgroud.jpg" ){
           wx.showModal({
             title: '警告',
@@ -662,17 +704,20 @@ Page({
         }
         if (count === 0){
           obj = {
+            activityName: this.data.activityName,
             imageArray: this.data.imageArray,
             infoOfActivity: this.data.infoOfActivity,
             conditionObject: this.data.conditionObject,
             phoneNum: this.data.phoneNum,
             participantAttention: this.data.participantAttention,
             inviateFriends: this.data.inviateFriends,
+            newBy: app.globalData.newBy,
+            token: wx.getStorageSync('token')
           }
         }
       }
       
-
+      //高级抽奖、公众号抽奖、转盘抽奖
       if (app.globalData.newBy !== 1) {
         if (this.data.srcOfHeadImage === "/icons/headImage.svg") {
           wx.showModal({
@@ -708,7 +753,7 @@ Page({
           count++
         }
 
-        if(app.globalData.haveWroteTheActivityInfo !== true){
+        if (wx.getStorageSync('richText') == ""){
           wx.showModal({
             title: '警告',
             content: '活动说明不能为空',
@@ -725,6 +770,7 @@ Page({
           count++
         }
 
+        //判断奖品是否满足条件，内部又根据抽奖类型判断是否有转盘中奖概率、奖品图片
         for(let i = 0;i < this.data.imageArray.length;i++){
           if (app.globalData.newBy !== 4){
             if (this.data.imageArray[i].imageSrc === "/icons/prizeBackgroud.jpg") {
@@ -798,7 +844,7 @@ Page({
         }//for结束
         
         
-
+        //判断开奖条件及时间
         if (this.data.conditionObject.id === 0 && this.data.conditionObject.timeLeft === 0) {
           wx.showModal({
             title: '警告',
@@ -815,7 +861,7 @@ Page({
           })
           count++
         }
-
+        //判断开奖条件及人数
         if (this.data.conditionObject.id === 1 && this.data.conditionObject.info === 0) {
           wx.showModal({
             title: '警告',
@@ -852,6 +898,7 @@ Page({
 
 
       if (app.globalData.newBy === 2) {
+        //缺失判断公众号写入的数据
         if(this.data.initiatorName === ""){
           wx.showModal({
             title: '警告',
@@ -881,7 +928,9 @@ Page({
             shareJurisdiction: this.data.shareJurisdiction,
             allowQuitOrNot: this.data.allowQuitOrNot,
             inviateFriends: this.data.inviateFriends,
-            inputCommandOrNot: this.data.inputCommandOrNot
+            inputCommandOrNot: this.data.inputCommandOrNot,
+            newBy: app.globalData.newBy,
+            token: wx.getStorageSync('token')
           }
         }
       }
@@ -892,23 +941,6 @@ Page({
           wx.showModal({
             title: '警告',
             content: '公众号名称不能为空',
-            showCancel: false,
-            confirmColor: "#4CAF50",
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-          count++
-        }
-
-        if (this.data.initiatorWxNumber === "") {
-          wx.showModal({
-            title: '警告',
-            content: '发起人微信号不能为空',
             showCancel: false,
             confirmColor: "#4CAF50",
             success(res) {
@@ -933,6 +965,8 @@ Page({
           initiatorWxNumber: this.data.initiatorWxNumber,
           participateWay: this.data.participateWay,
           allowQuitOrNot: this.data.allowQuitOrNot,
+          newBy: app.globalData.newBy,
+          token: wx.getStorageSync('token')
         }
       }
 
@@ -954,22 +988,6 @@ Page({
           count++
         }
 
-        if (this.data.initiatorWxNumber === "") {
-          wx.showModal({
-            title: '警告',
-            content: '发起人微信号不能为空',
-            showCancel: false,
-            confirmColor: "#4CAF50",
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-          count++
-        }
         if(count === 0){
           obj = {
             srcOfHeadImage: this.data.srcOfHeadImage,
@@ -984,10 +1002,23 @@ Page({
             participantDrawNumber: this.data.participantDrawNumber,
             shareJurisdiction: this.data.shareJurisdiction,
             winnerList: this.data.winnerList,
+            newBy: app.globalData.newBy,
+            token: wx.getStorageSync('token')
           }
         }
       }
       if(count === 0){
+        var util = require('/utils/util.js')
+        util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, obj, 0, function (res) {
+          console.log('token:' + res)
+          console.log(typeof (res))
+          try {
+            wx.setStorage({
+              key: "token",
+              data: res
+            })
+          } catch (e) { console.log("存储token数据出错") }
+        })
         var newJSON = JSON.stringify(obj)
         try {
           wx.setStorage({

@@ -115,13 +115,18 @@
   </view>
   <!--开奖时间设定-->
   <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">
-    <view class="name" selectable="false" space="false" decode="false">开奖时间</view>
-    <picker mode="date" value="{{date}}" start="{{date}}" end="2100-09-01" bindchange="getDate">
-        <view class="picker_text" >
+      <view class="name" selectable="false" space="false" decode="false">开奖时间</view>
+      <picker mode="date" value="{{date}}" start="{{date}}" end="2100-09-01" bindchange="getDate">
+        <view class="date_picker_text" >
          {{date}}<!--//指定数组中指定下标的name键对应的值 -->
-         <image class="address_image" src="/icons/address.svg" mode="aspectFit"/>
+        </view>
+      </picker>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <view class="multipicker_text" >
+         {{multiArray[0][multiIndex[0]]}}:{{multiArray[1][multiIndex[1]]}}<!--//指定数组中指定下标的name键对应的值 -->
         </view>
     </picker>
+    <image class="address_image_participantAttention" src="/icons/address.svg" mode="aspectFit"/>
   </view>
   <!--提示剩余时间-->
   <view wx:if="{{kindOfCondition === 0}}" class="Line" hover-class="none" hover-stop-propagation="false">

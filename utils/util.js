@@ -1,6 +1,8 @@
 module.exports = {
   formatTime: formatTime,
-  httpRequest: httpRequest
+  httpRequest: httpRequest,
+  checkToken: checkToken,
+  fileUpload: fileUpload
 }
 const baseUrl = "http://127.0.0.1:8000/";//测试环境
 //const baseUrl = "https://www.luckydraw.net.cn/"; //正式环境
@@ -69,7 +71,50 @@ function httpRequest(loading, url, sessionChoose, params, method, callBack_succe
   })
 }
 
+function checkToken(res){
+  if (res == true) {
+    console.log("token没过期")
+  } else {
+    console.log("token已过期")
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          //发起网络请求
+          httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
+            console.log('token:' + res)
+            console.log(typeof (res))
+            try {
+              wx.setStorage({
+                key: "token",
+                data: res
+              })
+            } catch (e) { console.log("存储token数据出错") }
+          })
+        }
+      }
+    })
+    wx.hideLoading()
+  }
+}
 
+function fileUpload(url,tempFilePath,fileName){
+  var data
+  wx.uploadFile({
+    url: baseUrl + url, //仅为示例，非真实的接口地址
+    filePath: tempFilePath,
+    name: fileName,
+    success(res) {
+      data = res.data
+      console.log("上传文件成功，返回的信息为：" + res.data)
+      //do something
+    }
+  })
+  return data
+}
 class PrizeInformation {
   constructor(String1, String2, number1, number2, String3, String4, Data) {
     prizeImageSrc: String1;

@@ -7,6 +7,7 @@ Page({
     readOnly: false,
     placeholder: '开始输入...',
     _focus: false,
+    imageNumber: 1,
   },
   readOnlyChange() {
     this.setData({
@@ -89,14 +90,20 @@ Page({
   },
   insertImage() {
     const that = this
+    var util = require('../../utils/util.js')
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success: function (res) {
-        const tempFilePaths = res.tempFilePaths
+        const tempFilePaths = res.tempFilePaths[0]
+        var s = that.data.imageNumber
+        console.log(s)
+        console.log(typeof(s))
+        var imageKey = 'image'+ s
+        wx.setStorageSync(imageKey, tempFilePaths)
         that.editorCtx.insertImage({
-          src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543767268337&di=5a3bbfaeb30149b2afd33a3c7aaa4ead&imgtype=0&src=http%3A%2F%2Fimg02.tooopen.com%2Fimages%2F20151031%2Ftooopen_sy_147004931368.jpg',
+          src: wx.getStorageSync(imageKey),
           data: {
             id: 'abcd',
             role: 'god'
@@ -122,7 +129,7 @@ Page({
             key: "richText",
             data: textContent
           })
-          wx.setStorageSync('richText', textContent)
+          //wx.setStorageSync('richText', textContent)
         } catch (e) { console.log("存储页面数据出错") }
         console.log("richText:" + textContent)
       }

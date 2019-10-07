@@ -57,7 +57,7 @@ Page({
         
 
         conditionArray: ['按时间自动开奖', '按人数自动开奖', '手动开奖'],
-        conditionObject: { id: 0, info: null,timeLeft: 2},
+      conditionObject: { id: 0, info: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),timeLeft: 2},
         conditionIndex: 0,
         kindOfCondition: 0,
         date: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),
@@ -188,6 +188,7 @@ Page({
             [element]: e.detail.value *= 1
         })
       console.log("imageArray[" + length + "].numberOfPrize:" + that.data.imageArray[length].numberOfPrize)
+      console.log(typeof (that.data.imageArray[length].numberOfPrize))
     },
 
     //奖品类型选择器并将种类以number类存到变量kindOfPrize
@@ -215,6 +216,7 @@ Page({
                 kindOfPrize: e.detail.value,
             })
       console.log("kindOfPrize(紧接在增加奖项部分): " + that.data.kindOfPrize)
+      console.log(typeof (that.data.kindOfPrize))
         var myeventDetail = {} // detail对象，提供给事件监听函数
         var myeventOption = {} // 触发事件的选项
         this.triggerEvent('myevent', myeventDetail, myeventOption)
@@ -567,6 +569,9 @@ Page({
     confirmRelease:function(){
       var obj={}
       var count = 0
+      var hourString = ''
+      var minuteString = ''
+      var timeString = ''
       //快速抽奖
       if(app.globalData.newBy === 1){
         if (this.data.activityName === ""){
@@ -703,7 +708,24 @@ Page({
           count++
         }
         if (count === 0){
+          if(this.data.conditionObject.id == 0){
+            if(this.data.hour<10){
+              hourString = ' 0'+this.data.hour
+            }else{
+              hourString = ' ' + this.data.hour
+            }
+            if (this.data.minute < 10) {
+              minuteString = ':0' + this.data.minute +':00'
+            } else {
+              minuteString = ':' + this.data.minute +':00'
+            }
+            console.log('this.data.conditionObject.info' + this.data.conditionObject.info)
+            timeString = this.data.conditionObject.info + hourString + minuteString
+            console.log('timeString' + timeString)
+            this.data.conditionObject.info = timeString //此转换是为了适应服务端MySQL的datetime
+          }
           obj = {
+            kindOfPrize: parseInt(this.data.kindOfPrize),
             activityName: this.data.activityName,
             imageArray: this.data.imageArray,
             infoOfActivity: this.data.infoOfActivity,
@@ -916,7 +938,22 @@ Page({
           count++
         }
         if (count === 0) {
+          if(this.data.conditionObject.id == 0){
+            if(this.data.hour<10){
+              hourString = ' 0'+this.data.hour
+            }else{
+              hourString = ' ' + this.data.hour
+            }
+            if (this.data.minute < 10) {
+              minuteString = ':0' + this.data.minute +':00'
+            } else {
+              minuteString = ':' + this.data.minute +':00'
+            }
+            timeString = this.data.conditionObject.info + hourString + minuteString
+            this.data.conditionObject.info = timeString //此转换是为了适应服务端MySQL的datetime
+          }
           obj = {
+            kindOfPrize: parseInt(this.data.kindOfPrize),
             srcOfHeadImage: this.data.srcOfHeadImage,
             activityName: this.data.activityName,
             infoOfActivity: this.data.infoOfActivity,
@@ -953,20 +990,36 @@ Page({
           })
           count++
         }
-
-        obj = {
-          srcOfHeadImage: this.data.srcOfHeadImage,
-          activityName: this.data.activityName,
-          infoOfActivity: this.data.infoOfActivity,
-          imageArray: this.data.imageArray,
-          conditionObject: this.data.conditionObject,
-          phoneNum: this.data.phoneNum,
-          officialAccountsName: this.data.officialAccountsName,
-          initiatorWxNumber: this.data.initiatorWxNumber,
-          participateWay: this.data.participateWay,
-          allowQuitOrNot: this.data.allowQuitOrNot,
-          newBy: app.globalData.newBy,
-          token: wx.getStorageSync('token')
+        if(count == 0){
+          if (this.data.conditionObject.id == 0) {
+            if (this.data.hour < 10) {
+              hourString = ' 0' + this.data.hour
+            } else {
+              hourString = ' ' + this.data.hour
+            }
+            if (this.data.minute < 10) {
+              minuteString = ':0' + this.data.minute + ':00'
+            } else {
+              minuteString = ':' + this.data.minute + ':00'
+            }
+            timeString = this.data.conditionObject.info + hourString + minuteString
+            this.data.conditionObject.info = timeString //此转换是为了适应服务端MySQL的datetime
+          }
+          obj = {
+            kindOfPrize: parseInt(this.data.kindOfPrize),
+            srcOfHeadImage: this.data.srcOfHeadImage,
+            activityName: this.data.activityName,
+            infoOfActivity: this.data.infoOfActivity,
+            imageArray: this.data.imageArray,
+            conditionObject: this.data.conditionObject,
+            phoneNum: this.data.phoneNum,
+            officialAccountsName: this.data.officialAccountsName,
+            initiatorWxNumber: this.data.initiatorWxNumber,
+            participateWay: this.data.participateWay,
+            allowQuitOrNot: this.data.allowQuitOrNot,
+            newBy: app.globalData.newBy,
+            token: wx.getStorageSync('token')
+          }
         }
       }
 
@@ -989,7 +1042,22 @@ Page({
         }
 
         if(count === 0){
+          if (this.data.conditionObject.id == 0) {
+            if (this.data.hour < 10) {
+              hourString = ' 0' + this.data.hour
+            } else {
+              hourString = ' ' + this.data.hour
+            }
+            if (this.data.minute < 10) {
+              minuteString = ':0' + this.data.minute + ':00'
+            } else {
+              minuteString = ':' + this.data.minute + ':00'
+            }
+            timeString = this.data.conditionObject.info + hourString + minuteString
+            this.data.conditionObject.info = timeString //此转换是为了适应服务端MySQL的datetime
+          }
           obj = {
+            kindOfPrize: parseInt(this.data.kindOfPrize),
             srcOfHeadImage: this.data.srcOfHeadImage,
             activityName: this.data.activityName,
             infoOfActivity: this.data.infoOfActivity,
@@ -1008,27 +1076,34 @@ Page({
         }
       }
       if(count === 0){
-        var util = require('/utils/util.js')
-        util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, obj, 0, function (res) {
-          console.log('token:' + res)
+        var that = this
+        var util = require('../../utils/util.js')
+        var imageSrcArray = []
+        var formdataArray = []
+        var fileUploadRes = 0
+        util.httpRequest(false, 'luckyDraw_1/get_activity_info', 0, obj, 0, function (res) {
+          console.log('get_activity_info返回的数据:' + res)
           console.log(typeof (res))
-          try {
-            wx.setStorage({
-              key: "token",
-              data: res
-            })
-          } catch (e) { console.log("存储token数据出错") }
+          console.log(res.activityUrl)
+          console.log(typeof(res.activityUrl))
+          console.log(res.activityId)
+          console.log(typeof(res.activityId))
+          if (app.globalData.newBy !== 1) {
+            formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0 })
+            imageSrcArray.push(that.data.srcOfHeadImage)
+          }
+          for (var a = 0; a < res.prizeId.length; a++) {
+            console.log(res.prizeId[a])
+            console.log(typeof (res.prizeId[a]))
+            formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a] })
+            imageSrcArray.push(that.data.imageArray[a].imageSrc)
+          }
         })
-        var newJSON = JSON.stringify(obj)
-        try {
-          wx.setStorage({
-            key: "newInfo",
-            data: newJSON
-          })
-          wx.setStorageSync('newInfo', newJSON)
-        } catch (e) { console.log("存储页面数据出错") }
-        console.log("newJSON:" + newJSON)
-        app.globalData.haveWroteTheActivityInfo
+        for(var index=0;index<imageSrcArray.length;index++){
+          util.fileUpload('luckyDraw_1/upload_file', imageSrcArray[index], formdataArray[index])
+        }
+        console.log(obj.infoOfActivity)
+        console.log(typeof (obj.infoOfActivity))
         wx.showToast({
           title: '发布抽奖成功',
           icon: 'success',

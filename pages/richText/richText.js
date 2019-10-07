@@ -97,19 +97,16 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
-        var s = that.data.imageNumber
-        console.log(s)
-        console.log(typeof(s))
-        var imageKey = 'image'+ s
-        wx.setStorageSync(imageKey, tempFilePaths)
+        var filesrc = util.fileUpload('luckyDraw_1/upload_file', res.tempFilePaths[0], { newBy: 0, activityId: 0, prizeId: 0})
+        console.log('filesrc: '+filesrc)
         that.editorCtx.insertImage({
-          src: wx.getStorageSync(imageKey),
+          src: filesrc,
           data: {
             id: 'abcd',
             role: 'god'
           },
           success: function () {
-            console.log('insert image success' + tempFilePaths)
+            console.log('insert image success ' + tempFilePaths)
           }
         })
       }

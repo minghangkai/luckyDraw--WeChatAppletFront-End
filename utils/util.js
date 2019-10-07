@@ -1,6 +1,6 @@
 module.exports = {
   formatTime: formatTime,
-  httpRequest: httpRequest,
+  httpRequest: httpRequest, 
   checkToken: checkToken,
   fileUpload: fileUpload
 }
@@ -101,12 +101,13 @@ function checkToken(res){
   }
 }
 
-function fileUpload(url,tempFilePath,fileName){
+function fileUpload(url, tempFilePath, formdata){
   var data
   wx.uploadFile({
     url: baseUrl + url, //仅为示例，非真实的接口地址
     filePath: tempFilePath,
-    name: fileName,
+    name: 'fileName',
+    formData: formdata,
     success(res) {
       data = res.data
       console.log("上传文件成功，返回的信息为：" + res.data)

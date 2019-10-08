@@ -8,6 +8,7 @@ Page({
     placeholder: '开始输入...',
     _focus: false,
     imageNumber: 1,
+    filesrc:'',
   },
   readOnlyChange() {
     this.setData({
@@ -97,16 +98,23 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
-        var filesrc = util.fileUpload('luckyDraw_1/upload_file', res.tempFilePaths[0], { newBy: 0, activityId: 0, prizeId: 0})
-        console.log('filesrc: '+filesrc)
-        that.editorCtx.insertImage({
-          src: filesrc,
-          data: {
-            id: 'abcd',
-            role: 'god'
-          },
-          success: function () {
-            console.log('insert image success ' + tempFilePaths)
+        wx.uploadFile({
+          url: 'http://127.0.0.1:8000/luckyDraw_1/upload_file', //仅为示例，非真实的接口地址
+          //"https://www.luckydraw.net.cn/luckyDraw_1/upload_file"
+          filePath: res.tempFilePaths[0],
+          name: 'fileName',
+          formData: { newBy: 0, activityId: 0, prizeId: 0 },
+          success(res) {
+            that.editorCtx.insertImage({
+              src: res.data,
+              data: {
+                id: 'abcd',
+                role: 'god'
+              },
+              success: function () {
+                console.log('显示图片成功')
+              }
+            })
           }
         })
       }

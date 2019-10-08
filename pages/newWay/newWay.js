@@ -1080,26 +1080,23 @@ Page({
         var util = require('../../utils/util.js')
         var imageSrcArray = []
         var formdataArray = []
-        var fileUploadRes = 0
+        var prizeLen = 0
         util.httpRequest(false, 'luckyDraw_1/get_activity_info', 0, obj, 0, function (res) {
-          console.log('get_activity_info返回的数据:' + res)
-          console.log(typeof (res))
-          console.log(res.activityUrl)
-          console.log(typeof(res.activityUrl))
+          prizeLen = res.prizeLen
           console.log(res.activityId)
           console.log(typeof(res.activityId))
           if (app.globalData.newBy !== 1) {
             formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0 })
             imageSrcArray.push(that.data.srcOfHeadImage)
           }
-          for (var a = 0; a < res.prizeId.length; a++) {
+          for (let a = 0; a < prizeLen; a++) {
             console.log(res.prizeId[a])
             console.log(typeof (res.prizeId[a]))
             formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a] })
             imageSrcArray.push(that.data.imageArray[a].imageSrc)
           }
         })
-        for(var index=0;index<imageSrcArray.length;index++){
+        for(let index=0;index<imageSrcArray.length;index++){
           util.fileUpload('luckyDraw_1/upload_file', imageSrcArray[index], formdataArray[index])
         }
         console.log(obj.infoOfActivity)

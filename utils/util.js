@@ -6,6 +6,7 @@ module.exports = {
 }
 const baseUrl = "http://127.0.0.1:8000/";//测试环境
 //const baseUrl = "https://www.luckydraw.net.cn/"; //正式环境
+var data = ''
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -102,19 +103,21 @@ function checkToken(res){
 }
 
 function fileUpload(url, tempFilePath, formdata){
-  var data
+  var data = ''
   wx.uploadFile({
     url: baseUrl + url, //仅为示例，非真实的接口地址
     filePath: tempFilePath,
     name: 'fileName',
     formData: formdata,
     success(res) {
-      data = res.data
-      console.log("上传文件成功，返回的信息为：" + res.data)
+     return res.data
       //do something
     }
   })
-  return data
+
+  ///console.log("upload success外的data: " + data)
+  //console.log(typeof (data))
+  //return data
 }
 class PrizeInformation {
   constructor(String1, String2, number1, number2, String3, String4, Data) {

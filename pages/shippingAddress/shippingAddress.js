@@ -116,18 +116,15 @@ Page({
       })
       app.globalData.haveWroteThePersonalInfo = true
       console.log("联系人：" + that.data.participantName + "\n手机号：" + that.data.participantPhoneNumber + "\n详细地址:" + that.data.participantAddress)
-    } 
-
-    util.httpRequest(false, 'luckyDraw_1/storage_address', 0, {
+    }  
+    util.checkToken()
+    util.httpRequest(false, 'user/storage_address', 0, {
       participantName: that.data.participantName,
       participantPhoneNumber: that.data.participantPhoneNumber,
       participantAddress: that.data.participantAddress, 
       token: wx.getStorageSync('token')}, 0, function (res) {
-        console.log(typeof(res))
-        console.log(res)
-        util.checkToken(res)
-        console.log('上传地址成功')
-    })
+          console.log('上传地址成功')
+      })
   },
 
   /**
@@ -161,7 +158,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

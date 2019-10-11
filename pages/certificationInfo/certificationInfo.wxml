@@ -14,11 +14,11 @@ principalName:””
       <view class="name" selectable="false" space="false" decode="false">{{organizationInput}}</view>
       <input class="input68" data-id="{{index}}" type="text"  placeholder="{{organizationPlaceholder}}" placeholder-class="placeholderClass" bindinput="getOrginizationName"/>
 </view>
-<view class="Line" >
+<view class="Line" wx:if="{{otherLineShow}}">
       <view class="name" selectable="false" space="false" decode="false">{{unifiedSocialCreditCodeInput}}</view>
       <input class="input68" data-id="{{index}}" type="text"  placeholder="{{unifiedSocialCreditCodePlaceholder}}" placeholder-class="placeholderClass" bindinput="getUnifiedSocialCreditCode"/>
 </view>
-<view class="Line" >
+<view class="Line" wx:if="{{otherLineShow}}">
       <view class="name" selectable="false" space="false" decode="false">{{principalInput}}</view>
       <input class="input68" data-id="{{index}}" type="text"  placeholder-class="placeholderClass" placeholder="{{principalPlaceholder}}" bindinput="getPrincipalName"/>
 </view>

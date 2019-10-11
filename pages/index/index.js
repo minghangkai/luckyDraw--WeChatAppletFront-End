@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    activity_number: 0,
   },
 
   /**
@@ -30,7 +30,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    /**var util = require('../../utils/util.js')
+    util.httpRequest(true, 'activity_and_prize/return_activity_main_info', 0, {}, 0, function (res) {
+      console.log('activity_number:' + res.activity_num)
+      console.log(typeof (res.activity_num))
+      console.log('activity_array:' + res.activity_array)
+      console.log(typeof (res.activity_array))
+    })*/
   },
 
   /**

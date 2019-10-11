@@ -38,43 +38,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    var haveToken = wx.getStorageSync('token') || []
-    console.log("haveToken:" + haveToken)
-    if (haveToken == '') { //本地没有存储token
-      console.log("本地没有存储token,将调用wx.login")
-      wx.login({
-        success: res => {
-          // 发送 res.code 到后台换取 openId, sessionKey, unionId
-          if (res.code) {
-            //发起网络请求
-            console.log('code'+res.code)
-            util.httpRequest(false, 'luckyDraw_1/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
-              console.log('token:' + res)
-              console.log(typeof (res))
-              try {
-                wx.setStorage({
-                  key: "token",
-                  data: res
-                })
-              } catch (e) { console.log("存储token数据出错") }
-            })
-          }
-        }
-      })
-    } else { //本地存储token了
-      console.log("else")
-      try {
-        wx.getStorage({
-          key: 'token',
-          success(res) {
-            console.log("本地有存储token:" + res.data)
-            util.httpRequest(false, 'luckyDraw_1/check_token', 0, { token: res.data }, 0, function (res) {
-              util.checkToken(res)
-            })
-          }
-        })
-      } catch (e) { console.log("取token数据时出错")}
-    }
+    util.checkToken()
 
     // 获取用户信息
     wx.getSetting({
@@ -111,6 +75,6 @@ App({
     numberOfKindPrize:0,
     haveWroteTheActivityInfo:false,
     haveWroteThePersonalInfo:false,
-    certificationKind:0,
+    certificationKind:0, //判断显示哪种认证方式
   }
 })

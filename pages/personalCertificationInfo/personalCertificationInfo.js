@@ -198,14 +198,19 @@ Page({
         }
       })
     } else {
+      var util = require('../../utils/util.js')
       finalCertificationKindAndInfoObj = {
         realName: that.data.realName,
         kindForCredentials: that.data.credentialsIndex,
         credentialsNumber: that.data.credentialsNumber,
-        uploadPhoto1: that.data.uploadPhoto1,
-        uploadPhoto2: that.data.uploadPhoto2,
-        certificationKind: app.globalData.certificationKind
+        phoneNum: that.data.phoneNum,
+        //uploadPhoto1: that.data.uploadPhoto1,
+        //uploadPhoto2: that.data.uploadPhoto2,
+        certificationKind: app.globalData.certificationKind,
       }
+      util.checkToken()
+      certificationId = util.fileUpload('certification/get_personal_certificate_info_positive', that.data.uploadPhoto1, finalCertificationKindAndInfoObj)
+      util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId})
 
       //若存在其他组织认证则将之前的组织认证的对象和运营者信息的对象合并为finalCertificationKindAndInfoObj
       if (app.globalData.certificationKind !== 3){
@@ -222,23 +227,14 @@ Page({
             temp2 = temp1.replace(/\ufeff/g, "")
             certificationOfOrganizationObj = JSON.parse(temp2)
             console.log("\nobj: " + certificationOfOrganizationObj)
+            util.checkToken()
+            orginizationPhoto = wx.getStorageSync('orginizationPhoto')
+            util.fileUpload('certification/get_orginization_certificate_info', orginizationPhoto, certificationOfOrganizationObj)
           }
         })
-        object.assign(finalCertificationKindAndInfoObj, certificationOfOrganizationObj);
+      }else{
+
       }
-
-      //将finalCertificationKindAndInfoObj转为json格式存储
-      var finalCertificationKindAndInfoJSON = JSON.stringify(finalCertificationKindAndInfoObj)
-      try {
-        wx.setStorage({
-          key: "finalCertificationKindAndInfo",
-          data: finalCertificationKindAndInfoJSON
-        })
-        wx.setStorageSync('finalCertificationKindAndInfo', finalCertificationKindAndInfoJSON)
-      } catch (e) { console.log("存储页面数据出错") }
-      console.log("finalCertificationKindAndInfo:" + finalCertificationKindAndInfoJSON)
-
-
       //缺少支付部分
       wx.showToast({
         title: '成功',

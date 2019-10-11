@@ -98,12 +98,12 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
-        wx.uploadFile({
-          url: 'http://127.0.0.1:8000/luckyDraw_1/upload_file', //仅为示例，非真实的接口地址
+        wx.uploadFile({ 
+          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file', //仅为示例，非真实的接口地址
           //"https://www.luckydraw.net.cn/luckyDraw_1/upload_file"
           filePath: res.tempFilePaths[0],
           name: 'fileName',
-          formData: { newBy: 0, activityId: 0, prizeId: 0 },
+          formData: { image_type: 1 },
           success(res) {
             that.editorCtx.insertImage({
               src: res.data,
@@ -138,6 +138,13 @@ Page({
         } catch (e) { console.log("存储页面数据出错") }
         console.log("richText:" + textContent)
       }
+    })
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+
+    prevPage.setData({
+      infoOfActivity: wx.getStorageSync('richText')
     })
     wx.navigateBack({
       success(res){

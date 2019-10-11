@@ -1,5 +1,5 @@
 // pages/certificationInfo/certificationInfo.js
-var app = getApp();
+var app = getApp(); 
 Page({
 
   /**
@@ -24,6 +24,7 @@ Page({
     uploadPhoto: "/icons/headImage.svg",
     chooseAgain:"重新上传图片",
     
+    otherLineShow:true,
   },
 
   getOrginizationName: function(e){
@@ -134,21 +135,16 @@ Page({
         }
       })
     }else{
+      var util = require('../../utils/util.js')
       var obj = {
         orginizationName: that.data.orginizationName,
         unifiedSocialCreditCode: that.data.unifiedSocialCreditCode,
         principalName: that.data.principalName,
-        uploadPhoto: that.data.uploadPhoto,
-        certificationKind: app.globalData.certificationKind
+        //uploadPhoto: that.data.uploadPhoto,
       }
       var certificationKindAndInfoJSON = JSON.stringify(obj)
-      try {
-        wx.setStorage({
-          key: "certificationKindAndInfo",
-          data: certificationKindAndInfoJSON
-        })
-        wx.setStorageSync('certificationKindAndInfo', certificationKindAndInfoJSON)
-      } catch (e) { console.log("存储页面数据出错") }
+      wx.setStorageSync('certificationKindAndInfo', certificationKindAndInfoJSON)
+      wx.setStorageSync('orginizationPhoto', that.data.uploadPhoto)
       console.log("certificationKindAndInfo:" + certificationKindAndInfoJSON)
       wx.redirectTo({
         url: '/pages/personalCertificationInfo/personalCertificationInfo',
@@ -191,6 +187,7 @@ Page({
         principalInput: "法定代表人姓名",
         principalPlaceholder: "请输入法定代表人姓名",
         uploadIntroduction: "营业执照/单位登记证书/法人证",
+        otherLineShow: true,
       })
     }else{
       if (app.globalData.certificationKind === 1) {
@@ -202,6 +199,7 @@ Page({
           principalInput: "负责人姓名",
           principalPlaceholder: "请输入负责人姓名",
           uploadIntroduction: "营业执照 / 单位登记证书 / 法人证",
+          otherLineShow: true,
         })
       }else{
         if (app.globalData.certificationKind === 2){
@@ -215,6 +213,7 @@ Page({
             principalInput: "",
             principalPlaceholder: "",
             uploadIntroduction: "公众号后台 - 公众号设置 - 账号详情页面截图",
+            otherLineShow: false,
           })
         }
       }

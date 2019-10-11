@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var util = require('../../utils/util.js')
 Page({
     data: {
         userInfo: {},
@@ -10,17 +10,26 @@ Page({
         title:"奖落谁家\n欢迎您\n",
         tips:"请将微信授权登录后放心使用奖落谁家\n您的信息和数据将受到保护",
         synchronizationUserInfo: '同步微信资料',
-        luckyDrawNumber: [0, 0, 0],
+        createActivityNum: 0,
+        participateActivityNum: 0,
+        winNum: 0,
         luckDrawKind: ["发起抽奖", "参与抽奖", "中奖纪录"],
       functionImage: ["/icons/identification.svg", "/icons/share.svg", "/icons/officialAccountsInterface.svg", "/icons/supportCenter.svg", "/icons/miniprogramRecommend.svg", "/icons/addvice.svg", "/icons/cooperation.svg" ],
         functionText: ["发起人认证", "分享给好友", "公众号接入", "帮助中心", "小程序推荐", "反馈/建议","推广合作"]
     },
-    //事件处理函数
-    bindViewTap: function() {
-        wx.navigateTo({
-            url: '../logs/logs'
+    onShow: function () {
+      var that = this
+        var util = require('../../utils/util.js')
+        util.checkToken()
+        util.httpRequest(true, 'user/return_user_luckyDraw_info', 0, { token: wx.getStorageSync('token') }, 0, function (res) {
+            that.setData({
+              createActivityNum: res.CreateActivityNum,
+              participateActivityNum:res.ParticipateActivityNum,
+              winNum: res.WinNum
+            })
         })
     },
+
     onLoad: function() {
       console.log(app.globalData.newBy)
         if (app.globalData.userInfo) {
@@ -70,7 +79,8 @@ Page({
           userInfoObj.gender
           userInfoObj.language
           userInfoObj.province
-          util.httpRequest(false, 'luckyDraw_1/getUserInfo', 0, {
+          util.checkToken()
+          util.httpRequest(false, 'user/getUserInfo', 0, {
               nickName: userInfoObj.nickName,
               avatarUrl: userInfoObj.avatarUrl,
               city: userInfoObj.city,
@@ -80,8 +90,7 @@ Page({
               province: userInfoObj.province,
               token: wx.getStorageSync('token')
           }, 0, function (res) {
-                  util.checkToken(res)
-                  console.log('成功获取用户信息')
+            console.log('成功上传用户信息')
           })
         }
       })

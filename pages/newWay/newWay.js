@@ -355,12 +355,14 @@ Page({
         var myeventOption = {} // 触发事件的选项
         this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
+
     bindMultiPickerChange: function (e) {
       console.log('picker发送选择改变，携带值为', e.detail.value)
       this.setData({
         multiIndex: e.detail.value
       })
     },
+
     bindMultiPickerColumnChange: function (e) {
       console.log('修改的列为', e.detail.column, '，值为', e.detail.value)
       console.log('类型为', typeof(e.detail.value))
@@ -572,6 +574,7 @@ Page({
       var hourString = ''
       var minuteString = ''
       var timeString = ''
+      var that = this
       //快速抽奖
       if(app.globalData.newBy === 1){
         if (this.data.activityName === ""){
@@ -741,6 +744,23 @@ Page({
       
       //高级抽奖、公众号抽奖、转盘抽奖
       if (app.globalData.newBy !== 1) {
+        console.log('infoOfActivity' + that.data.infoOfActivity)
+        if (that.data.infoOfActivity === "") {
+          wx.showModal({
+            title: '警告',
+            content: '请填写活动详情',
+            showCancel: false,
+            confirmColor: "#4CAF50",
+            success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+          count++
+        }
         if (this.data.srcOfHeadImage === "/icons/headImage.svg") {
           wx.showModal({
             title: '警告',
@@ -762,23 +782,6 @@ Page({
           wx.showModal({
             title: '警告',
             content: '活动标题不能为空且其字数不能大于30',
-            showCancel: false,
-            confirmColor: "#4CAF50",
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-          count++
-        }
-
-        if (wx.getStorageSync('richText') == ""){
-          wx.showModal({
-            title: '警告',
-            content: '活动说明不能为空',
             showCancel: false,
             confirmColor: "#4CAF50",
             success(res) {
@@ -1081,33 +1084,35 @@ Page({
         var imageSrcArray = []
         var formdataArray = []
         var prizeLen = 0
-        util.httpRequest(false, 'luckyDraw_1/get_activity_info', 0, obj, 0, function (res) {
-          prizeLen = res.prizeLen
-          console.log(res.activityId)
-          console.log(typeof(res.activityId))
-          if (app.globalData.newBy !== 1) {
-            formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0 })
-            imageSrcArray.push(that.data.srcOfHeadImage)
+        util.checkToken()
+        util.httpRequest(false, 'activity_and_prize/get_activity_info', 0, obj, 0, function (res) {
+            prizeLen = res.prizeLen
+            console.log(res.activityId)
+            console.log(typeof (res.activityId))
+            if (app.globalData.newBy !== 1) {
+              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0, image_type: 2 })
+              imageSrcArray.push(that.data.srcOfHeadImage)
+            }
+            for (let a = 0; a < prizeLen; a++) {
+              console.log(res.prizeId[a])
+              console.log(typeof (res.prizeId[a]))
+              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a], image_type: 2})
+              imageSrcArray.push(that.data.imageArray[a].imageSrc)
+            }
+          for(let index=0;index<imageSrcArray.length;index++){
+            util.fileUpload('activity_and_prize/get_prize_info', imageSrcArray[index], formdataArray[index])
           }
-          for (let a = 0; a < prizeLen; a++) {
-            console.log(res.prizeId[a])
-            console.log(typeof (res.prizeId[a]))
-            formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a] })
-            imageSrcArray.push(that.data.imageArray[a].imageSrc)
-          }
-        })
-        for(let index=0;index<imageSrcArray.length;index++){
-          util.fileUpload('luckyDraw_1/upload_file', imageSrcArray[index], formdataArray[index])
-        }
-        console.log(obj.infoOfActivity)
-        console.log(typeof (obj.infoOfActivity))
-        wx.showToast({
-          title: '发布抽奖成功',
-          icon: 'success',
-          duration: 2000
-        })
-        wx.switchTab({
-          url: '/pages/personal/personal',
+          console.log(obj.infoOfActivity)
+          console.log(typeof (obj.infoOfActivity))
+          app.globalData.haveWroteTheActivityInfo = false
+          wx.showToast({
+            title: '发布抽奖成功',
+            icon: 'success',
+            duration: 2000
+          })
+          wx.switchTab({
+            url: '/pages/personal/personal',
+          })
         })
       }
     },
@@ -1138,6 +1143,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function() {
+      var that = this
         this.setData({
             headImageDisplayOrNot: app.globalData.newBy,
 
@@ -1160,6 +1166,17 @@ Page({
             inputCommandOrNotDisplayOrNot: app.globalData.newBy, //参与抽奖需要输入口令
             winnerListDisplayOrNot: app.globalData.newBy, //显示中奖者名单
         })
+      if (wx.getStorageSync('token') !== "" && app.globalData.haveWroteTheActivityInfo === false) {
+        wx.getStorage({
+          key: 'richText',
+          success(res) {
+            console.log('getStorage成功：' + res.data)
+            that.setData({
+              infoOfActivity: res.data
+            })
+          }
+        })
+      }
     },
 
     /**

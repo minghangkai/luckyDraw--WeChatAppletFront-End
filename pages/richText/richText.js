@@ -94,16 +94,15 @@ Page({
     var util = require('../../utils/util.js')
     wx.chooseImage({
       count: 1,
-      sizeType: ['original', 'compressed'],
+      sizeType: ['original', 'compressed'], 
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
         wx.uploadFile({ 
-          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file', //仅为示例，非真实的接口地址
+          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file_json', //仅为示例，非真实的接口地址
           //"https://www.luckydraw.net.cn/luckyDraw_1/upload_file"
           filePath: res.tempFilePaths[0],
           name: 'fileName',
-          formData: { image_type: 1 },
           success(res) {
             that.editorCtx.insertImage({
               src: res.data,

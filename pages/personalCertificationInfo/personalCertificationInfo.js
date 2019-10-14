@@ -59,7 +59,7 @@ Page({
           // tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFilePaths
           that.setData({
-            uploadPhoto1: tempFilePaths,
+            uploadPhoto1: tempFilePaths[0],
             chooseAgainShowOrNot1: true
           })
         },
@@ -82,7 +82,7 @@ Page({
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
         that.setData({
-          uploadPhoto1: tempFilePaths,
+          uploadPhoto1: tempFilePaths[0],
           chooseAgainShowOrNot1: true
         })
       },
@@ -100,7 +100,7 @@ Page({
           // tempFilePath可以作为img标签的src属性显示图片
           const tempFilePaths = res.tempFilePaths
           that.setData({
-            uploadPhoto2: tempFilePaths,
+            uploadPhoto2: tempFilePaths[0],
             chooseAgainShowOrNot2: true
           })
         },
@@ -123,7 +123,7 @@ Page({
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
         that.setData({
-          uploadPhoto2: tempFilePaths,
+          uploadPhoto2: tempFilePaths[0],
           chooseAgainShowOrNot2: true
         })
       },
@@ -208,9 +208,39 @@ Page({
         //uploadPhoto2: that.data.uploadPhoto2,
         certificationKind: app.globalData.certificationKind,
       }
-      util.checkToken()
-      certificationId = util.fileUpload('certification/get_personal_certificate_info_positive', that.data.uploadPhoto1, finalCertificationKindAndInfoObj)
-      util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId})
+      //util.checkToken() 440883199807120319
+      wx.uploadFile({
+        url: 'http://127.0.0.1:8000/certification/get_personal_certificate_info_positive', //仅为示例，非真实的接口地址
+        filePath: that.data.uploadPhoto1,
+        name: 'fileName',
+        formData: finalCertificationKindAndInfoObj,
+        success(res) {
+          var certificationId = res.data
+          console.log('certificationId:' + certificationId)
+          console.log(typeof (certificationId))
+          util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId })
+          //do something
+        },
+        fail(res) {
+          console.log(res);
+          wx.showModal({
+            title: '提示',
+            content: '请求失败！由于网络请求时间过长或网络无法连接的原因，请确认网络畅通，点击"重新请求"进行再次请求！',
+            confirmText: "重新请求",
+            success: function (res) {
+              if (res.confirm) {
+                fileUpload(url, tempFilePath, formdata);//再次进行请求
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+              }
+            }
+          })
+        }
+      })
+      /**var certificationId = util.fileUpload('certification/get_personal_certificate_info_positive', that.data.uploadPhoto1, finalCertificationKindAndInfoObj)
+      console.log('certificationId:' + certificationId)
+      console.log(typeof(certificationId))
+      util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId})*/
 
       //若存在其他组织认证则将之前的组织认证的对象和运营者信息的对象合并为finalCertificationKindAndInfoObj
       if (app.globalData.certificationKind !== 3){

@@ -1090,13 +1090,13 @@ Page({
             console.log(res.activityId)
             console.log(typeof (res.activityId))
             if (app.globalData.newBy !== 1) {
-              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0, image_type: 2 })
+              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0})
               imageSrcArray.push(that.data.srcOfHeadImage)
             }
             for (let a = 0; a < prizeLen; a++) {
               console.log(res.prizeId[a])
               console.log(typeof (res.prizeId[a]))
-              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a], image_type: 2})
+              formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a]})
               imageSrcArray.push(that.data.imageArray[a].imageSrc)
             }
           for(let index=0;index<imageSrcArray.length;index++){

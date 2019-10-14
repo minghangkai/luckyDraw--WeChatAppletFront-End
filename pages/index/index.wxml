@@ -8,5 +8,17 @@
 </view>-->
 <header></header>
 <prize_card_one></prize_card_one>
+ 
 
-
+<view class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item'>
+  <navigator class="indexCard" target="" url="/pages/test/test" hover-class="navigator-hover" open-type="navigate">
+    <image class="pImage" src="{{src1}}" mode="aspectFit"></image>
+    <view class="pText" wx:for="{{item.prize_of_activity_array}}"  wx:key="prize_name" wx:for-item="cell" >
+      奖品：{{cell.prize_name}}*{{prize_num}}
+    </view>
+    <icon class="icon1" type="waiting" size="18" color="0, 171, 255">
+      <text class="tText1" space="nbsp"> 点击参与</text>
+      <text class="tText2" style="font:lightgray 18rpx line-height: 30rpx vertical-align: middle">  {{item.activity_end_time}}自动开奖</text>
+    </icon>  
+  </navigator>
+</view> 

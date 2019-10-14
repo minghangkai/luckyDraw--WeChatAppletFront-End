@@ -9,4 +9,4 @@
       <text class="tText2" style="font:lightgray 18rpx line-height: 30rpx vertical-align: middle">  {{expirationTime}}</text>
     </icon>  
   </navigator>
-</view>
+</view> 

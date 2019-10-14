@@ -1,5 +1,5 @@
 // Components/prizeCard1/prizeCard1.js
-Component({
+Component({ 
     /**
      * 组件的属性列表
      */

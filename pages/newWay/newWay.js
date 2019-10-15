@@ -125,6 +125,8 @@ Page({
                 that.setData({
                     srcOfHeadImage: tempFilePaths
                 })
+                console.log('srcOfHeadImage:')
+              console.log(that.data.srcOfHeadImage)
             },
         })
     },
@@ -144,6 +146,7 @@ Page({
     //改变图片并取得图片路径（路径保存在imageSrc变量中）
     changePrizeImage: function(e) { 
         var that = this;
+        console.log(e.target)
       const length = e.target.dataset.id//target.dataset.id;
         console.log("换图片的id是否为undefined:"+length)
         var element = "imageArray[" + length + "].imageSrc"
@@ -167,7 +170,7 @@ Page({
     //取得奖品名称并保存在nameOfPrize变量中
     getPrizeName: function(e) {
         var that = this
-        const length = e.currentTarget.dataset.id;
+        const length = e.currentTarget.dataset.id; 
         var element = "imageArray[" + length + "].nameOfPrize"
         console.log("id=" + length)
         that.setData({
@@ -612,7 +615,7 @@ Page({
 
         if (this.data.imageArray[0].nameOfPrize === "") {
           wx.showModal({
-            title: '警告',
+            title: '警告', 
             content: '奖品名称不能为空',
             showCancel: false,
             confirmColor: "#4CAF50",
@@ -1087,19 +1090,16 @@ Page({
         util.checkToken()
         util.httpRequest(false, 'activity_and_prize/get_activity_info', 0, obj, 0, function (res) {
             prizeLen = res.prizeLen
-            console.log(res.activityId)
-            console.log(typeof (res.activityId))
             if (app.globalData.newBy !== 1) {
               formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0})
               imageSrcArray.push(that.data.srcOfHeadImage)
             }
             for (let a = 0; a < prizeLen; a++) {
-              console.log(res.prizeId[a])
-              console.log(typeof (res.prizeId[a]))
               formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: res.prizeId[a]})
               imageSrcArray.push(that.data.imageArray[a].imageSrc)
             }
           for(let index=0;index<imageSrcArray.length;index++){
+            console.log(formdataArray[index].prizeId)
             util.fileUpload('activity_and_prize/get_prize_info', imageSrcArray[index], formdataArray[index])
           }
           console.log(obj.infoOfActivity)

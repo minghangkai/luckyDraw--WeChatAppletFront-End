@@ -15,7 +15,8 @@
     "pages/certificationKind/certificationKind",
     "pages/certificationInfo/certificationInfo",
     "pages/personalCertificationInfo/personalCertificationInfo",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/activityInfo/activityInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

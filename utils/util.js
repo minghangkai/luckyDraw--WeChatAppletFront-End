@@ -77,7 +77,6 @@ function checkToken(){
   console.log('checkToken函数执行')
   var that = this
   var haveToken = wx.getStorageSync('token') || []
-  console.log("haveToken:" + haveToken)
   if (haveToken == '') { //本地没有存储token
     console.log("本地没有存储token,将调用wx.login")
     wx.login({
@@ -139,6 +138,7 @@ function fileUpload(url, tempFilePath, formdata){
     name: 'fileName',
     formData: formdata,
     success(res) {
+      console.log(res.data)
      return res.data
       //do something
     },

@@ -23,7 +23,7 @@
 
 <!--奖品设置-->
 
-<view class="prizeImageNameAndNum"> 
+<view class="prizeImageNameAndNum">  
   <view class="PrizeSetting" wx:for="{{imageArray}}" wx:key="id">
     <view class="image" wx:if="{{imageDisplayOrNot !== 4}}"  bindtap="changePrizeImage">
       <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="aspectFill"></image>

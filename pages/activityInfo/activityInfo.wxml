@@ -1,0 +1,4 @@
+<!--pages/activityInfo/activityInfo.wxml-->
+<image class="image" src="{{srcOfHeadImage}}" mode="aspectFill"></image>
+<view id="prize_text" >{{}}
+</view>

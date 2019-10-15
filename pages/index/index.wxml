@@ -7,14 +7,12 @@
 <moreOptions bindmyevent="myEventListener"></moreOptions>
 </view>-->
 <header></header>
-<prize_card_one></prize_card_one>
- 
 
 <view class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item'>
-  <navigator class="indexCard" target="" url="/pages/test/test" hover-class="navigator-hover" open-type="navigate">
-    <image class="pImage" src="{{src1}}" mode="aspectFit"></image>
+  <navigator class="indexCard" data-id="{{item.activity_id}}" target="" url="/pages/activityInfo/activityInfo" hover-class="navigator-hover" open-type="navigate" bindtap="getActivityId">
+    <image class="pImage" src="http://127.0.0.1:8000/media/{{item.activity_photo}}" mode="aspectFit"></image>
     <view class="pText" wx:for="{{item.prize_of_activity_array}}"  wx:key="prize_name" wx:for-item="cell" >
-      奖品：{{cell.prize_name}}*{{prize_num}}
+      奖品：{{cell.prize_name}}*{{cell.prize_num}}
     </view>
     <icon class="icon1" type="waiting" size="18" color="0, 171, 255">
       <text class="tText1" space="nbsp"> 点击参与</text>

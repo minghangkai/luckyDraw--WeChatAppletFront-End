@@ -2,8 +2,110 @@
 .image {
         display: flex;
         width: 100%;
-        height: 410rpx;
         justify-content: center;
         position: relative;
         border-bottom: 1rpx lightgray solid;
-    }
+        background-color: white;
+}
+.a_block{
+  background-color: white;
+  margin-bottom: 10rpx;
+} 
+
+#prize_text_of_title{
+  margin: 20rpx 0rpx 0rpx 20rpx;
+  size: 38rpx;
+}
+#activity_end{
+  margin-left: 20rpx;
+  font-size: 18rpx;
+  color: #64DD17;
+}
+
+#certificate{
+  font-size: 10rpx;
+  color: #F9A825;
+}
+
+#clock_and_endTime{
+  background-color: white;
+  padding-bottom: 20rpx;
+  display: table-cell;
+  vertical-align:middle
+}
+
+#clock{
+  display: inline-block;
+  width: 32rpx;
+  height: 32rpx;
+  margin: 10rpx 0rpx 0rpx 20rpx;
+}
+
+#endTime{
+  display: inline-block;
+  padding-bottom: 10rpx;
+  line-height:10rpx;
+  color: #616161;
+  font-size: 20rpx;
+  /*margin-bottom: 100rpx;和padding都无效*/
+}
+
+#sponsorNickName{
+  height: 40rpx;
+  font-size: 20rpx;
+}
+
+#rich_text{
+  background-color: white;
+}
+
+#prize_item{
+  display:inline-block;
+  padding:20rpx 0rpx 20rpx 20rpx;
+}
+
+#prize_info{
+}
+
+#prize_text_of_bottom{
+  margin: 20rpx 0rpx 0rpx 20rpx;
+  size: 28rpx;
+}
+
+#buttom_line{
+  /**position:fixed;     #ECEFF1**/
+  background-color: green;
+  width: 100%;
+  height: 100rpx;
+}
+.buttom_line_block{
+  float: left;
+  width: 20%;
+  border: 1rpx red solid;
+}
+
+.buttom_line_image{
+  margin: 0 auto;
+  display: block;
+  width: 35%;
+}
+
+.buttom_line_text{
+  text-align: center;
+  display: inline-block;
+  font-size: 20rpx;
+}
+
+#sharewithfriend{
+  float: left;
+  width: 39%;
+  background-color: #FF5252;
+}
+
+#sharewithfriend_image{
+  width: 18%;
+}
+
+#sharewithfriend_text{
+  font-size: 20rpx;
+}

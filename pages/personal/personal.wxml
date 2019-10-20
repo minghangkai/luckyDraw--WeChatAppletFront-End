@@ -22,15 +22,15 @@
   </view>
 
   <view class="infoAbuotLuckyDraw">
-    <view class="info">
+    <view class="info" bindtap="turnToLottery0">
       <view class="infoNum">{{createActivityNum}}</view>
       <view class="infoText">{{luckDrawKind[0]}}</view>
     </view>
-    <view class="info">
+    <view class="info" bindtap="turnToLottery1"> 
       <view class="infoNum">{{participateActivityNum}}</view>
       <view class="infoText">{{luckDrawKind[1]}}</view>
     </view>
-    <view class="info">
+    <view class="info" bindtap="turnToLottery2"> 
       <view class="infoNum">{{winNum}}</view>
       <view class="infoText">{{luckDrawKind[2]}}</view>
     </view>

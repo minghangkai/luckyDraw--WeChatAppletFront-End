@@ -1,1 +1,59 @@
-/* pages/participateLottery/participateLottery.wxss */
+#isNull{
+  width: 100%;
+}
+#isNull_image{
+  width: 100rpx;
+  margin: 100rpx 325rpx 0rpx 325rpx;
+}
+
+#isNull_text{
+  display: flex;
+  width: 100%;
+  font-size: 24rpx;
+  color: #BDBDBD;
+  justify-content: center;
+}
+.card1{
+    display: flex;
+    width: 700rpx; 
+    height: 260rpx;
+    margin: 25rpx;
+    padding-top: 40rpx; 
+    background-color: white;
+}
+
+.pImage {
+    width: 220rpx;
+    height: 220rpx;
+    float: left;
+    display: flex;
+    margin: 0rpx 20rpx 40rpx 10rpx;
+}
+
+.textOfCard2 {
+    float: left;
+    position:relative;
+    width: 450rpx;
+}
+
+.pText {
+    margin: 0rpx 5rpx 0rpx 10rpx;
+    width: 450rpx;
+}
+
+#numberCondition1 {
+    font-size: 20rpx;
+    color: gray;
+    vertical-align: middle;
+    position: absolute;
+    top: 180rpx;
+}
+
+#numberCondition2 {
+    font-size: 20rpx;
+    color: gray;
+    vertical-align: middle;
+    position: absolute;
+    top: 200rpx;
+    left: 350rpx;
+}

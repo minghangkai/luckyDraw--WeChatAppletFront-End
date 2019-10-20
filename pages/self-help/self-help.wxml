@@ -1,14 +1,20 @@
 <!--pages/self-help/self-help.wxml-->
-<view class="main2" hover-class="none" hover-stop-propagation="false">
-    <header></header>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    <prize_card_two></prize_card_two>
-    
-</view>
+<header></header>
+ 
+<view class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item' >
+  <navigator class="indexCard" data-id="{{item.activity_id}}" target="" url="/pages/activityInfo/activityInfo" hover-class="navigator-hover" open-type="navigate" bindtap="getActivityId">
+    <image src="http://127.0.0.1:8000/media/{{item.activity_photo}}" class="pImage"></image>
+        <view class="textOfCard2">
+          <view class="pText" wx:for="{{item.prize_of_activity_array}}"  wx:key="prize_name" wx:for-item="cell" >
+            奖品：{{cell.prize_name}} * {{cell.prize_num}}
+          </view>
+          <view class="numberCondition" hover-class="none" hover-stop-propagation="false">
+            满{{item.participate_number}}人 自动开奖
+          </view>
+          <view class="" hover-class="none" hover-stop-propagation="false">
+            <icon class="icon1" type="waiting" size="20" color="0, 171, 255"><text class="tText" space="nbsp"> 点击参与</text></icon>
+          </view>
+        </view>
+  </navigator>
+</view> 
+

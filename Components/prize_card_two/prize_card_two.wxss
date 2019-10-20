@@ -2,7 +2,7 @@
 
 .card2 {
     display: flex;
-    width: 700rpx;
+    width: 700rpx; 
     height: 300rpx;
     margin: 25rpx;
     background-color: white;

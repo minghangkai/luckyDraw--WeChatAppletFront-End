@@ -1,4 +1,61 @@
-<!--pages/activityInfo/activityInfo.wxml-->
-<image class="image" src="{{srcOfHeadImage}}" mode="aspectFill"></image>
-<view id="prize_text" >{{}}
+<!--pages/activityInfo/activityInfo.wxml
+srcOfHeadImage: '',
+    prizeArray: [],
+    activityEnd: false,
+    certificate: false,
+    endTime: '',
+    sponsorNickName: '',
+    activityInfoJson: '',
+    participateAvatarArray: [],
+    shareJurisdiction: false,-->
+<view class="a_block">
+  <image class="image" src="{{srcOfHeadImage}}" mode="widthFix"></image>
+  <view id="prize_text_of_title" wx:for="{{prizeArray}}"wx:key="PrizeName" wx:for-item='item'>
+    奖品：{{item.fields.PrizeName}}x{{item.fields.PrizeNumber}} 
+  </view>
+  <view id="activity_end_and_certificate">
+    <text id="activity_end">{{activity_end}}</text>
+    <text id="certificate">{{certificate}}</text>
+  </view>
+  <view id="clock_and_endTime">
+    <image id="clock" src="{{srcOfClock}}" mode="widthFix"></image>
+    <text id="endTime"> {{endTime}}</text>
+  </view>
+</view>
+
+<view class="a_block" id="sponsorNickName">
+  <text id="">{{sponsorNickName}}</text>
+</view>
+<rich-text class="a_block" id="rich_text" nodes="{{nodes}}"></rich-text>
+<view class="a_block" id="prize_info">
+  <text id="prize_item">奖项：</text>
+  <view id="prize_text" wx:for="{{prizeArray}}"wx:key="PrizeName" wx:for-item='item'>
+    <image src="http://127.0.0.1:8000/media/{{item.fields.PrizePhoto}}" class="image" mode="widthFix"></image>
+    <text id="prize_text_of_bottom">{{item.fields.PrizeName}}x{{item.fields.PrizeNumber}}</text>
+  </view>
+</view>
+<button bindtap="participateActivity">参与抽奖</button>
+
+<view id="buttom_line">
+  <view class="buttom_line_block" bindtap="navigateToSelfHelpPage">
+    <image src="../../icons/selfHelp_active.png" class="buttom_line_image" mode="widthFix"></image>
+    <text class="buttom_line_text">更多福利</text>
+  </view>
+
+  <view class="buttom_line_block" bindtap="">
+    <image src="../../icons/advisory.png" class="buttom_line_image" mode="widthFix"></image>
+    <text class="buttom_line_text">咨询</text>
+  </view>
+    
+  <view  class="buttom_line_block" bindtap="">
+    <image src="../../icons/poster.png" class="buttom_line_image" mode="widthFix"></image>
+    <text class="buttom_line_text">海报长图</text>
+  </view>
+  <button id="sharewithfriend" open-type="share" >
+    
+      <image src="../../icons/sharewithfriend.png" id="sharewithfriend_image" mode="widthFix"></image>
+      <text id="sharewithfriend_text">分享给好友</text>
+    
+  </button>
+  
 </view>

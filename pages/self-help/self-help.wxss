@@ -1,5 +1,48 @@
-/* pages/self-help/self-help.wxss */
+/* pages/self-help/self-help.wxss */ 
 
-.main2 {
-    
+.card1{
+  display: flex;
+    width: 700rpx; 
+    height: 300rpx;
+    margin: 25rpx;
+    background-color: white;
+}
+
+.pImage {
+    width: 220rpx;
+    height: 220rpx;
+    float: left;
+    display: flex;
+    margin: 40rpx 20rpx 40rpx 10rpx;
+}
+
+.textOfCard2 {
+    float: left;
+}
+
+.pText {
+    height: 150rpx;
+    margin: 20rpx 5rpx 20rpx 0rpx;
+}
+
+.numberCondition {
+    font-size: 28rpx;
+    color: gray;
+    line-height: 30rpx;
+    vertical-align: middle;
+    margin-bottom: 20rpx;
+}
+
+.icon1 {
+    margin-top: 5rpx;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+}
+
+.tText {
+    font-size: 20rpx;
+    color: #00abff;
+    line-height: 30rpx;
+    vertical-align: middle;
 }

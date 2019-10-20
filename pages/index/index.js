@@ -41,7 +41,7 @@ Page({
     var util = require('../../utils/util.js')
     var that = this
     console.log(app.globalData.newBy)
-    util.httpRequest(false, 'activity_and_prize/return_activity_main_info', 0, {}, 0, function (res) {
+    util.httpRequest(false, 'activity_and_prize/return_index_activity_main_info', 0, {}, 0, function (res) {
       console.log(res)
       /**console.log(typeof(res[0]))
       console.log(typeof (res[0].prize_of_acitivity_array))

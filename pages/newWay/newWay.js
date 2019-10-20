@@ -84,7 +84,7 @@ Page({
         shareJurisdiction: 1,
         allowQuitOrNot: false,
         inputCommandOrNot: false,
-        winnerList: false,
+        winnerList: false, 
         participateWayArray: ['菜单和自动回复卡片', '不限制'],
         participateWayObjectArray: [{
                 id: 0,

@@ -6,7 +6,7 @@
 <condition bindmyevent="myEventListener"></condition>
 <moreOptions bindmyevent="myEventListener"></moreOptions>
 </view>-->
-<header></header>
+<header></header>   
 
 <view class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item'>
   <navigator class="indexCard" data-id="{{item.activity_id}}" target="" url="/pages/activityInfo/activityInfo" hover-class="navigator-hover" open-type="navigate" bindtap="getActivityId">

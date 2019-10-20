@@ -1,2 +1,25 @@
 <!--pages/participateLottery/participateLottery.wxml-->
-<text>pages/participateLottery/participateLottery.wxml</text>
+<view wx:if='{{isNull}}' id="isNull">
+  <image id="isNull_image" src="{{nullImageSrc}}" mode="widthFix"></image>
+  <text id="isNull_text">{{null_string}}</text>
+</view>
+
+<view wx:if='{{!isNull}}' class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item' >
+  <navigator class="indexCard" data-id="{{item.activity_id}}" target="" url="/pages/activityInfo/activityInfo" hover-class="navigator-hover" open-type="navigate" bindtap="getActivityId">
+    <image src="http://127.0.0.1:8000/media/{{item.activity_photo}}" class="pImage"></image>
+        <view class="textOfCard2">
+          <view class="pText" wx:for="{{item.prize_of_activity_array}}"  wx:key="prize_name" wx:for-item="cell" >
+            奖品：{{cell.prize_name}} * {{cell.prize_num}}
+          </view>
+          <text id="numberCondition1" hover-class="none" hover-stop-propagation="false">{{item.condition_type}} {{item.info}}
+            现参与人数：{{item.now_participate_number}}
+          </text>
+          <view id="numberCondition2" style="color:{{item.color}}">
+            {{item.end}}
+          </view>
+          <view id="numberCondition3" hover-class="none" hover-stop-propagation="false">
+            
+          </view>
+        </view>
+  </navigator>
+</view> 

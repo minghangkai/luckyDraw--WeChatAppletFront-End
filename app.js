@@ -77,5 +77,6 @@ App({
     haveWroteThePersonalInfo:false,
     certificationKind:0, //判断显示哪种认证方式
     activity_id: 0,
+    lotteryRecord: 0,
   }
 })

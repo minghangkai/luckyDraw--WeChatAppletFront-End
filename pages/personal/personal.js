@@ -17,6 +17,26 @@ Page({
       functionImage: ["/icons/identification.svg", "/icons/share.svg", "/icons/officialAccountsInterface.svg", "/icons/supportCenter.svg", "/icons/miniprogramRecommend.svg", "/icons/addvice.svg", "/icons/cooperation.svg" ],
         functionText: ["发起人认证", "分享给好友", "公众号接入", "帮助中心", "小程序推荐", "反馈/建议","推广合作"]
     },
+  turnToLottery0: function (e) {
+    app.globalData.lotteryRecord = 0
+    wx.navigateTo({
+      url: '/pages/participateLottery/participateLottery',
+    })
+  },
+  turnToLottery1: function (e) {
+    app.globalData.lotteryRecord = 1
+    wx.navigateTo({
+      url: '/pages/participateLottery/participateLottery',
+    })
+  },
+  turnToLottery2: function (e) {
+    app.globalData.lotteryRecord = 2
+    wx.navigateTo({
+      url: '/pages/participateLottery/participateLottery',
+    })
+  },
+
+
     onShow: function () {
       var that = this
         var util = require('../../utils/util.js')

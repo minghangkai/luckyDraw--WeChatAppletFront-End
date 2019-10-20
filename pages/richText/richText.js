@@ -18,7 +18,7 @@ Page({
   onShow(){
     
   },
-  onLoad() {
+  onLoad() { 
     wx.loadFontFace({
       family: 'Pacifico',
       source: 'url("https://sungd.github.io/Pacifico.ttf")',
@@ -99,13 +99,14 @@ Page({
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
         wx.uploadFile({ 
-          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file_json', //仅为示例，非真实的接口地址
+          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file_json',
           //"https://www.luckydraw.net.cn/luckyDraw_1/upload_file"
           filePath: res.tempFilePaths[0],
           name: 'fileName',
           success(res) {
             that.editorCtx.insertImage({
               src: res.data,
+              width: '100rpx',
               data: {
                 id: 'abcd',
                 role: 'god'

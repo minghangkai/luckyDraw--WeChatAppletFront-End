@@ -1,4 +1,4 @@
-<!--pages/personalCertificationInfo/personalCertificationInfo.wxml-->
+<!--pages/personalCertificationInfo/personalCertificationInfo.wxm l-->
 <view class="main">
   <text class="guide">{{guide}}</text>
   <view class="Line" >
@@ -18,7 +18,15 @@
       <view class="name" selectable="false" space="false" decode="false">{{name[2]}}</view>
       <input class="input68" type="number"  placeholder="请输入您的证件号码"  placeholder-class="placeholderClass" bindinput="getCredentialsNumber"/>
   </view>
-  <phoneNumber></phoneNumber>
+  <!--手机号--> 
+    <view class="Line" hover-class="none" hover-stop-propagation="false">
+      <view class="name40" selectable="false" space="false" decode="false">手机号（必填）</view>
+      <button class="synchronization" type="primary" plain="true"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber1"><text>自动填写</text></button>
+    </view>
+    <view class="Line" wx:if="{{phoneNumLineTwoShowOrNot == true}}" hover-class="none" hover-stop-propagation="false">
+      <view class="name50" selectable="false" space="false" decode="false">手机号</view>
+      <input class="input50" type="text" value='{{phoneNum}}' placeholder="{{placeholderOfPhoneNumber}}" bindinput="getPhoneNumber2"/>
+    </view>
 </view>
 
 <view class="upload">

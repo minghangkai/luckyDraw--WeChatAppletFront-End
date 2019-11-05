@@ -28,12 +28,39 @@
 });
  */
 var util = require('/utils/util.js')
+var nowDate = new Date()
+nowDate.setDate(nowDate.getDate() + 2)
+var year = nowDate.getFullYear()
+var month = nowDate.getMonth() + 1
+var day = nowDate.getDate()
+const updateManager = wx.getUpdateManager()
 
+updateManager.onCheckForUpdate(function (res) {
+  // 请求完新版本信息的回调
+  console.log(res.hasUpdate)
+})
+
+updateManager.onUpdateReady(function () {
+  wx.showModal({
+    title: '更新提示',
+    content: '新版本已经准备好，是否重启应用？',
+    success(res) {
+      if (res.confirm) {
+        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+        updateManager.applyUpdate()
+      }
+    }
+  })
+})
+
+updateManager.onUpdateFailed(function () {
+  // 新版本下载失败
+})
 App({
   config: {
     host: 'luckydraw.net.cn' // 这个地方填写你的域名
   },
-  onLaunch: function () {
+  onLaunch: function () { 
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -78,5 +105,8 @@ App({
     certificationKind:0, //判断显示哪种认证方式
     activity_id: 0,
     lotteryRecord: 0,
+    year:year,
+    month:month,
+    day:day,
   }
 })

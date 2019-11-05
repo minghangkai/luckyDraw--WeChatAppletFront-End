@@ -7,7 +7,7 @@ Page({
      */
     data: {
         headImageDisplayOrNot: 0,
-
+        
         probityDisplayOrNot: app.globalData.newBy,
         imageDisplayOrNot: app.globalData.newBy,
         addPrizeOrNotDisplayOrNot: app.globalData.newBy,
@@ -57,10 +57,10 @@ Page({
         
 
         conditionArray: ['按时间自动开奖', '按人数自动开奖', '手动开奖'],
-      conditionObject: { id: 0, info: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),timeLeft: 2},
+      conditionObject: { id: 0, info: app.globalData.year + "-" + app.globalData.month + "-" + app.globalData.day,timeLeft: 2},
         conditionIndex: 0,
         kindOfCondition: 0,
-        date: (new Date().getFullYear()) + "-" + (new Date().getMonth() + 1) + "-" + (new Date().getDate() + 2),
+      date: (app.globalData.year + "-" + app.globalData.month + "-" + app.globalData.day),
         finalYear: new Date().getFullYear(),
         finalMonth: (new Date().getMonth() + 1),
         finalDay: new Date().getDate(),
@@ -75,7 +75,9 @@ Page({
 
         initiatorName: "",
         initiatorWxNumber: "",
-        phoneNum: "13360719126",
+        phoneNum: "",
+        phoneNumLineTwoShowOrNot: false,
+        placeholderOfPhoneNumber: '请输入手机号',
         participantAttention: true,
         inviateFriends: false,
         officialAccountsName: "",
@@ -417,49 +419,40 @@ Page({
     },
 
     //手机号
-    getPhoneNumber: function(e) {
-        console.log(e);
-        wx.request({
-            url: 'http://host:port/local', //此处Ip就不暴露咯
-            data: {
-                "tel": e.detail, //微信小程序服务器返回的信息
-                "openId": "openId" //openId  注意此处的openId 是我们通过 code(用户登录凭证) 去后台获取到的 openId
-            },
-            method: "GET",
-            dataType: "json",
-            success: function(result) {
-                var that = this
-                that.data.phoneNum = result.data
-                wx.showModal({
-                        title: '警告',
-                        content: that.data.phoneNum,
-                        showCancel: false,
-                        confirmColor: "#4CAF50",
-                        success(res) {
-                            if (res.confirm) {
-                                console.log('用户点击确定')
-                            } else if (res.cancel) {
-                                console.log('用户点击取消')
-                            }
-                        }
-                    })
-                    //无区号的手机号
-                console.log(result.data + "-------手机号")
-            },
-            //that.setData({
-            //index2: e.detail.value,
-            //})
+    getPhoneNumber1: function(e) {
+      var util = require('../../utils/util.js')
+      var that = this
+      that.setData({
+        phoneNumLineTwoShowOrNot: true,
+      })
+      console.log(e.detail.errMsg)
+      console.log(e.detail.iv)
+      console.log(e.detail.encryptedData)
+      wx.login({
+        success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+          if (res.code) {
+            //发起网络请求
+            console.log('code' + res.code)
+            util.httpRequest(false, 'user/get_user_phone_number', 0, { code: res.code, iv: e.detail.iv, encryptedData: e.detail.encryptedData}, 0, function (res) {
+              that.setData({
+                phoneNum:res,
+              })
+            })
+          }
+        }
+      })
+    },
 
-
-            //var myeventDetail = {} // detail对象，提供给事件监听函数
-            //var myeventOption = {} // 触发事件的选项
-            //this.triggerEvent('myevent', myeventDetail, myeventOption)
-
-        })
-      console.log("发起人手机号phoneNumber" + this.data.phoneNum)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+    getPhoneNumber2: function (e) {
+      console.log('getPhoneNumber2发送选择改变，携带值为', e.detail.value)
+      this.setData({
+        phoneNum: e.detail.value,
+      })
+      console.log("发起人手机号" + this.data.phoneNum)
+      var myeventDetail = {} // detail对象，提供给事件监听函数
+      var myeventOption = {} // 触发事件的选项
+      this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //参与者关注
@@ -1090,6 +1083,7 @@ Page({
         util.checkToken()
         util.httpRequest(false, 'activity_and_prize/get_activity_info', 0, obj, 0, function (res) {
             prizeLen = res.prizeLen
+          console.log(res.activityId)
             if (app.globalData.newBy !== 1) {
               formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0})
               imageSrcArray.push(that.data.srcOfHeadImage)
@@ -1140,10 +1134,18 @@ Page({
     },
 
     /**
-     * 生命周期函数--监听页面显示
+     * 生命周期函数--监听页面显示var nowDate = new Date()
+      nowDate.setDate(nowDate.getDate() + 2)
+      var year=nowDate.getFullYear()
+      var month = nowDate.getMonth+1
+      var day = nowDate.getDate()
+      app.globalData.year=year
+      app.globalData.month=month
+      app.globalData.day=day
      */
     onShow: function() {
       var that = this
+      
         this.setData({
             headImageDisplayOrNot: app.globalData.newBy,
 
@@ -1165,6 +1167,7 @@ Page({
             allowQuitOrNotDisplayOrNot: app.globalData.newBy, //允许参与人退出抽奖
             inputCommandOrNotDisplayOrNot: app.globalData.newBy, //参与抽奖需要输入口令
             winnerListDisplayOrNot: app.globalData.newBy, //显示中奖者名单
+
         })
       if (wx.getStorageSync('token') !== "" && app.globalData.haveWroteTheActivityInfo === false) {
         wx.getStorage({

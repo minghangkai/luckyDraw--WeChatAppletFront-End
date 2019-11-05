@@ -2,11 +2,12 @@ module.exports = {
   formatTime: formatTime,
   httpRequest: httpRequest, 
   checkToken: checkToken,
-  fileUpload: fileUpload
+  fileUpload: fileUpload,
+  baseUrl: baseUrl,
 }
 
-const baseUrl = "http://127.0.0.1:8000/";//测试环境
-//const baseUrl = "https://www.luckydraw.net.cn/"; //正式环境
+//const baseUrl = "http://127.0.0.1:8000/";//测试环境
+const baseUrl = "https://www.luckydraw.net.cn/"; //正式环境
 var data = ''
 const formatTime = date => {
   const year = date.getFullYear()
@@ -131,7 +132,7 @@ function checkToken(){
   }
 }
 
-function fileUpload(url, tempFilePath, formdata){
+function fileUpload(url, tempFilePath, formdata, callBack_success=function(){console.log('匿名函数作为参数')}){
   wx.uploadFile({
     url: baseUrl + url, //仅为示例，非真实的接口地址
     filePath: tempFilePath,
@@ -139,6 +140,7 @@ function fileUpload(url, tempFilePath, formdata){
     formData: formdata,
     success(res) {
       console.log(res.data)
+      callBack_success(res)
      return res.data
       //do something
     },

@@ -1,4 +1,4 @@
-// pages/personalCertificationInfo/personalCertificationInfo.js
+// pages/personalCertificationInfo/personalCertificationInfo.js 440883199807120319
 var app = getApp();
 Page({
 
@@ -48,6 +48,45 @@ Page({
     })
   },
 
+  //手机号
+  getPhoneNumber1: function (e) {
+    var util = require('../../utils/util.js')
+    var that = this
+    that.setData({
+      phoneNumLineTwoShowOrNot: true,
+    })
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          //发起网络请求
+          console.log('code' + res.code)
+          util.httpRequest(false, 'user/get_user_phone_number', 0, { code: res.code, iv: e.detail.iv, encryptedData: e.detail.encryptedData }, 0, function (res) {
+            that.setData({
+              phoneNum: res.phoneNumber,
+            })
+            console.log('phoneNum:')
+            console.log(that.data.phoneNum)
+          })
+        }
+      }
+    })
+  },
+
+  getPhoneNumber2: function (e) {
+    console.log('getPhoneNumber2发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      phoneNum: e.detail.value,
+    })
+    console.log("发起人手机号" + this.data.phoneNum)
+    var myeventDetail = {} // detail对象，提供给事件监听函数
+    var myeventOption = {} // 触发事件的选项
+    this.triggerEvent('myevent', myeventDetail, myeventOption)
+  },
+  
   choosePhoto1: function (e) {
     var that = this;
     if (that.data.chooseAgainShowOrNot1 === false) {
@@ -200,6 +239,7 @@ Page({
     } else {
       var util = require('../../utils/util.js')
       finalCertificationKindAndInfoObj = {
+        token:wx.getStorageSync('token'),
         realName: that.data.realName,
         kindForCredentials: that.data.credentialsIndex,
         credentialsNumber: that.data.credentialsNumber,
@@ -210,29 +250,65 @@ Page({
       }
       //util.checkToken() 440883199807120319
       wx.uploadFile({
-        url: 'http://127.0.0.1:8000/certification/get_personal_certificate_info_positive', //仅为示例，非真实的接口地址
+        url: 'https://www.luckydraw.net.cn/certification/get_personal_certificate_info_positive', //仅为示例，非真实的接口地址
         filePath: that.data.uploadPhoto1,
         name: 'fileName',
         formData: finalCertificationKindAndInfoObj,
         success(res) {
           var certificationId = res.data
+          wx.setStorageSync('certification_id', certificationId)
           console.log('certificationId:' + certificationId)
           console.log(typeof (certificationId))
-          util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId })
+          util.fileUpload('certification/get_personal_certificate_info_negative', that.data.uploadPhoto2, { realName: that.data.realName, certification_id: certificationId }, function (res) {
+            util.httpRequest(false, 'certification/pay', 0, { token: wx.getStorageSync('token'), certification_id: wx.getStorageSync('certification_id') }, 0, function (res) {
+              console.log(res)
+              var obj = res
+              console.log('obj_res:')
+              console.log(obj.timeStamp)
+              console.log(obj.nonceStr)
+              console.log(obj.package)
+              console.log(obj.paySign)
+              wx.requestPayment({
+                timeStamp: obj.timeStamp,
+                nonceStr: obj.nonceStr,
+                package: obj.package,
+                signType: 'MD5',
+                paySign: obj.paySign,
+                success(res) { console.log('调用支付函数成功') },
+                fail(res) { 
+                  console.log('调用支付函数失败')
+                  console.log(res)
+                 }
+              })
+            })
+          })
           //do something
         },
         fail(res) {
           console.log(res);
           wx.showModal({
             title: '提示',
-            content: '请求失败！由于网络请求时间过长或网络无法连接的原因，请确认网络畅通，点击"重新请求"进行再次请求！',
+            content: '请求失败！由于网络请求时间过长或网络无法连接的原因，请确认网络畅通后，重新点击提交认证按钮',
             confirmText: "重新请求",
             success: function (res) {
-              if (res.confirm) {
-                fileUpload(url, tempFilePath, formdata);//再次进行请求
+              /*if (res.confirm) {
+                util.fileUpload('https://www.luckydraw.net.cn/certification/get_personal_certificate_info_positive', that.data.uploadPhoto1, finalCertificationKindAndInfoObj, function (res) {
+                  util.httpRequest(false, 'certification/pay', 0, { token: wx.getStorageSync('token'), certification_id: wx.getStorageSync('certification_id') }, 0, function (res) {
+                    console.log(res)
+                    wx.requestPayment({
+                      timeStamp: res.timeStamp,
+                      nonceStr: res.nonceStr,
+                      package: "prepay_id=" + res.package,
+                      signType: 'MD5',
+                      paySign: res.paySign,
+                      success(res) {console.log('调用支付函数成功')},
+                      fail(res) {}
+                    })
+                  })
+                });//再次进行请求
               } else if (res.cancel) {
                 console.log('用户点击取消');
-              }
+              }*/
             }
           })
         }
@@ -262,18 +338,28 @@ Page({
             util.fileUpload('certification/get_orginization_certificate_info', orginizationPhoto, certificationOfOrganizationObj)
           }
         })
-      }else{
-
       }
-      //缺少支付部分
+      //支付部分
+      /*util.httpRequest(false, 'certification/pay', 0, { token: wx.getStorageSync('token'), certification_id: wx.getStorageSync('certification_id') }, 0, function (res) {
+        console.log(res)
+        wx.requestPayment({
+          timeStamp: res.timeStamp,
+          nonceStr: res.nonceStr,
+          package: "prepay_id=" + res.package,
+          signType: 'MD5',
+          paySign: res.paySign,
+          success(res) { },
+          fail(res) { }
+        })
+      })*/
       wx.showToast({
         title: '成功',
         icon: 'success',
         duration: 2000
       })
-      wx.switchTab({
+      /*wx.switchTab({
         url: '/pages/personal/personal'
-      })
+      })*/
 
     }
   },

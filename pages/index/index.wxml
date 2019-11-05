@@ -10,7 +10,7 @@
 
 <view class="card1" wx:for="{{activity_array}}" wx:key="activity_id" wx:for-item='item'>
   <navigator class="indexCard" data-id="{{item.activity_id}}" target="" url="/pages/activityInfo/activityInfo" hover-class="navigator-hover" open-type="navigate" bindtap="getActivityId">
-    <image class="pImage" src="http://127.0.0.1:8000/media/{{item.activity_photo}}" mode="aspectFit"></image>
+    <image class="pImage" src="http://www.luckydraw.net.cn/media/{{item.activity_photo}}" mode="aspectFit"></image>
     <view class="pText" wx:for="{{item.prize_of_activity_array}}"  wx:key="prize_name" wx:for-item="cell" >
       奖品：{{cell.prize_name}}*{{cell.prize_num}}
     </view>

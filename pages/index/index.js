@@ -52,6 +52,7 @@ Page({
         activity_number: res.length,
         activity_array: res
       })
+      console.log(res.activity_photo)
       console.log(that.data.activity_number)
       console.log(that.data.activity_array[0].activity_id)
     })

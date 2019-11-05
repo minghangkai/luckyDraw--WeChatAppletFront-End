@@ -1,4 +1,4 @@
-// pages/activityInfo/activityInfo.js
+ // pages/activityInfo/activityInfo.js
 var app = getApp();
 Page({
 
@@ -93,8 +93,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var baseurl = 'http://127.0.0.1:8000/media/'
-    // var baseurl = 'https://www.luckydraw.net.cn/media/'
+    //var baseurl = 'http://127.0.0.1:8000/media/'
+    var baseurl = 'https://www.luckydraw.net.cn/media/'
     var util = require('../../utils/util.js')
     var that = this
     util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id}, 0, function (res) {
@@ -130,6 +130,13 @@ Page({
       console.log(that.data.prizeArray[0].fields)
       console.log(that.data.prizeArray)
     })
+    var pages = getCurrentPages()
+    var currentPage1 = pages[pages.length - 1] //获取当前页面的对象
+    var url1 = currentPage1.route
+    console.log('url1:'+url1)
+    var options = currentPage1.options
+    console.log('options: ')
+    console.log(options)
   },
 
   /**

@@ -1,5 +1,6 @@
 var app = getApp();
 var textContent = "";
+
 Page({
   data: {
     formats: {},
@@ -90,6 +91,7 @@ Page({
     })
   },
   insertImage() {
+    console.log('insertImage开始执行')
     const that = this
     var util = require('../../utils/util.js')
     wx.chooseImage({
@@ -98,12 +100,13 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
-        wx.uploadFile({ 
-          url: 'http://127.0.0.1:8000/activity_and_prize/upload_file_json',
-          //"https://www.luckydraw.net.cn/luckyDraw_1/upload_file"
+        wx.uploadFile({
+          //url: 'http://127.0.0.1:8000/activity_and_prize/upload_file_json',
+          url: 'https://www.luckydraw.net.cn/activity_and_prize/upload_file_json',
           filePath: res.tempFilePaths[0],
           name: 'fileName',
           success(res) {
+            console.log(res.data)
             that.editorCtx.insertImage({
               src: res.data,
               width: '100rpx',

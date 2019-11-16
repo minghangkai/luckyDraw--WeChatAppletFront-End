@@ -1,5 +1,5 @@
-// pages/newWay/newWay.js  
-var app = getApp(); 
+// pages/newWa y/newWay.js  
+var app = getApp();  
 Page({
 
     /**
@@ -73,7 +73,7 @@ Page({
 
 
 
-        initiatorName: "",
+        initiatorName: "1",
         initiatorWxNumber: "",
         phoneNum: "",
         phoneNumLineTwoShowOrNot: false,
@@ -115,22 +115,10 @@ Page({
     },
 
     //头图
-    changeImage: function() {
-        var that = this;
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['original', 'compressed'],
-            sourceType: ['album', 'camera'],
-            success(res) {
-                // tempFilePath可以作为img标签的src属性显示图片
-                const tempFilePaths = res.tempFilePaths[0]
-                that.setData({
-                    srcOfHeadImage: tempFilePaths
-                })
-                console.log('srcOfHeadImage:')
-              console.log(that.data.srcOfHeadImage)
-            },
-        })
+    changeImage: function(){
+      var compression_image = require('../../utils/compression_image.js')
+      var srcOfHeadImage = this.data.srcOfHeadImage
+      compression_image.changeImage(this, srcOfHeadImage)
     },
 
     getActivityName: function(e) {
@@ -151,8 +139,9 @@ Page({
         console.log(e.target)
       const length = e.target.dataset.id//target.dataset.id;
         console.log("换图片的id是否为undefined:"+length)
-        var element = "imageArray[" + length + "].imageSrc"
-        wx.chooseImage({
+      var compression_image = require('../../utils/compression_image.js')
+      compression_image.changeImage2(this, length)
+        /*wx.chooseImage({
             count: 1,
             sizeType: ['original', 'compressed'],
             sourceType: ['album', 'camera'],
@@ -163,7 +152,7 @@ Page({
                     [element]: tempFilePaths
                 })
             },
-        })
+        })*/
         //var myeventDetail = {} // detail对象，提供给事件监听函数
         //var myeventOption = {} // 触发事件的选项
         //this.triggerEvent('myevent', myeventDetail, myeventOption)
@@ -179,9 +168,9 @@ Page({
             [element]: e.detail.value
         })
       console.log("imageArray[" + length + "].nameOfPrize:" + that.data.imageArray[length].nameOfPrize)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //取得奖品数量并保存在numberOfPrize变量中
@@ -208,9 +197,9 @@ Page({
         console.log("kindOfPrize(紧接在含图片部分): "+that.data.kindOfPrize)
             //console.log("kindOfPrize=" + this.data.kindOfPrize)
             //console.log(that.data.kindOfPrize)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     getKindOfPrize2: function(e) {
@@ -222,9 +211,9 @@ Page({
             })
       console.log("kindOfPrize(紧接在增加奖项部分): " + that.data.kindOfPrize)
       console.log(typeof (that.data.kindOfPrize))
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //获得转盘抽奖的中奖概率
@@ -252,9 +241,9 @@ Page({
         }
       console.log("imageArray[" + length + "].probityOfPrize:" + that.data.imageArray[length].nameOfPrize)
         //console.log(that.data.probity)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
 
@@ -311,9 +300,9 @@ Page({
           infoOfActivity: e.detail.value
         })
         console.log("活动说明"+that.data.infoOfActivity)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     getKindOfConditon: function(e) {
@@ -326,9 +315,9 @@ Page({
       console.log("kindOfCondition:" + this.data.kindOfCondition)
         console.log("开奖条件： "+this.data.conditionArray[this.data.conditionIndex])
         console.log("kind： " + this.data.conditionObject.id)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     getDate: function(e) {
@@ -356,9 +345,9 @@ Page({
             timeLeft: Math.ceil(timeleft)
         })
       this.data.conditionObject.timeLeft = this.data.timeLeft
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     bindMultiPickerChange: function (e) {
@@ -401,10 +390,8 @@ Page({
             initiatorName: e.detail.value,
         })
         console.log("发起人署名initiatorName：" + this.data.initiatorName)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
+  
 
     //发起人微信号
     getInitiatorWxNumber: function(e) {
@@ -413,9 +400,9 @@ Page({
             initiatorWxNumber: e.detail.value,
         })
         console.log("发起人微信号initiatorWxNumber" + this.data.initiatorWxNumber)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //手机号
@@ -436,7 +423,7 @@ Page({
             console.log('code' + res.code)
             util.httpRequest(false, 'user/get_user_phone_number', 0, { code: res.code, iv: e.detail.iv, encryptedData: e.detail.encryptedData}, 0, function (res) {
               that.setData({
-                phoneNum:res,
+                phoneNum: res.phoneNumber,
               })
             })
           }
@@ -450,16 +437,16 @@ Page({
         phoneNum: e.detail.value,
       })
       console.log("发起人手机号" + this.data.phoneNum)
-      var myeventDetail = {} // detail对象，提供给事件监听函数
-      var myeventOption = {} // 触发事件的选项
-      this.triggerEvent('myevent', myeventDetail, myeventOption)
+      //var myeventDetail = {} // detail对象，提供给事件监听函数
+      //var myeventOption = {} // 触发事件的选项
+      //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //参与者关注
     getParticipantAttention: function(e) {
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //开启邀请好友助力
@@ -470,9 +457,9 @@ Page({
         })
       console.log("是否开启邀请好友助力：" + this.data.inviateFriends)
 
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //公众号名称
@@ -482,9 +469,9 @@ Page({
             officialAccountsName: e.detail.value,
         })
         console.log("公众号名称officialAccountsName：" + this.data.officialAccountsName)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //每位参与者抽取次数
@@ -494,9 +481,9 @@ Page({
             participantDrawNumber: e.detail.value,
         })
       console.log("每位参与者抽取次数participantDrawNumber：" + this.data.participantDrawNumber)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+       // this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //参加抽奖途径
@@ -508,9 +495,9 @@ Page({
             participateWay: e.detail.value,
         })
       console.log("参加抽奖途径participateWay：" + this.data.participateWay)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //分享权限
@@ -521,9 +508,9 @@ Page({
             shareJurisdiction: e.detail.value,
         })
         console.log("分享权限shareJurisdiction：" + this.data.shareJurisdiction)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //允许参与人退出抽奖
@@ -533,9 +520,9 @@ Page({
             allowQuitOrNot: e.detail.value,
         })
       console.log("允许退出allowQuitOrNot：" + this.data.allowQuitOrNot)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //参与抽奖需要输入口令
@@ -545,9 +532,9 @@ Page({
             inputCommandOrNot: e.detail.value,
         })
       console.log("需要输入口令inputCommandOrNot：" + this.data.inputCommandOrNot)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
     //显示中奖者名单
@@ -557,9 +544,9 @@ Page({
             winnerList: e.detail.value,
         })
         console.log("显示中奖名单WinnerList" + this.data.winnerList)
-        var myeventDetail = {} // detail对象，提供给事件监听函数
-        var myeventOption = {} // 触发事件的选项
-        this.triggerEvent('myevent', myeventDetail, myeventOption)
+        //var myeventDetail = {} // detail对象，提供给事件监听函数
+        //var myeventOption = {} // 触发事件的选项
+        //this.triggerEvent('myevent', myeventDetail, myeventOption)
     },
 
 
@@ -1123,7 +1110,6 @@ Page({
         this.setData({
             newBy: app.globalData.newBy
         })
-        console.log(typeof(this))
     },
 
     /**

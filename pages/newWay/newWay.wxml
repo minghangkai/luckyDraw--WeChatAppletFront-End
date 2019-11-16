@@ -1,11 +1,12 @@
 <!--头奖设置--> 
 <view class="HeadImage" wx:if="{{headImageDisplayOrNot!==1}}">
   <view class="image" bindtap="changeImage">
-    <image class="image" src="{{srcOfHeadImage}}" mode="aspectFill"></image>
+    <image class="image" src="{{srcOfHeadImage}}" mode="aspectFit"></image>
+<canvas canvas-id="canvas" style="width:{{cWidth}}px;height:{{cHeight}}px;position: absolute;left:-1000px;top:-1000px;"></canvas>
     <view class="change">点击更换头奖图片</view>
   </view> 
   <view class="Line" hover-class="none" hover-stop-propagation="false">
-    <input class="inputFull" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindblur="getActivityName"/>
+    <input class="inputFull" type="text"  maxlength="30" placeholder="请输入抽奖活动标题（最长30个字）" bindinput="getActivityName"/>
   </view>
 
   <navigator url="/pages/richText/richText">
@@ -164,7 +165,7 @@
 <!--发起人署名-->
     <view class="Line" wx:if="{{initiatorNameDisplayOrNot === 2 || initiatorNameDisplayOrNot=== 4}}" hover-class="none" hover-stop-propagation="false">
       <view class="name40" selectable="false" space="false" decode="false">发起人署名</view>
-      <input class="input60" type="text"  placeholder="请输入发起人的姓名或昵称" bindinput="getInitiatorName"/>
+      <input class="input60" type="number"  placeholder="请输入发起人的姓名或昵称"  bindinput="getInitiatorName"/>
     </view>
 
 <!--发起人微信号-->
@@ -261,3 +262,4 @@
   <text class="agreeTheProtocol">确认即表示同意《微信公众平台服务协议》</text>
   <button class="confirm" bindtap="confirmRelease">确认发布</button>
 </view>
+

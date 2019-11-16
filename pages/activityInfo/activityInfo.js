@@ -37,9 +37,18 @@ Page({
     var util = require('../../utils/util.js')
     var that = this
     util.checkToken()
-    util.httpRequest(false, 'activity_and_prize/participate_activity', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token')}, 0, function (res) {
-      console.log('调用参与活动函数成功')
+    wx.requestSubscribeMessage({
+      tmplIds: ['3HNEeIjVsSDRLXjIkMAmECv7RvBijDLkkyhx3l6zjdA'],
+      success(res) {
+        util.httpRequest(false, 'activity_and_prize/test_message', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token') }, 0, function (res) {
+          console.log('调用参与活动函数成功')
+        })
+      }
     })
+    
+    /*util.httpRequest(false, 'activity_and_prize/participate_activity', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token')}, 0, function (res) {
+      console.log('调用参与活动函数成功')
+    })*/
   },
   navigateToSelfHelpPage: function (e) {
     wx.switchTab({
@@ -61,7 +70,7 @@ Page({
     }
     return {
       title: '抽奖吧',
-      path: '/pages/activityInfo/activityInfo',
+      path: '/pages/activityInfo/activityInfo?activity_id=' + app.globalData.activity_id,
       imageUrl: that.data.srcOfHeadImage
     }
   },
@@ -81,6 +90,10 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    var activity_id = options.activity_id
+    if(activity_id != undefined) {
+      app.globalData.activity_id = activity_id
+    }
   },
 
   /**
@@ -97,7 +110,7 @@ Page({
     var baseurl = 'https://www.luckydraw.net.cn/media/'
     var util = require('../../utils/util.js')
     var that = this
-    util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id}, 0, function (res) {
+    util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id}, 1, function (res) {
       that.setData({
         srcOfHeadImage: baseurl + res.activity_photo,
         prizeArray: JSON.parse(res.activity_prizes),

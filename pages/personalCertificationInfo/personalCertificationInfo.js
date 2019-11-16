@@ -263,11 +263,6 @@ Page({
             util.httpRequest(false, 'certification/pay', 0, { token: wx.getStorageSync('token'), certification_id: wx.getStorageSync('certification_id') }, 0, function (res) {
               console.log(res)
               var obj = res
-              console.log('obj_res:')
-              console.log(obj.timeStamp)
-              console.log(obj.nonceStr)
-              console.log(obj.package)
-              console.log(obj.paySign)
               wx.requestPayment({
                 timeStamp: obj.timeStamp,
                 nonceStr: obj.nonceStr,

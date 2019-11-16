@@ -14,7 +14,7 @@ Page({
     var that = this
     var len = e.currentTarget.dataset.id
     app.globalData.activity_id = len
-    console.log('globalData.activity_id:'+app.globalData.activity_id)
+    //console.log('globalData.activity_id:'+app.globalData.activity_id)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -52,9 +52,9 @@ Page({
         activity_number: res.length,
         activity_array: res
       })
-      console.log(res.activity_photo)
-      console.log(that.data.activity_number)
-      console.log(that.data.activity_array[0].activity_id)
+      //console.log(res.activity_photo)
+      //console.log(that.data.activity_number)
+      //console.log(that.data.activity_array[0].activity_id)
     })
   },
 

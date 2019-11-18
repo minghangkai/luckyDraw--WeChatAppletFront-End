@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    haveParticipate: false, //判断用户是否已经参加该活动
+    participateButtonText: '参与抽奖',
     srcOfHeadImage: '',
     srcOfClock: '/icons/clock.svg',
     prizeArray: [],
@@ -20,6 +22,7 @@ Page({
     readOnly: true,
     content: '',
     content_html: '',
+    user_id: '',
     nodes: [{
       name: 'div',
       attrs: {
@@ -37,18 +40,27 @@ Page({
     var util = require('../../utils/util.js')
     var that = this
     util.checkToken()
-    wx.requestSubscribeMessage({
+    var token = wx.getStorageSync('token')
+    /*wx.requestSubscribeMessage({
       tmplIds: ['3HNEeIjVsSDRLXjIkMAmECv7RvBijDLkkyhx3l6zjdA'],
       success(res) {
         util.httpRequest(false, 'activity_and_prize/test_message', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token') }, 0, function (res) {
           console.log('调用参与活动函数成功')
         })
       }
-    })
-    
-    /*util.httpRequest(false, 'activity_and_prize/participate_activity', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token')}, 0, function (res) {
-      console.log('调用参与活动函数成功')
     })*/
+    if (app.globalData.share_user_id != '') {
+      console.log('该用户通过点击其他用户分享而进入抽奖界面')
+      util.httpRequest(false, 'activity_and_prize/participate_activity_by_share', 0, {
+        'activity_id': app.globalData.activity_id, 'token': token, 'shareUserId': app.globalData.share_user_id }, 0, function (res) {
+        console.log('调用参与活动函数成功')
+      })
+    }else{
+        util.httpRequest(false, 'activity_and_prize/participate_activity', 0, { 'activity_id': app.globalData.activity_id, 'token': token}, 0, function (res) {
+        console.log('调用参与活动函数成功')
+      })
+    }
+    
   },
   navigateToSelfHelpPage: function (e) {
     wx.switchTab({
@@ -56,44 +68,45 @@ Page({
     })
   },
 
-  /*sharewithfriend: function (e) {
-    wx.updateShareMenu({
-
-    })
-  },*/
-
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function (res) {  //分享函数
     var that = this
+    var activityId = app.globalData.activity_id
+    var shareUserId = wx.getStorageSync('user_id')
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
+      console.log('url:')
+      console.log('/pages/activityInfo/activityInfo?activity_id=' + app.globalData.activity_id + '&shareUserId=' + shareUserId)
     }
     return {
       title: '抽奖吧',
-      path: '/pages/activityInfo/activityInfo?activity_id=' + app.globalData.activity_id,
-      imageUrl: that.data.srcOfHeadImage
+      path: '/pages/activityInfo/activityInfo?activity_id=' + activityId + '&shareUserId=' + shareUserId,
+      imageUrl: that.data.srcOfHeadImage,
+      success: (res) => {
+        console.log('转发成功')
+        console.log("转发成功", res);
+      },
+      fail: (res) => {
+        console.log("转发失败", res);
+      }
     }
   },
-  /**onEditorReady() {
-    const that = this
-    wx.createSelectorQuery().select('#editor').context(function (res) {
-      that.editorCtx = res.context
-      if (app.globalData.haveWroteTheActivityInfo === true) {
-        let html = JSON.parse(that.data.activityInfoJson)
-        that.editorCtx.setContents(html)
-        //that.editorCtx.insertText(html)
-      }
-    }).exec()
-  },*/
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    var activity_id = options.activity_id
-    if(activity_id != undefined) {
-      app.globalData.activity_id = activity_id
+    console.log(options)
+    console.log("options.activity_id:")
+    console.log(options.activity_id)
+    if (options.activity_id != undefined){
+      app.globalData.activity_id = options.activity_id
+      app.globalData.open_by_share = true
+      app.globalData.share_user_id = options.shareUserId
     }
+    console.log(app.globalData.activity_id)
+    console.log(app.globalData.open_by_share)
+    console.log(app.globalData.share_user_id)
   },
 
   /**
@@ -110,7 +123,9 @@ Page({
     var baseurl = 'https://www.luckydraw.net.cn/media/'
     var util = require('../../utils/util.js')
     var that = this
-    util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id}, 1, function (res) {
+    var userId = wx.getStorageSync('user_id')
+    console.log('userid:'+userId)
+    util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id, 'user_id': userId}, 1, function (res) {
       that.setData({
         srcOfHeadImage: baseurl + res.activity_photo,
         prizeArray: JSON.parse(res.activity_prizes),
@@ -119,9 +134,14 @@ Page({
         activityInfoJson: res.activity_details,
         participateAvatarArray: res.participate_avatar_array,
         shareJurisdiction: res.share_jurisdiction,
+        haveParticipate: res.have_participate,
       })
-      console.log('JSON.parse(that.data.activityInfoJson):')
-      console.log(JSON.parse(that.data.activityInfoJson).html)
+      if (res.have_participate == true){
+        that.setData({participateButtonText: '待开奖'})
+      }else{
+        that.setData({ participateButtonText: '参与抽奖' })
+      }
+      console.log('用户已经参加该活动：' + that.data.haveParticipate)
       that.setData({
         nodes: JSON.parse(that.data.activityInfoJson).html,
         content_html: JSON.parse(that.data.activityInfoJson).html
@@ -180,10 +200,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  }
 })

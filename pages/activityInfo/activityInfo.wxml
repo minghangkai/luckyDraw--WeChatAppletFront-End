@@ -34,7 +34,7 @@ srcOfHeadImage: '',
     <text id="prize_text_of_bottom">{{item.fields.PrizeName}}x{{item.fields.PrizeNumber}}</text>
   </view>
 </view>
-<button bindtap="participateActivity">参与抽奖</button>
+<button bindtap="participateActivity" disabled="{{haveParticipate}}">{{participateButtonText}}</button>
 
 <view id="buttom_line">
   <view class="buttom_line_block" bindtap="navigateToSelfHelpPage">

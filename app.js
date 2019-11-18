@@ -6,17 +6,6 @@
  * 类二TimeCondition extends Contion：结束时间
  * 类三NumberCondition extends Contion:开奖人数
  */
-/**class PrizeInformation {
-  constructor(String1, String2, number1, number2, String3, String4, Data) {
-    prizeImageSrc: String1;
-      prizeName: String2;
-        prizeNumber: number;
-          prizeSpecies: number;//1:潮牌、2：美妆、3：数码、4：美食、5：好玩
-            activitiyInformation: String3;
-              creatorPhoneNumber: String4;
-                beginTime: Time1
-  },
-  */
 
 //app.js
 /**
@@ -103,6 +92,8 @@ App({
     haveWroteTheActivityInfo:false,
     haveWroteThePersonalInfo:false,
     certificationKind:0, //判断显示哪种认证方式
+    open_by_share: false,
+    share_user_id: '',
     activity_id: 0,
     lotteryRecord: 0,
     year:year,

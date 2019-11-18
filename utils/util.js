@@ -87,14 +87,15 @@ function checkToken(){
           //发起网络请求
           console.log('code' + res.code)
           httpRequest(false, 'user/get_openid_session_key', 0, { code: res.code }, 0, function (res) {
-            console.log('token:' + res)
-            console.log(typeof (res))
             try {
-              wx.setStorage({
-                key: "token",
-                data: res
-              })
-            } catch (e) { console.log("存储token数据出错") }
+              wx.setStorageSync("token", res.token)
+              wx.setStorageSync("user_id", res.user_id)
+              
+              console.log("存储token数据成功")
+              
+            } catch (e) { 
+              console.log(e)
+              console.log("存储token数据出错") }
           })
         }
       }
@@ -117,11 +118,9 @@ function checkToken(){
                 console.log('token:' + res)
                 console.log(typeof (res))
                 try {
-                  wx.setStorage({
-                    key: "token",
-                    data: res
-                  })
+                  wx.setStorageSync( "token",res.token)
                 } catch (e) { console.log("存储token数据出错") }
+                console.log('重新获得token成功')
               })
             }
           }

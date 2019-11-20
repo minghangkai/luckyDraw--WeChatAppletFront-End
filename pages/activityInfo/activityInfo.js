@@ -129,7 +129,7 @@ Page({
     console.log('userid:'+userId)
     util.httpRequest(false, 'activity_and_prize/return_activity_info', 0, { 'activity_id': app.globalData.activity_id, 'user_id': userId}, 1, function (res) {
       that.setData({
-        srcOfHeadImage: baseurl + res.activity_photo,
+        srcOfHeadImage: res.activity_photo,
         prizeArray: JSON.parse(res.activity_prizes),
         endTime: res.activity_end_time,
         sponsorNickName: res.sponsor_nickname,

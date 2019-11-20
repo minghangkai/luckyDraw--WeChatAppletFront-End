@@ -30,7 +30,7 @@ srcOfHeadImage: '',
 <view class="a_block" id="prize_info">
   <text id="prize_item">奖项：</text>
   <view id="prize_text" wx:for="{{prizeArray}}"wx:key="PrizeName" wx:for-item='item'>
-    <image src="https://www.luckydraw.net.cn/media/{{item.fields.PrizePhoto}}" class="image" mode="widthFix"></image>
+    <image src="{{item.fields.PrizePhoto}}" class="image" mode="widthFix"></image>
     <text id="prize_text_of_bottom">{{item.fields.PrizeName}}x{{item.fields.PrizeNumber}}</text>
   </view>
 </view>

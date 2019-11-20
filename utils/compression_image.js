@@ -45,10 +45,11 @@ function changeImage(this1) {
                 destHeight: canvasHeight,
                 success: function (res) {
                   console.log(res)
+                  tempFilePaths = res.tempFilePath
                   that.setData({
                     srcOfHeadImage: res.tempFilePath,
                   })
-                  console.log('srcOfHeadImage:')
+                  console.log('srcOfHeadImage_yasuo:')
                   console.log(that.data.srcOfHeadImage)
                 },
                 fail: function (res) {
@@ -64,7 +65,12 @@ function changeImage(this1) {
         that.setData({
           srcOfHeadImage: tempFilePaths,
         })
+        console.log('srcOfHeadImage_buyasuo:')
+        console.log(that.data.srcOfHeadImage)
       }
+      var util = require('util.js')
+      var fileUrl = util.qiniuFileUpload(tempFilePaths)
+      console.log('fileUrl:' + fileUrl)
     },
   })
 }

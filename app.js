@@ -24,6 +24,7 @@ var month = nowDate.getMonth() + 1
 var day = nowDate.getDate()
 const updateManager = wx.getUpdateManager()
 
+
 updateManager.onCheckForUpdate(function (res) {
   // 请求完新版本信息的回调
   console.log(res.hasUpdate)
@@ -87,6 +88,7 @@ App({
   globalData: {
     userInfo: null,
     systemInfo: null,
+    qiniuToken: '',
     newBy:0, //1快速，2高级，3公众号，4转盘
     numberOfKindPrize:0,
     haveWroteTheActivityInfo:false,
@@ -99,5 +101,5 @@ App({
     year:year,
     month:month,
     day:day,
-  }
+  },
 })

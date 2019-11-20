@@ -35,13 +35,20 @@ Page({
       url: '/pages/participateLottery/participateLottery',
     })
   },
-
-
+  
+   checkTokenAwait:async function () {
+    var util = require('../../utils/util.js')
+    const result = await util.checkToken();
+    console.log(result);
+  },
     onShow: function () {
       var that = this
-        var util = require('../../utils/util.js')
-        util.checkToken()
+      var util = require('../../utils/util.js')
+      var a = util.checkTokenAwait()
+      console.log(a)
+      console.log('checkToken')
         util.httpRequest(true, 'user/return_user_luckyDraw_info', 0, { token: wx.getStorageSync('token') }, 0, function (res) {
+          console.log('checkToken结束后才执行')
             that.setData({
               createActivityNum: res.CreateActivityNum,
               participateActivityNum:res.ParticipateActivityNum,

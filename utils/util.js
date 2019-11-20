@@ -4,6 +4,9 @@ module.exports = {
   checkToken: checkToken,
   fileUpload: fileUpload,
   baseUrl: baseUrl,
+  qiniuFileUpload: qiniuFileUpload,
+  checkTokenAwait: checkTokenAwait,
+  qiniuFileUploadAwait: qiniuFileUploadAwait,
 }
 
 //const baseUrl = "http://127.0.0.1:8000/";//测试环境
@@ -160,6 +163,55 @@ function fileUpload(url, tempFilePath, formdata, callBack_success=function(){con
     }
   })
 }
+
+function qiniuFileUpload(tempFilePath){
+  var qiniuUploader = require('qiniuUploader.js')
+  // 交给七牛上传
+  qiniuUploader.upload(tempFilePath, (res) => {
+    // 每个文件上传成功后,处理相关的事情
+    // 其中 info 是文件上传成功后，服务端返回的json，形式如
+    // {
+    //    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
+    //    "key": "gogopher.jpg"
+    //  }
+    // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+    console.log("上传图片成功返回的res：" + res)
+    console.log('file url is: ' + res.fileUrl); //res.fileUrl为上传图片返回的url
+    return res.fileUrl
+  }, (error) => {
+    console.log('error: ' + error);
+  }, {
+      region: 'SCN',
+      domain: 'images.luckydraw.net.cn', // // bucket 域名，下载资源时用到。如果设置，会在 success callback 的 res 参数加上可以直接使用的 ImageURL 字段。否则需要自己拼接 'q15nuskn6.bkt.clouddn.com'为测试域名 
+      //key: '', // [非必须]自定义文件 key。如果不设置，默认为使用微信小程序 API 的临时文件名
+      // 以下方法三选一即可，优先级为：uptoken > uptokenURL > uptokenFunc
+      //uptoken: app.globalData.qiniuToken, // 由其他程序生成七牛 uptoken
+      uptokenURL: 'https://www.luckydraw.net.cn/activity_and_prize/return_qiniu_upload_token', // 从指定 url 通过 HTTP GET 获取 uptoken，返回的格式必须是 json 且包含 uptoken 字段，例如： {"uptoken": "[yourTokenString]"}
+      //uptokenFunc: function () { return '[yourTokenString]'; }
+    }, (res) => {
+      console.log('上传进度', res.progress)
+      console.log('已经上传的数据长度', res.totalBytesSent)
+      console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+    }, () => {
+      // 取消上传
+    }, () => {
+      // `before` 上传前执行的操作
+    }, (err) => {
+      // `complete` 上传接受后执行的操作(无论成功还是失败都执行)
+    });
+// domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
+// key：通过微信小程序 Api 获得的图片文件的 URL 已经是处理过的临时地址，可以作为唯一文件 key 来使用。
+}
+async function checkTokenAwait() {
+  const result = await checkToken();
+  //console.log(result);
+}
+
+async function qiniuFileUploadAwait(tempFilePath) {
+  const result = await qiniuFileUpload(tempFilePath);
+  console.log(result);
+}
+
 
 class PrizeInformation {
   constructor(String1, String2, number1, number2, String3, String4, Data) {

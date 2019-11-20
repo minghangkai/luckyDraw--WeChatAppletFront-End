@@ -11,6 +11,7 @@ Page({
     imageNumber: 1,
     filesrc:'',
   },
+  
   readOnlyChange() {
     this.setData({
       readOnly: !this.data.readOnly
@@ -90,7 +91,56 @@ Page({
       text: formatDate
     })
   },
+  insertImageAsync(that,fileUrl){
+    that.editorCtx.insertImage({
+      src: fileUrl,
+      width: '100rpx',
+      data: {
+        id: 'abcd',
+        role: 'god'
+      },
+      success: function () {
+        console.log('显示图片成功')
+      }
+    })
+  },
+  insertImageAwait: async function (that, fileUrl) {
+    const result = await this.qiniuFileUpload(that, fileUrl);
+    console.log(result);
+  },
+  qiniuFileUploadAwait: async function (tempFilePath) {
+    var util = require('../../utils/util.js')
+    const result = await util.qiniuFileUpload(tempFilePath);
+    console.log(result);
+  },
   insertImage() {
+    console.log('insertImage开始执行')
+    const that = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'], 
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        const tempFilePaths = res.tempFilePaths[0]
+        var util = require('../../utils/util.js')
+        var fileUrl = util.qiniuFileUploadAwait(tempFilePaths)
+        console.log('fileUrl:'+ fileUrl)
+        that.editorCtx.insertImage({
+          src: fileUrl,
+          width: '100rpx',
+          data: {
+            id: 'abcd',
+            role: 'god'
+          },
+          success: function () {
+            console.log('显示图片成功')
+          }
+        })
+        
+      }
+    })
+  },
+  /*insertImage() {
     console.log('insertImage开始执行')
     const that = this
     var util = require('../../utils/util.js')
@@ -122,7 +172,7 @@ Page({
         })
       }
     })
-  },
+  },*/
   
   storageRichText(e){
     const that = this
@@ -162,35 +212,5 @@ Page({
     })
 
   }
-  //真正地插入图片函数，等到后端可用时再更新
-  /*insertImage() {
-    const that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['original', 'compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        console.log(res.tempFilePaths, '上传图片')
-        wx.uploadFile({
-          url: '自己的图片上传地址',
-          filePath: res.tempFilePaths,
-          name: 'file',
-          formData: {
-            app_token: app.data.userInfo.app_token,
-          },
-          success: function (res) {
-            console.log(res.data, '图片上传之后的数据')
-            var data = JSON.parse(res.data)
-            console.log(data.data.url)
-            that.editorCtx.insertImage({
-              src: data.data.url,
-              success: function () {
-                console.log('insert image success')
-              }
-            })
-          }
-        })
-      }
-    })
-  }*/
+
 })

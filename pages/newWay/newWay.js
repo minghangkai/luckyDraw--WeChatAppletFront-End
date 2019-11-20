@@ -114,7 +114,7 @@ Page({
 
     },
 
-    //头图
+    //头图 
     changeImage: function(){
       var compression_image = require('../../utils/compression_image.js')
       var srcOfHeadImage = this.data.srcOfHeadImage
@@ -1064,6 +1064,7 @@ Page({
       if(count === 0){
         var that = this
         var util = require('../../utils/util.js')
+        const qiniuUploader = require("../../../utils/qiniuUploader")
         var imageSrcArray = []
         var formdataArray = []
         var prizeLen = 0
@@ -1106,7 +1107,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
+      var util = require('../../utils/util.js')
         //console.log(app.globalData.newBy)
+      util.httpRequest(false, 'activity_and_prize/return_qiniu_upload_token', 0, {}, 0, function (res) {
+        app.globalData.qiniuToken = res
+        console.log('成功获得七牛云token')
+      })
         this.setData({
             newBy: app.globalData.newBy
         })

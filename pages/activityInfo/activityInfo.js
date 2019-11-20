@@ -62,6 +62,8 @@ Page({
     }
     
   },
+
+  
   navigateToSelfHelpPage: function (e) {
     wx.switchTab({
       url: '/pages/self-help/self-help',

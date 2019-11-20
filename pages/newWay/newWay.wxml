@@ -27,7 +27,7 @@
 <view class="prizeImageNameAndNum">  
   <view class="PrizeSetting" wx:for="{{imageArray}}" wx:key="id">
     <view class="image" wx:if="{{imageDisplayOrNot !== 4}}"  bindtap="changePrizeImage">
-      <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="aspectFill"></image>
+      <image class="image"  data-id="{{index}}" src="{{item.imageSrc}}" mode="aspectFit"></image>
       <view class="change">点击更换奖品图片</view>
     </view>
  

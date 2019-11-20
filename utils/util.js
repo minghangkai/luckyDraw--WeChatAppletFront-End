@@ -164,7 +164,7 @@ function fileUpload(url, tempFilePath, formdata, callBack_success=function(){con
   })
 }
 
-function qiniuFileUpload(tempFilePath){
+function qiniuFileUpload(tempFilePath, callBack_success = function () { console.log('匿名函数作为参数') }){
   var qiniuUploader = require('qiniuUploader.js')
   // 交给七牛上传
   qiniuUploader.upload(tempFilePath, (res) => {
@@ -177,6 +177,7 @@ function qiniuFileUpload(tempFilePath){
     // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
     console.log("上传图片成功返回的res：" + res)
     console.log('file url is: ' + res.fileUrl); //res.fileUrl为上传图片返回的url
+    callBack_success(res.fileUrl)
     return res.fileUrl
   }, (error) => {
     console.log('error: ' + error);

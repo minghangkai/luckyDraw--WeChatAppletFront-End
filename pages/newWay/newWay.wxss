@@ -1,4 +1,6 @@
-    /* pages/newWay/newWay.wxss  */
+    /* pages/newWay/newWay.wxss  
+        padding: 30rpx 0rpx 0rpx 450rpx;
+    */
     /* headImage.wxss */
     
     .image {
@@ -12,10 +14,12 @@
     
     .change {
         font-size: 30rpx;
-        padding: 30rpx 0rpx 0rpx 450rpx;
+        margin: 30rpx 0rpx 0rpx 200rpx;
+        padding: 10rpx;
         position: absolute;
         text-align: center;
         color: gray;
+        background-color: white;
     }
     
     .Line {

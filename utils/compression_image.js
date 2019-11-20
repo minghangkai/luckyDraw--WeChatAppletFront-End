@@ -4,6 +4,7 @@ module.exports = {
 }
 
 function changeImage(this1) {
+  var util = require('util.js')
   var that = this1;
   var tempFilePaths = ''
   var photo_size = 0
@@ -46,9 +47,9 @@ function changeImage(this1) {
                 success: function (res) {
                   console.log(res)
                   tempFilePaths = res.tempFilePath
-                  that.setData({
-                    srcOfHeadImage: res.tempFilePath,
-                  })
+                  tempFilePaths = util.qiniuFileUpload(tempFilePaths, function (res) {that.setData({
+                    srcOfHeadImage: 'http://' + res,
+                  })})
                   console.log('srcOfHeadImage_yasuo:')
                   console.log(that.data.srcOfHeadImage)
                 },
@@ -62,21 +63,21 @@ function changeImage(this1) {
         })
       }else{
         console.log('图片小于500k，不压缩')
-        that.setData({
-          srcOfHeadImage: tempFilePaths,
+        tempFilePaths = util.qiniuFileUpload(tempFilePaths, function (res) {
+          that.setData({
+            srcOfHeadImage: 'http://' + res,
+          })
         })
         console.log('srcOfHeadImage_buyasuo:')
         console.log(that.data.srcOfHeadImage)
       }
-      var util = require('util.js')
-      var fileUrl = util.qiniuFileUpload(tempFilePaths)
-      console.log('fileUrl:' + fileUrl)
     },
   })
 }
 
 
 function changeImage2(this1, length) {
+  var util = require('util.js')
   var that = this1;
   var tempFilePaths = ''
   var photo_size = 0
@@ -90,7 +91,7 @@ function changeImage2(this1, length) {
       tempFilePaths = res.tempFilePaths[0]
       photo_size = parseInt(res.tempFiles[0].size / 1024)
       if (photo_size >= 500) {
-        console.log('图片大于500k，压缩')
+        console.log('奖品图片大于500k，压缩')
         //-----返回选定照片的本地文件路径列表，获取照片信息-----------
         wx.getImageInfo({
           src: tempFilePaths,
@@ -119,11 +120,11 @@ function changeImage2(this1, length) {
                 destHeight: canvasHeight,
                 success: function (res) {
                   console.log(res)
-                  that.setData({
-                    [element]: res.tempFilePath,
+                  tempFilePaths = res.tempFilePathtempFilePaths = util.qiniuFileUpload(tempFilePaths, function (res) {
+                    that.setData({
+                      [element]: 'http://' + res,
+                    })
                   })
-                  console.log('srcOfHeadImage:')
-                  console.log(that.data.srcOfHeadImage)
                 },
                 fail: function (res) {
                   console.log(res.errMsg)
@@ -134,9 +135,11 @@ function changeImage2(this1, length) {
           fail: function (res) { },
         })
       } else {
-        console.log('图片小于500k，不压缩')
-        that.setData({
-          [element]: tempFilePaths,
+        console.log('奖品图片小于500k，不压缩')
+        tempFilePaths = res.tempFilePathtempFilePaths = util.qiniuFileUpload(tempFilePaths, function (res) {
+          that.setData({
+            [element]: 'http://' + res,
+          })
         })
       }
     },

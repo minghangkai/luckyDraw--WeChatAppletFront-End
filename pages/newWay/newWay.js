@@ -1064,13 +1064,12 @@ Page({
       if(count === 0){
         var that = this
         var util = require('../../utils/util.js')
-        const qiniuUploader = require("../../../utils/qiniuUploader")
         var imageSrcArray = []
         var formdataArray = []
         var prizeLen = 0
         util.checkToken()
         util.httpRequest(false, 'activity_and_prize/get_activity_info', 0, obj, 0, function (res) {
-            prizeLen = res.prizeLen
+            /*prizeLen = res.prizeLen
           console.log(res.activityId)
             if (app.globalData.newBy !== 1) {
               formdataArray.push({ newBy: app.globalData.newBy, activityId: res.activityId, prizeId: 0})
@@ -1085,7 +1084,8 @@ Page({
             util.fileUpload('activity_and_prize/get_prize_info', imageSrcArray[index], formdataArray[index])
           }
           console.log(obj.infoOfActivity)
-          console.log(typeof (obj.infoOfActivity))
+          console.log(typeof (obj.infoOfActivity))*/
+          console.log(res)
           app.globalData.haveWroteTheActivityInfo = false
           wx.showToast({
             title: '发布抽奖成功',

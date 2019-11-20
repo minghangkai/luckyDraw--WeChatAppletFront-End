@@ -108,11 +108,7 @@ Page({
     const result = await this.qiniuFileUpload(that, fileUrl);
     console.log(result);
   },
-  qiniuFileUploadAwait: async function (tempFilePath) {
-    var util = require('../../utils/util.js')
-    const result = await util.qiniuFileUpload(tempFilePath);
-    console.log(result);
-  },
+
   insertImage() {
     console.log('insertImage开始执行')
     const that = this
@@ -123,8 +119,24 @@ Page({
       success: function (res) {
         const tempFilePaths = res.tempFilePaths[0]
         var util = require('../../utils/util.js')
-        var fileUrl = util.qiniuFileUploadAwait(tempFilePaths)
-        console.log('fileUrl:'+ fileUrl)
+        util.qiniuFileUpload(tempFilePaths, function (res) {
+          that.editorCtx.insertImage({
+            src: 'http://' + res,
+            width: '100rpx',
+            data: {
+              id: 'abcd',
+              role: 'god'
+            },
+            success() {
+              console.log('显示图片成功')
+            },
+            fail(e){
+              console.log('显示图片失败:'+e)
+            }
+          })
+        })
+        /*var fileUrl = util.qiniuFileUploadAwait(tempFilePaths)
+        console.log('fileUrl:' + fileUrl)
         that.editorCtx.insertImage({
           src: fileUrl,
           width: '100rpx',
@@ -135,8 +147,7 @@ Page({
           success: function () {
             console.log('显示图片成功')
           }
-        })
-        
+        })*/
       }
     })
   },

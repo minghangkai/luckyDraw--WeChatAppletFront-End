@@ -97,6 +97,7 @@ App({
     open_by_share: false,
     share_user_id: '',
     activity_id: 0,
+    prize_num: 0,
     lotteryRecord: 0,
     year:year,
     month:month,

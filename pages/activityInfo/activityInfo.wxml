@@ -48,7 +48,7 @@ srcOfHeadImage: '',
   </view>
     
   <view  class="buttom_line_block" bindtap="">
-    <image src="../../icons/poster.png" class="buttom_line_image" mode="widthFix"></image>
+    <image src="../../icons/poster.png" class="buttom_line_image" mode="widthFix" bindtap="navigateToCreatePost"></image>
     <text class="buttom_line_text">海报长图</text>
   </view>
   <button id="sharewithfriend" open-type="share" >

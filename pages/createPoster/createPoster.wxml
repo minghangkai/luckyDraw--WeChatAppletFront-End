@@ -1,0 +1,11 @@
+<!--pages/createPoster/createPoster.wxml 
+<view class='img'>
+    <image src='data:image/png;base64,{{wxacode}}'></image>
+   </view>
+   //生成二维码的wxml-->
+
+<view>
+  <canvas class="cv-ct-canvas" canvas-id="myCanvas"></canvas>
+  <image class="image" src="{{poster}}" mode="aspectFit" bindtap="previewImage"></image>   
+  <button class="confirm" bindtap="confirmRelease">保存到手机</button>
+</view>

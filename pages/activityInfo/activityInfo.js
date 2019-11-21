@@ -1,5 +1,5 @@
  // pages/activityInfo/activityInfo.js
-var app = getApp();
+var app = getApp(); 
 Page({
 
   /**
@@ -41,15 +41,20 @@ Page({
     var that = this
     util.checkToken()
     var token = wx.getStorageSync('token')
-    /*wx.requestSubscribeMessage({
-      tmplIds: ['3HNEeIjVsSDRLXjIkMAmECv7RvBijDLkkyhx3l6zjdA'],
+    console.log('触发participateActivity函数')
+    wx.requestSubscribeMessage({
+      tmplIds: ['3HNEeIjVsSDRLXjIkMAmEJmyLc9SOq8aalnB9hkZT9s'],
       success(res) {
         util.httpRequest(false, 'activity_and_prize/test_message', 0, { 'activity_id': app.globalData.activity_id, token: wx.getStorageSync('token') }, 0, function (res) {
           console.log('调用参与活动函数成功')
         })
+      },
+      fail(res) { 
+        console.log('requestSubscribeMessage执行失败')
+        console.log(res)
       }
-    })*/
-    if (app.globalData.share_user_id != '') {
+    })
+    /*if (app.globalData.share_user_id != '') {
       console.log('该用户通过点击其他用户分享而进入抽奖界面')
       util.httpRequest(false, 'activity_and_prize/participate_activity_by_share', 0, {
         'activity_id': app.globalData.activity_id, 'token': token, 'shareUserId': app.globalData.share_user_id }, 0, function (res) {
@@ -59,10 +64,20 @@ Page({
         util.httpRequest(false, 'activity_and_prize/participate_activity', 0, { 'activity_id': app.globalData.activity_id, 'token': token}, 0, function (res) {
         console.log('调用参与活动函数成功')
       })
-    }
+    }*/
     
   },
-
+  navigateToCreatePost: function (e) {
+    console.log('navigateToCreatePost执行')
+    var that = this
+    var prizeArrayJson = JSON.stringify(that.data.prizeArray)
+    wx.navigateTo({
+      url: '../createPoster/createPoster?prizeArray=' + prizeArrayJson,//,
+      success: function (res) { },
+      fail: function (res) { console.log(res) },
+      complete: function (res) { },
+    })
+  },
   
   navigateToSelfHelpPage: function (e) {
     wx.switchTab({
@@ -98,13 +113,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-    console.log("options.activity_id:")
-    console.log(options.activity_id)
+    var scene = decodeURIComponent(options.scene)
     if (options.activity_id != undefined){
       app.globalData.activity_id = options.activity_id
-      app.globalData.open_by_share = true
-      app.globalData.share_user_id = options.shareUserId
+      if (options.shareUserId != undefined){ //还需添加通过扫描海报二维码进入活动的逻辑
+        app.globalData.open_by_share = true
+        app.globalData.share_user_id = options.shareUserId
+        console.log('用户通过他人分享打开该活动')
+      }else{
+        console.log('用户通过开奖通知打开该活动')
+      }
+      
     }
     console.log(app.globalData.activity_id)
     console.log(app.globalData.open_by_share)
@@ -143,7 +162,6 @@ Page({
       }else{
         that.setData({ participateButtonText: '参与抽奖' })
       }
-      console.log('用户已经参加该活动：' + that.data.haveParticipate)
       that.setData({
         nodes: JSON.parse(that.data.activityInfoJson).html,
         content_html: JSON.parse(that.data.activityInfoJson).html

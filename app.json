@@ -5,7 +5,6 @@
     "pages/new/new",
     "pages/personal/personal",
     "pages/newWay/newWay",
-    "pages/indexPrize/indexPrize",
     "pages/richText/richText",
     "pages/sponsorCertification/sponsorCertification",
     "pages/participateLottery/participateLottery",
@@ -14,7 +13,8 @@
     "pages/certificationInfo/certificationInfo",
     "pages/personalCertificationInfo/personalCertificationInfo",
     "pages/test/test",
-    "pages/activityInfo/activityInfo"
+    "pages/activityInfo/activityInfo",
+    "pages/createPoster/createPoster"
   ],
   "window": {
     "backgroundTextStyle": "dark",
